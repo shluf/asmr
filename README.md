@@ -43,7 +43,28 @@ composer install
 php artisan key:generate
 ```
 
-### Langkah 7: Jalankan Aplikasi
+### Langkah 6: Migrate database
+Mulai database server kemudian jalan perintah berikut 
+```bash
+php artisan migrate
+```
+
+### Langkah 7: Konfigurasi Vite
+1. Jalankan perintah berikut 
+```bash
+npm i 
+```
+2. Kemudian jalankan perintah berikut
+```bash
+npm run dev
+```
+3. Buka terminal baru dan jalankan perintah 
+```bash
+npm run build
+```
+4. Perintah `npm run dev` dapat ditutup
+
+### Langkah 8: Jalankan Aplikasi
 ```bash
 php artisan serve
 ```
