@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id('id_notifikasi');
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->text('pesan');
+            $table->enum('jenis_notif',['surat','proker','lainya']);
             $table->date('tanggal');
             $table->timestamps();
         });
