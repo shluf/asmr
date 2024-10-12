@@ -3,20 +3,37 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, useForm } from '@inertiajs/react';
+import { useRef } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({
         email: '',
     });
 
-    const submit = (e) => {
+    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+
+    const recaptchaRef = useRef();
+
+    const submit = async (e) => {
         e.preventDefault();
 
-        post(route('password.email'));
+        const recaptchaValue = recaptchaRef.current.getValue();
+        if (!recaptchaValue) {
+            alert("Silakan selesaikan CAPTCHA");
+            return;
+        }
+
+        const formData = {
+            ...data,
+            recaptcha: recaptchaValue,
+        };
+
+        post(route('password.email'), formData);
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout button={'all'} title={'Lupa Password'}>
             <Head title="Forgot Password" />
 
             <div className="mb-4 text-sm text-gray-600">
@@ -31,7 +48,7 @@ export default function ForgotPassword({ status }) {
                 </div>
             )}
 
-            <form onSubmit={submit}>
+            <form onSubmit={submit} className='flex flex-col justify-center items-center'>
                 <TextInput
                     id="email"
                     type="email"
@@ -44,9 +61,16 @@ export default function ForgotPassword({ status }) {
 
                 <InputError message={errors.email} className="mt-2" />
 
+                <div className="mt-4">
+                    <ReCAPTCHA
+                        ref={recaptchaRef}
+                        sitekey={siteKey}
+                    />
+                </div>
+
                 <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Email Password Reset Link
+                    <PrimaryButton className="ms-4" disabled={processing} color={'green'}>
+                        Email Link Reset Password
                     </PrimaryButton>
                 </div>
             </form>

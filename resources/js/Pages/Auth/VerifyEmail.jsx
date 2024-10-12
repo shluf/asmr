@@ -12,7 +12,7 @@ export default function VerifyEmail({ status }) {
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout button={'all'} title={'Verifikasi Email'}>
             <Head title="Email Verification" />
 
             <div className="mb-4 text-sm text-gray-600">
@@ -31,7 +31,7 @@ export default function VerifyEmail({ status }) {
 
             <form onSubmit={submit}>
                 <div className="mt-4 flex items-center justify-between">
-                    <PrimaryButton disabled={processing}>
+                    <PrimaryButton disabled={processing} color={'green'}>
                         Resend Verification Email
                     </PrimaryButton>
 
