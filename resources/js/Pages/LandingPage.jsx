@@ -82,13 +82,6 @@ const LandingPage = ({ auth }) => {
                             >
                                 Kritik Saran
                             </a>
-                            <span className="mx-4 text-green">⋮</span>
-                            <a
-                                href="#"
-                                className="text-gray-800 hover:text-green"
-                            >
-                                Bantuan
-                            </a>
                         </div>
                         <div className="flex">
                             {auth.user ? (
@@ -102,13 +95,13 @@ const LandingPage = ({ auth }) => {
                                 <>
                                     <Link
                                         href={route("register")}
-                                        className="rounded-md px-3 py-2 bg-yellow hover:bg-yellow-2 text-white font-bold mr-2 ring-1 ring-transparent transition hover:text-white focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                        className="rounded-md px-3 py-2 bg-yellow hover:bg-yellow-2 text-white font-medium mr-2 ring-1 ring-transparent transition hover:text-white focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                     >
                                         Registrasi
                                     </Link>
                                     <Link
                                         href={route("login")}
-                                        className="rounded-md px-3 py-2 bg-green hover:bg-green-2 text-white font-bold ring-1 ring-transparent transition hover:text-white focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                        className="rounded-md px-3 py-2 bg-green hover:bg-green-2 text-white font-medium ring-1 ring-transparent transition hover:text-white focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                     >
                                         Masuk
                                     </Link>
@@ -144,7 +137,7 @@ const LandingPage = ({ auth }) => {
                                     {auth.user ? (
                                         <Link
                                             href={route("dashboard")}
-                                            className="rounded-md px-3 py-2 bg-yellow hover:bg-yellow-2 text-white font-bold mr-2 ring-1 ring-transparent transition hover:text-white focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                            className="rounded-md px-3 py-2 bg-yellow hover:bg-yellow-2 text-white font-medium mr-2 ring-1 ring-transparent transition hover:text-white focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                         >
                                             Dashboard
                                         </Link>
@@ -160,7 +153,7 @@ const LandingPage = ({ auth }) => {
                                             </div>
                                             <Link
                                                 href={route("register")}
-                                                className="rounded-md px-3 py-2 bg-yellow hover:bg-yellow-2 text-white font-bold mr-2 ring-1 ring-transparent transition hover:text-white focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                                className="rounded-md px-3 py-2 bg-yellow hover:bg-yellow-2 text-white font-medium mr-2 ring-1 ring-transparent transition hover:text-white focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                             >
                                                 Registrasi
                                             </Link>
@@ -174,7 +167,7 @@ const LandingPage = ({ auth }) => {
                                             </div>
                                             <Link
                                                 href={route("login")}
-                                                className="rounded-md px-3 py-2 bg-green hover:bg-green-2 text-white font-bold ring-1 ring-transparent transition hover:text-white focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                                className="rounded-md px-3 py-2 bg-green hover:bg-green-2 text-white font-medium ring-1 ring-transparent transition hover:text-white focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                             >
                                                 Masuk
                                             </Link>

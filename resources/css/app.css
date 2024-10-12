@@ -5,6 +5,8 @@
   :root {
     --green: 168 75% 42%;
     --yellow: 45 86% 62%;
+    --blue: 212 100% 50%;
+    --orange: 29 100% 50%;
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -59,6 +61,7 @@
   }
   *, html {
     scroll-behavior: smooth !important;
+    font-family: 'Poppins', sans-serif;
 }
 }
 @layer base {

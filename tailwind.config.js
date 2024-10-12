@@ -30,6 +30,12 @@ export default {
 					DEFAULT: 'hsl(var(--yellow))',
 					2: '#D9AA1C',
 				},
+				blue: {
+					DEFAULT: 'hsl(var(--blue))',
+				},
+				orange: {
+					DEFAULT: 'hsl(var(--orange))',
+				},
     			background: 'hsl(var(--background))',
     			foreground: 'hsl(var(--foreground))',
     			card: {
