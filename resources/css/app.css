@@ -3,6 +3,8 @@
 @tailwind utilities;
 @layer base {
   :root {
+    --green: 168 75% 42%;
+    --yellow: 45 86% 62%;
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -55,6 +57,9 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%
   }
+  *, html {
+    scroll-behavior: smooth !important;
+}
 }
 @layer base {
   * {
