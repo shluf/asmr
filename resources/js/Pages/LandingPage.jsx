@@ -34,7 +34,7 @@ const LandingPage = ({ auth }) => {
     return (
         <>
             <Head title="Home" />
-            <body className="bg-gray-100 font-sans">
+            <main className="bg-gray-100 font-sans">
                 <nav
                     className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out
             ${
@@ -376,11 +376,11 @@ const LandingPage = ({ auth }) => {
                                     untuk terus meningkatkan layanan demi
                                     kepuasan bersama.
                                 </p>
-                                <form data-aos="flip-right" data-aos-delay="750" action="mailto:example@example.com" method="post" enctype="text/plain">
+                                <form data-aos="flip-right" data-aos-delay="750" action="mailto:example@example.com" method="post" encType="text/plain">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
                                             <label
-                                                for="firstName"
+                                                htmlFor="firstName"
                                                 className="block text-sm font-medium text-gray-700"
                                             >
                                                 First Name
@@ -389,13 +389,13 @@ const LandingPage = ({ auth }) => {
                                                 type="text"
                                                 name="firstName"
                                                 id="firstName"
-                                                value="John"
+                                                defaultValue="John"
                                                 className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-0 border-b-2"
                                             />
                                         </div>
                                         <div>
                                             <label
-                                                for="lastName"
+                                                htmlFor="lastName"
                                                 className="block text-sm font-medium text-gray-700"
                                             >
                                                 Last Name
@@ -404,13 +404,13 @@ const LandingPage = ({ auth }) => {
                                                 type="text"
                                                 name="lastName"
                                                 id="lastName"
-                                                value="Doe"
+                                                defaultValue="Doe"
                                                 className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-0 border-b-2"
                                             />
                                         </div>
                                         <div className="col-span-2">
                                             <label
-                                                for="email"
+                                                htmlFor="email"
                                                 className="block text-sm font-medium text-gray-700"
                                             >
                                                 Email
@@ -419,13 +419,13 @@ const LandingPage = ({ auth }) => {
                                                 type="email"
                                                 name="email"
                                                 id="email"
-                                                value="johndoe@gmail.com"
+                                                defaultValue="johndoe@gmail.com"
                                                 className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-0 border-b-2"
                                             />
                                         </div>
                                         <div className="col-span-2">
                                             <label
-                                                for="subject"
+                                                htmlFor="subject"
                                                 className="block text-sm font-medium text-gray-700"
                                             >
                                                 Subject
@@ -439,7 +439,7 @@ const LandingPage = ({ auth }) => {
                                         </div>
                                         <div className="col-span-2">
                                             <label
-                                                for="message"
+                                                htmlFor="message"
                                                 className="block text-sm font-medium text-gray-700"
                                             >
                                                 Message
@@ -510,7 +510,7 @@ const LandingPage = ({ auth }) => {
                     </div>
                 </footer>
                 </div>
-            </body>
+            </main>
         </>
     );
 };

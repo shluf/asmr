@@ -1,7 +1,7 @@
 // import ApplicationLogo from "@/Components/ApplicationLogo";
 import { Link } from "@inertiajs/react";
 
-export default function Guest({ children, button, title }) {
+export default function Guest({ children, button, title, wide=false }) {
 
     return (
         <section className="relative bg-gray-100 overflow-hidden">
@@ -92,10 +92,10 @@ export default function Guest({ children, button, title }) {
                     </Link>
                 </div> */}
                 <div>
-                    <h1 className="font-bold text-4xl">{title}</h1>
                 </div>
 
-                <div className="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg">
+                <div className={`mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md ${wide ? "sm:max-w-4xl" : "sm:max-w-md"} sm:rounded-lg`}>
+                    <h1 className="text-center mb-10 font-bold text-4xl">{title}</h1>
                     {children}
                 </div>
             </div>
