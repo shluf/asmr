@@ -15,6 +15,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_rw');
             $table->string('nama');
             $table->string('nomer_kk');
+            $table->string('jenis_kelamin');
+            $table->string('phone');
+            $table->string('tempat_dan_tanggal_lahir');
             $table->string('alamat');
             $table->string('kabupaten');
             $table->string('provinsi');

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
 
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -33,7 +34,20 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user();
+        $role = $user->role;
+        switch ($role) {
+            case 'Admin':
+                return redirect()->intended(route('admin.dashboard', absolute: false));
+            case 'Warga':
+                return redirect()->intended(route('warga.dashboard', absolute: false));
+            case 'RT':
+                return redirect()->intended(route('rt.dashboard', absolute: false));
+            case 'RW':
+                return redirect()->intended(route('rw.dashboard', absolute: false));
+            default:
+                return redirect()->intended(route('dashboard', absolute: false));
+        }
     }
 
     /**
