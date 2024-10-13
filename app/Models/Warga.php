@@ -13,6 +13,7 @@ class Warga extends Model{
     public $incrementing = false; // Karena primary key bukan integer
 
     protected $fillable = [
+        'nik_warga',
         'id_user',
         'id_rt',
         'id_rw',
@@ -24,8 +25,7 @@ class Warga extends Model{
         'alamat',
         'kabupaten',
         'provinsi',
-        'agama',
-        'status'
+        'agama'
     ];
 
     public function rt()

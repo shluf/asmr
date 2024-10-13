@@ -35,7 +35,6 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'nik_warga' => 'required|string|unique:warga,nik_warga',
-            'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:users,email',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'id_rt' => 'required|integer',
@@ -74,7 +73,7 @@ class RegisteredUserController extends Controller
         // }
 
         $user = User::create([
-            'name' => $request->name,
+            'name' => $request->nama,
             'email' => $request->email,
             'role' => 'Warga',
             'password' => Hash::make($request->password),
@@ -95,7 +94,7 @@ class RegisteredUserController extends Controller
             'agama' => $request->agama,
         ]);
 
-        event(new Registered($user));
+        event(new Registered($user, $warga));
 
         Auth::login($user);
 

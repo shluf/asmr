@@ -10,7 +10,6 @@ export default function Register() {
     const [focusedField, setFocusedField] = useState(null);
     const { data, setData, post, processing, errors, reset } = useForm({
         nik_warga: "",
-        name: "",
         email: "",
         password: "",
         password_confirmation: "",
@@ -26,6 +25,7 @@ export default function Register() {
         provinsi: "",
         agama: "",
     });
+
 
     const InputField = ({
         label,
@@ -56,6 +56,8 @@ export default function Register() {
     const submit = (e) => {
         e.preventDefault();
 
+        console.log(data)
+
         post(route("register"), {
             onFinish: () => reset("password", "password_confirmation"),
         });
@@ -81,28 +83,28 @@ export default function Register() {
                         />
                         <InputField
                             label="NIK"
-                            id="nik"
+                            id="nik_warga"
                             type="number"
-                            value={data.nik}
+                            value={data.nik_warga}
                             onChange={setData}
-                            error={errors.nik}
+                            error={errors.nik_warga}
                             required
                         />
                         <InputField
                             label="Nomor KK"
-                            id="no_kk"
+                            id="nomer_kk"
                             type="number"
-                            value={data.no_kk}
+                            value={data.nomer_kk}
                             onChange={setData}
-                            error={errors.no_kk}
+                            error={errors.nomer_kk}
                             required
                         />
                         <InputField
                             label="Tempat, tgl lahir"
-                            id="ttl"
-                            value={data.ttl}
+                            id="tempat_dan_tanggal_lahir"
+                            value={data.tempat_dan_tanggal_lahir}
                             onChange={setData}
-                            error={errors.ttl}
+                            error={errors.tempat_dan_tanggal_lahir}
                             required
                         />
                         <div>
@@ -111,20 +113,21 @@ export default function Register() {
                                 value="Jenis Kelamin"
                             />
                             <select
-                                id="gender"
-                                name="gender"
-                                value={data.gender}
+                                id="jenis_kelamin"
+                                name="jenis_kelamin"
+                                value={data.jenis_kelamin}
                                 onChange={(e) =>
-                                    setData("gender", e.target.value)
+                                    setData("jenis_kelamin", e.target.value)
                                 }
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 required
                             >
+                                <option value=""></option>
                                 <option value="laki-laki">Laki-laki</option>
                                 <option value="perempuan">Perempuan</option>
                             </select>
                             <InputError
-                                message={errors.gender}
+                                message={errors.jenis_kelamin}
                                 className="mt-1"
                             />
                         </div>
@@ -155,30 +158,30 @@ export default function Register() {
                         <div className="grid grid-cols-2 gap-4 col-span-1">
                             <InputField
                                 label="RT"
-                                id="rt"
+                                id="id_rt"
                                 type="number"
-                                value={data.rt}
+                                value={data.id_rt}
                                 onChange={setData}
-                                error={errors.rt}
+                                error={errors.id_rt}
                                 required
                             />
                             <InputField
                                 label="RW"
-                                id="rw"
+                                id="id_rw"
                                 type="number"
-                                value={data.rw}
+                                value={data.id_rw}
                                 onChange={setData}
-                                error={errors.rw}
+                                error={errors.id_rw}
                                 required
                             />
                         </div>
                         <div className="md:col-span-3">
                             <InputField
                                 label="Alamat"
-                                id="address"
-                                value={data.address}
+                                id="alamat"
+                                value={data.alamat}
                                 onChange={setData}
-                                error={errors.address}
+                                error={errors.alamat}
                                 required
                             />
                         </div>
