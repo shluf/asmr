@@ -11,6 +11,19 @@ export default {
         './resources/js/**/*.jsx',
     ],
 
+	safelist: [
+		'text-green',
+		'text-blue',
+		'text-yellow',
+		'text-orange',
+		'bg-green',
+		'bg-blue',
+		'bg-yellow',
+		'bg-orange',
+		'hover:text-blue',
+		'hover:bg-blue-2',
+	  ],
+
     theme: {
     	extend: {
     		fontFamily: {
@@ -32,6 +45,7 @@ export default {
 				},
 				blue: {
 					DEFAULT: 'hsl(var(--blue))',
+					2: '#609FE8',
 				},
 				orange: {
 					DEFAULT: 'hsl(var(--orange))',
