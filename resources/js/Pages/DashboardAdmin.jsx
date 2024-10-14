@@ -1,13 +1,31 @@
+import Akun from "@/Components/Contents/Admin/Akun";
+import ApprovalRole from "@/Components/Contents/Admin/ApprovalRole";
+import BiodataRTRW from "@/Components/Contents/Admin/BiodataRTRW";
+import DashboardContent from "@/Components/Contents/Admin/DashboardContent";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export const description =
-    "A products dashboard with a sidebar navigation and a main content area. The dashboard has a header with a search input and a user menu. The sidebar has a logo, navigation links, and a card with a call to action. The main content area shows an empty state with a call to action.";
-
 export default function Dashboard() {
+    const currentPage = ''
+    const renderContent = () => {
+        switch(currentPage) {
+            case 'dashboard':
+                return <DashboardContent />;
+            case 'biodataRTRW':
+                return <BiodataRTRW />;
+            case 'approvalRole':
+                return <ApprovalRole />;
+            case 'akun':
+                return <Akun />;
+            default:
+                return <DashboardContent />;
+        }
+    }
+
     return (
         <DashboardLayout header={'Dashboard Admin'} color={'blue'}>
             <Head title="Dashboard" />
+            {renderContent()}
         </DashboardLayout>
     );
 }

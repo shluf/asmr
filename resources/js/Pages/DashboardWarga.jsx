@@ -1,26 +1,34 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import Bantuan from '@/Components/Contents/Bantuan';
+import Akun from '@/Components/Contents/Warga/Akun';
+import DashboardContent from '@/Components/Contents/Warga/DashboardContent';
+import HistoriPengajuan from '@/Components/Contents/Warga/HistoriPengajuan';
+import Pengajuan from '@/Components/Contents/Warga/Pengajuan';
+import DashboardLayout from '@/Layouts/DashboardLayout';
 import { Head } from '@inertiajs/react';
 
 export default function Dashboard() {
-    return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Dashboard Warga
-                </h2>
-            }
-        >
-            <Head title="Dashboard" />
+    const currentPage = ''
+    const renderContent = () => {
+        switch(currentPage) {
+            case 'dashboard':
+                return <DashboardContent />;
+            case 'pengajuan':
+                return <Pengajuan />;
+            case 'historiPengajuan':
+                return <HistoriPengajuan />;
+            case 'akun':
+                return <Akun />;
+            case 'bantuan':
+                return <Bantuan />;
+            default:
+                return <DashboardContent />;
+        }
+    }
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            You're logged in!
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </AuthenticatedLayout>
+    return (
+        <DashboardLayout header={'Dashboard Warga'} color={'green'}>
+            <Head title="Dashboard" />
+            {renderContent()}
+        </DashboardLayout>
     );
 }
