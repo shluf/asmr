@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -23,18 +24,9 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        $user = Auth::user();
-        
-        return match ($user->role) {
-            'Admin' => Inertia::render('DashboardAdmin'),
-            'RT' => Inertia::render('DashboardRT'),
-            'RW' => Inertia::render('DashboardRW'),
-            'Warga' => Inertia::render('DashboardWarga'),
-            default => redirect('/')
-        };
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
+   
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
