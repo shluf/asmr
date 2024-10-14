@@ -35,6 +35,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'nik_warga' => 'required|string|unique:warga,nik_warga',
+            'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:users,email',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'id_rt' => 'required|integer',
@@ -72,8 +73,30 @@ class RegisteredUserController extends Controller
         //     ]);
         // }
 
+        // $rt = RT::find($request->id_rt);
+        // if (!$rt) {
+        //     $rt = RT::create([
+        //         'id_rt' => $request->id_rt,
+        //         'id_rw' => $request->id_rw, // Asumsi RT baru juga membutuhkan RW
+        //         'nama' => 'RT ' . $request->id_rt,
+        //         'nik' => '',
+        //         'periode' => '',
+        //         'penanggung_jawab_rt' => '',
+        //     ]);
+        // }
+        // $rw = Rw::find($request->id_rw);
+        // if (!$rw) {
+        //     $rw = Rw::create([
+        //         'id_rw' => $request->id_rw,
+        //         'nama' => 'RW ' . $request->id_rw,
+        //         'nik' => '',
+        //         'periode' => '',
+        //         'penanggung_jawab_rw' => '',
+        //     ]);
+        // }
+
         $user = User::create([
-            'name' => $request->nama,
+            'name' => $request->name,
             'email' => $request->email,
             'role' => 'Warga',
             'password' => Hash::make($request->password),
@@ -93,11 +116,12 @@ class RegisteredUserController extends Controller
             'provinsi' => $request->provinsi,
             'agama' => $request->agama,
         ]);
+        
 
-        event(new Registered($user, $warga));
+        event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('dashboardWarga', absolute: false));
     }
 }
