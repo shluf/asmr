@@ -60,7 +60,7 @@ const RWSidebBar = ({ color }) => {
                                 color={color}
                             >
                                 <ShoppingCart className="h-4 w-4" />
-                                Orders
+                                Pengaduan Warga
                                 <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                                     6
                                 </Badge>
@@ -72,7 +72,7 @@ const RWSidebBar = ({ color }) => {
                                 color={color}
                             >
                                 <Package className="h-4 w-4" />
-                                Products{" "}
+                                Rekap Pengajuan Warga{" "}
                             </NavLink>
                             <NavLink
                                 href={route('dashboard')}
@@ -81,15 +81,7 @@ const RWSidebBar = ({ color }) => {
                                 color={color}
                             >
                                 <Users className="h-4 w-4" />
-                                Customers
-                            </NavLink>
-                            <NavLink
-                                href="#"
-                                className=""
-                                color={color}
-                            >
-                                <LineChart className="h-4 w-4" />
-                                Analytics
+                                Bantuan
                             </NavLink>
                         </nav>
                     </div>

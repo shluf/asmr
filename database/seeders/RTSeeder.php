@@ -11,7 +11,8 @@ class RTSeeder extends Seeder
     {
         DB::table('rt')->insert([
             [
-                'id_rw' => 1, 
+                'id_user' => 3,
+                'id_rw' => 1, // ID dari tabel RW
                 'nama' => 'RT 01',
                 'nik' => '3201010101010003',
                 'periode' => '2022-2025',
@@ -20,6 +21,7 @@ class RTSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'id_user' => 4,
                 'id_rw' => 2, // ID dari tabel RW
                 'nama' => 'RT 02',
                 'nik' => '3201010101010004',

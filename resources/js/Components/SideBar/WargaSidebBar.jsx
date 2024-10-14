@@ -53,24 +53,24 @@ const WargaSidebBar = ({ color }) => {
                             </NavLink>
                             <NavLink
                                 href={route('dashboard')}
-                                active={route().current('order')}
-                                className=""
-                                color={color}
-                            >
-                                <ShoppingCart className="h-4 w-4" />
-                                Orders
-                                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                                    6
-                                </Badge>
-                            </NavLink>
-                            <NavLink
-                                href={route('dashboard')}
                                 active={route().current('products')}
                                 className=""
                                 color={color}
                             >
                                 <Package className="h-4 w-4" />
-                                Products{" "}
+                                Pengajuan{" "}
+                            </NavLink>
+                            <NavLink
+                                href={route('dashboard')}
+                                active={route().current('order')}
+                                className=""
+                                color={color}
+                            >
+                                <ShoppingCart className="h-4 w-4" />
+                                Histori Pengajuan
+                                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                                    6
+                                </Badge>
                             </NavLink>
                             <NavLink
                                 href={route('dashboard')}
@@ -79,7 +79,7 @@ const WargaSidebBar = ({ color }) => {
                                 color={color}
                             >
                                 <Users className="h-4 w-4" />
-                                Customers
+                                Akun
                             </NavLink>
                             <NavLink
                                 href="#"
@@ -87,7 +87,7 @@ const WargaSidebBar = ({ color }) => {
                                 color={color}
                             >
                                 <LineChart className="h-4 w-4" />
-                                Analytics
+                                Bantuan
                             </NavLink>
                         </nav>
                     </div>

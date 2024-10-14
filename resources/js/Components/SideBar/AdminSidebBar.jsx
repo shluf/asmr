@@ -60,7 +60,7 @@ const AdminSidebBar = ({ color }) => {
                                 color={color}
                             >
                                 <ShoppingCart className="h-4 w-4" />
-                                Orders
+                                Biodata RT/RW
                                 <Badge color={color} className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                                     6
                                 </Badge>
@@ -81,7 +81,7 @@ const AdminSidebBar = ({ color }) => {
                                 color={color}
                             >
                                 <Users className="h-4 w-4" />
-                                Customers
+                                Approval Role
                             </NavLink>
                             <NavLink
                                 href="#"
@@ -89,7 +89,7 @@ const AdminSidebBar = ({ color }) => {
                                 color={color}
                             >
                                 <LineChart className="h-4 w-4" />
-                                Analytics
+                                Akun
                             </NavLink>
                         </nav>
                     </div>

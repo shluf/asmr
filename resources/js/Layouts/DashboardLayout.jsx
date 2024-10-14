@@ -78,9 +78,6 @@ const DashboardLayout = ({ header='Dashboard Warga', color='yellow', children })
                                 >
                                     <ShoppingCart className="h-5 w-5" />
                                     Orders
-                                    {/* <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                                        6
-                                    </Badge> */}
                                 </Link>
                                 <Link
                                     href="#"
@@ -104,23 +101,6 @@ const DashboardLayout = ({ header='Dashboard Warga', color='yellow', children })
                                     Analytics
                                 </Link>
                             </nav>
-                            <div className="mt-auto">
-                                {/* <Card>
-                                    <CardHeader>
-                                        <CardTitle>Upgrade to Pro</CardTitle>
-                                        <CardDescription>
-                                            Unlock all features and get
-                                            unlimited access to our support
-                                            team.
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <Button size="sm" className="w-full">
-                                            Upgrade
-                                        </Button>
-                                    </CardContent>
-                                </Card> */}
-                            </div>
                         </SheetContent>
                     </Sheet>
 
