@@ -45,8 +45,6 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->intended(route('rt.dashboard', absolute: false));
             case 'RW':
                 return redirect()->intended(route('rw.dashboard', absolute: false));
-            default:
-                return redirect()->intended(route('dashboard', absolute: false));
         }
     }
 

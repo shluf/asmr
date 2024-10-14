@@ -24,6 +24,15 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('DashboardAdmin');
 })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboardWarga', function () {
+    return Inertia::render('DashboardWarga');
+})->middleware(['auth', 'verified'])->name('warga.dashboard');
+// Route::get('/dashboardRT', function () {
+//     return Inertia::render('DashboardRT');
+// })->middleware(['auth', 'verified'])->name('rt.dashboard');
+// Route::get('/dashboardRW', function () {
+//     return Inertia::render('DashboardRW');
+// })->middleware(['auth', 'verified'])->name('rw.dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
