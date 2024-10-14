@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Warga extends Model
-{
+class Warga extends Model{
     use HasFactory;
 
     protected $table = 'warga';
@@ -14,16 +13,19 @@ class Warga extends Model
     public $incrementing = false; // Karena primary key bukan integer
 
     protected $fillable = [
+        'nik_warga',
         'id_user',
         'id_rt',
         'id_rw',
         'nama',
         'nomer_kk',
+        'jenis_kelamin',
+        'phone',
+        'tempat_dan_tanggal_lahir',
         'alamat',
         'kabupaten',
         'provinsi',
-        'agama',
-        'status'
+        'agama'
     ];
 
     public function rt()
@@ -44,5 +46,9 @@ class Warga extends Model
     public function pengajuanSurat()
     {
         return $this->hasMany(PengajuanSurat::class, 'id_warga');
+    }
+    public function getWargaByRtRw($id_rt, $id_rw)
+    {
+        return $this->where('id_rt', $id_rt)->where('id_rw', $id_rw)->get();
     }
 }
