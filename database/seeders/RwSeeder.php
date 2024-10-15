@@ -11,6 +11,7 @@ class RWSeeder extends Seeder
     {
         DB::table('rw')->insert([
             [
+                'id_rw' => 1,
                 'id_user' => 1,
                 'nama' => 'RW 01',
                 'nik' => '3201010101010001',
@@ -20,6 +21,7 @@ class RWSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'id_rw' => 2,
                 'id_user' => 2,
                 'nama' => 'RW 02',
                 'nik' => '3201010101010002',

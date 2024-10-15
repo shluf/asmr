@@ -5,6 +5,7 @@ import 'aos/dist/aos.css';
 
 const LandingPage = ({ auth }) => {
     const [scrolled, setScrolled] = useState(false);
+    const [activeSection, setActiveSection] = useState("beranda");
 
     useEffect(() => {
         AOS.init({
@@ -14,13 +15,23 @@ const LandingPage = ({ auth }) => {
         });
       }, []);
 
-    useEffect(() => {
-
+      useEffect(() => {
         const handleScroll = () => {
             const isScrolled = window.scrollY > 10;
             if (isScrolled !== scrolled) {
                 setScrolled(isScrolled);
             }
+
+            const sections = ["beranda", "tentang", "cara-kerja", "kritik-saran"];
+            sections.forEach((section) => {
+                const sectionElement = document.getElementById(section);
+                if (sectionElement) {
+                    const rect = sectionElement.getBoundingClientRect();
+                    if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                        setActiveSection(section);
+                    }
+                }
+            });
         };
 
         window.addEventListener("scroll", handleScroll);
@@ -57,28 +68,36 @@ const LandingPage = ({ auth }) => {
                         <div className="hidden md:block">
                             <a
                                 href="#"
-                                className="text-gray-800 hover:text-green"
+                                className={`hover:text-green ${
+                                    activeSection === "beranda" ? "border-b-2 border-dotted border-green text-green" : "text-gray-800"
+                                }`}
                             >
                                 Beranda
                             </a>
                             <span className="mx-4 text-green">⋮</span>
                             <a
                                 href="#tentang"
-                                className="text-gray-800 hover:text-green"
+                                className={`hover:text-green ${
+                                    activeSection === "tentang" ? "border-b-2 border-dotted border-green text-green" : "text-gray-800"
+                                }`}
                             >
                                 Tentang
                             </a>
                             <span className="mx-4 text-green">⋮</span>
                             <a
                                 href="#cara-kerja"
-                                className="text-gray-800 hover:text-green"
+                                className={`hover:text-green ${
+                                    activeSection === "cara-kerja" ? "border-b-2 border-dotted border-green text-green" : "text-gray-800"
+                                }`}
                             >
                                 Cara Kerja
                             </a>
                             <span className="mx-4 text-green">⋮</span>
                             <a
                                 href="#kritik-saran"
-                                className="text-gray-800 hover:text-green"
+                                className={`hover:text-green ${
+                                    activeSection === "kritik-saran" ? "border-b-2 border-dotted border-green text-green" : "text-gray-800"
+                                }`}
                             >
                                 Kritik Saran
                             </a>
@@ -112,28 +131,29 @@ const LandingPage = ({ auth }) => {
                 </nav>
 
                 <div className="flex flex-col">
-                <section className="relative bg-gray-100 py-16 h-screen box-border">
+                <section id="beranda" className="relative bg-gray-100 py-16 h-screen box-border">
                     <div className="absolute inset-0 flex justify-center z-0">
                         <img
                             className="object-cover w-full h-full"
                             src="/img/bg_land_overlay.png"
                             alt="overlay"
+                            data-aos="zoom-in"
                         />
                     </div>
                     <div className="container mx-auto px-4 h-full z-10 relative">
                         <div className="grid grid-cols-1 md:grid-cols-1 gap-8 h-full">
                             <div className="flex flex-col items-center justify-center h-full">
                                 <div className="flex flex-col justify-center items-center">
-                                    <h2 className="text-l md:text-xl font-bold text-gray-500 text-start w-full leading-tight">
+                                    <h2 data-aos="fade-up" data-aos-delay="300" className="text-l md:text-xl font-bold text-gray-500 text-start w-full leading-tight">
                                         Portal Surat Menyurat
                                     </h2>
-                                    <h1 className="text-4xl md:text-5xl font-black text-gray-800 text-center leading-tight">
+                                    <h1 data-aos="fade-up" data-aos-delay="500" className="text-4xl md:text-5xl font-black text-gray-800 text-center leading-tight">
                                         Pengajuan Masalah
                                         <br />
                                         RT & RW
                                     </h1>
                                 </div>
-                                <div className="mt-8 flex items-center justify-around p-4 shadow-md rounded-lg bg-white">
+                                <div data-aos="fade" data-aos-delay="1000" className="mt-8 flex items-center justify-around p-4 shadow-md rounded-lg bg-white">
                                     {auth.user ? (
                                         <Link
                                             href={route("dashboard")}
@@ -246,7 +266,7 @@ const LandingPage = ({ auth }) => {
                                 <h3 className="mt-10 text-lg font-bold text-center text-gray-800 leading-tight">
                                     Registrasi akun
                                 </h3>
-                                <p className="text-sm text-gray-600 mt-2 text-center">
+                                <p className="text-xs text-gray-600 mt-2 text-center">
                                     Buat akun untuk akses cepat ke layanan surat
                                     menyurat dan informasi RT/RW. Registrasi
                                     hanya butuh beberapa langkah sederhana.
@@ -281,7 +301,7 @@ const LandingPage = ({ auth }) => {
                                 <h3 className="mt-10 text-lg font-bold text-center text-gray-800 leading-tight">
                                     Verifikasi akun
                                 </h3>
-                                <p className="text-sm text-gray-600 mt-2 text-center">
+                                <p className="text-xs text-gray-600 mt-2 text-center">
                                     Cek email untuk verifikasi dan aktifkan akun
                                     Anda agar bisa segera menggunakan semua
                                     layanan kami.
@@ -316,7 +336,7 @@ const LandingPage = ({ auth }) => {
                                 <h3 className="mt-10 text-lg font-bold text-center text-gray-800 leading-tight">
                                     Pengajuan masalah
                                 </h3>
-                                <p className="text-sm text-gray-600 mt-2 text-center">
+                                <p className="text-xs text-gray-600 mt-2 text-center">
                                     Laporkan masalah Anda melalui formulir
                                     online, dan kami akan segera
                                     menindaklanjutinya. Prosesnya cepat dan
@@ -352,7 +372,7 @@ const LandingPage = ({ auth }) => {
                                 <h3 className="mt-10 text-lg font-bold text-center text-gray-800 leading-tight">
                                     Masalah diproses
                                 </h3>
-                                <p className="text-sm text-gray-600 mt-2 text-center">
+                                <p className="text-xs text-gray-600 mt-2 text-center">
                                     Masalah Anda sedang kami tangani. Anda akan
                                     menerima update selanjutnya melalui email
                                     atau bisa memeriksanya langsung di website
@@ -474,13 +494,13 @@ const LandingPage = ({ auth }) => {
                     <div className="bg-[url('/img/footer.png')] bg-cover py-10">
                         <div className="container mx-auto px-4 text-white">
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                <div>
+                                <div data-aos="fade-up" data-aos-delay="100">
                                     <h3 className="text-2xl font-bold leading-tight">
                                         Layanan Surat Menyurat di Ujung Jari
                                         Anda, Bersama Kami!
                                     </h3>
                                 </div>
-                                <div>
+                                <div data-aos="fade-up" data-aos-delay="300">
                                     <h3 className="text-lg font-bold leading-tight">
                                         Alamat
                                     </h3>
@@ -494,7 +514,7 @@ const LandingPage = ({ auth }) => {
                                         U.S. of America
                                     </p>
                                 </div>
-                                <div>
+                                <div data-aos="fade-up" data-aos-delay="300">
                                     <h3 className="text-lg font-bold leading-tight">
                                         Hubungi Kami
                                     </h3>

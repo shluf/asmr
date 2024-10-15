@@ -36,6 +36,7 @@ export default function Login({ status, canResetPassword }) {
                     <InputLabel htmlFor="email" value="Email" />
 
                     <TextInput
+                        color="green"
                         id="email"
                         type="email"
                         name="email"
@@ -53,6 +54,7 @@ export default function Login({ status, canResetPassword }) {
                     <InputLabel htmlFor="password" value="Password" />
 
                     <TextInput
+                        color="green"
                         id="password"
                         type="password"
                         name="password"

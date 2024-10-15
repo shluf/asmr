@@ -7,7 +7,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import { useState } from "react";
 
 export default function Register() {
-    const [focusedField, setFocusedField] = useState(null);
+    const [focusedField, setFocusedField] = useState('nama');
     const { data, setData, post, processing, errors, reset } = useForm({
         nik_warga: "",
         email: "",
@@ -39,6 +39,7 @@ export default function Register() {
         <div>
             <InputLabel htmlFor={id} value={label} />
             <TextInput
+                color="yellow"
                 id={id}
                 name={id}
                 type={type}
