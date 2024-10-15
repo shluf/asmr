@@ -6,24 +6,24 @@ import DashboardLayout from "@/Layouts/DashboardLayout";
 import { Head, Link } from "@inertiajs/react";
 
 export default function Dashboard() {
-    const currentPage = ''
+    const currentPage = "";
     const renderContent = () => {
-        switch(currentPage) {
-            case 'dashboard':
+        switch (currentPage) {
+            case "dashboard":
                 return <DashboardContent />;
-            case 'biodataRTRW':
+            case "biodataRTRW":
                 return <BiodataRTRW />;
-            case 'approvalRole':
+            case "approvalRole":
                 return <ApprovalRole />;
-            case 'akun':
+            case "akun":
                 return <Akun />;
             default:
                 return <DashboardContent />;
         }
-    }
+    };
 
     return (
-        <DashboardLayout header={'Dashboard Admin'} color={'blue'}>
+        <DashboardLayout header={"Dashboard Admin"} color={"blue"}>
             <Head title="Dashboard" />
             {renderContent()}
         </DashboardLayout>
