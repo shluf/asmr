@@ -54,9 +54,9 @@ const DashboardContent = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <Link className="mt-4 w-full text-2xl text-start mb-4 p-5">
-                                BIODATA WARGA
-                            </Link>
+                            <div className="mt-4 w-full text-2xl text-start mb-4 p-5">
+                                <Link>BIODATA WARGA</Link>
+                            </div>
                         </div>
 
                         {/* Kartu Data Anggota RT/RW */}
@@ -75,15 +75,14 @@ const DashboardContent = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <button className="mt-4 w-full text-2xl text-start mb-4 p-5">
-                                BIODATA RT/RW
-                            </button>
+                            <div className="mt-4 w-full text-2xl text-start mb- p-5">
+                                <Link>BIODATA RT/RW</Link>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="container mx-auto p-6">
-                <h1 className="text-2xl font-bold mb-6">Dashboard Admin</h1>
                 <div className="border rounded-lg p-4 shadow-lg">
                     <h2 className="text-lg font-bold mb-4">
                         Approval warga pending
@@ -94,14 +93,13 @@ const DashboardContent = () => {
                                 key={index}
                                 className="flex items-center justify-between border border-gray-200 rounded-lg p-4 shadow-sm bg-white"
                             >
-                                <div className="flex flex-row gap-12 items-center">
+                                <div className="flex flex-row gap-20 items-center">
                                     {/* Icon */}
                                     <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">
                                         {approval.icon}
                                     </div>
-                                    {/* Data Warga */}
-                                    <div className="flex gap-5">
-                                        <div className="flex flex-col">
+                                    <div className="flex gap-4 justify-between w-full">
+                                        <div className="flex flex-col items-start">
                                             <span className="font-semibold text-gray-700">
                                                 Nama
                                             </span>
