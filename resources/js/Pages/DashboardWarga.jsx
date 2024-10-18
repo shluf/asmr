@@ -6,8 +6,7 @@ import Pengajuan from '@/Components/Contents/Warga/Pengajuan';
 import DashboardLayout from '@/Layouts/DashboardLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard() {
-    const currentPage = ''
+export default function Dashboard({ currentPage }) {
     const renderContent = () => {
         switch(currentPage) {
             case 'dashboard':

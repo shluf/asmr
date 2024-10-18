@@ -1,22 +1,19 @@
-import Akun from "@/Components/Contents/Admin/Akun";
 import ApprovalRole from "@/Components/Contents/Admin/ApprovalRole";
-import BiodataRTRW from "@/Components/Contents/Admin/BiodataRTRW";
+import BiodataUser from "@/Components/Contents/Admin/BiodataUser";
 import DashboardContent from "@/Components/Contents/Admin/DashboardContent";
+import TambahRTRW from "@/Components/Contents/Admin/TambahRTRW";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Dashboard() {
-    const currentPage = "";
+export default function Dashboard({ currentPage }) {
     const renderContent = () => {
         switch (currentPage) {
-            case "dashboard":
-                return <DashboardContent />;
-            case "biodataRTRW":
-                return <BiodataRTRW />;
+            case "biodataUser":
+                return <BiodataUser />;
             case "approvalRole":
                 return <ApprovalRole />;
-            case "akun":
-                return <Akun />;
+            case "tambahRTRW":
+                return <TambahRTRW />;
             default:
                 return <DashboardContent />;
         }

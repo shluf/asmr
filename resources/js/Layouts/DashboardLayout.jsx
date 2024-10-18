@@ -1,7 +1,8 @@
-import AdminSidebBar from "@/Components/SideBar/AdminSidebBar";
-import RTSidebBar from "@/Components/SideBar/RTSidebBar";
-import RWSidebBar from "@/Components/SideBar/RWSidebBar";
-import WargaSidebBar from "@/Components/SideBar/WargaSidebBar";
+
+import AdminSidebBar from "@/Components/SideBar/AdminSideBar";
+import RTSideBar from "@/Components/SideBar/RTSideBar";
+import RWSideBar from "@/Components/SideBar/RWSideBar";
+import WargaSideBar from "@/Components/SideBar/WargaSideBar";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -33,12 +34,12 @@ const DashboardLayout = ({ header='Dashboard Warga', color='yellow', children })
         <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
 
             { user.role === 'RT'? 
-            <RTSidebBar color={color} />
+            <RTSideBar color={color} />
             : user.role === 'RW'? 
-            <RWSidebBar color={color} />
+            <RWSideBar color={color} />
             : user.role === 'Admin'? 
             <AdminSidebBar color={color} />
-            : <WargaSidebBar color={color} />
+            : <WargaSideBar color={color} />
             }
             
             <div className="flex flex-col">
@@ -104,18 +105,7 @@ const DashboardLayout = ({ header='Dashboard Warga', color='yellow', children })
                         </SheetContent>
                     </Sheet>
 
-                    <div className="w-full flex-1">
-                        <form>
-                            <div className="relative">
-                                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                                <Input
-                                    type="search"
-                                    placeholder="Search products..."
-                                    className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
-                                />
-                            </div>
-                        </form>
-                    </div>
+                    <div className="w-full flex-1"></div>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button

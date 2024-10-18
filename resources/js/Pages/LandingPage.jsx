@@ -147,7 +147,7 @@ const LandingPage = ({ auth }) => {
                                     <h2 data-aos="fade-up" data-aos-delay="300" className="text-l md:text-xl font-bold text-gray-500 text-start w-full leading-tight">
                                         Portal Surat Menyurat
                                     </h2>
-                                    <h1 data-aos="fade-up" data-aos-delay="500" className="text-4xl md:text-5xl font-black text-gray-800 text-center leading-tight">
+                                    <h1 data-aos="fade-up" data-aos-delay="500" className="text-4xl md:text-5xl font-black text-gray-800 md:text-center text-start leading-tight">
                                         Pengajuan Masalah
                                         <br />
                                         RT & RW
@@ -201,10 +201,10 @@ const LandingPage = ({ auth }) => {
 
                 <section
                     id="tentang"
-                    className="relative bg-white py-16 h-full md:h-screen flex justify-center items-center w-full"
+                    className="relative bg-white md:py-16 py-20 md:px-24 h-full md:h-screen flex justify-center items-center w-full"
                 >
                     <div className="container md:mx-auto md:px-4 flex justify-center items-center h-full">
-                        <div className="flex flex-col-reverse gap-8 md:grid md:grid-cols-2">
+                        <div className="flex flex-col-reverse gap-10 md:grid md:grid-cols-2">
                             <div className="flex flex-col justify-center items-start md:px-0 px-6">
                                 <h1 data-aos="fade-up" className="text-m md:text-l font-bold text-gray-800 leading-tight relative flex items-center">
                                     <span className="absolute -left-[50px] block bg-gray-800 h-[2px] w-10 mr-2"></span>
@@ -234,7 +234,7 @@ const LandingPage = ({ auth }) => {
                                 <img
                                     src="/img/hero.png"
                                     alt="Hero Image"
-                                    className="rounded-lg shadow-lg md:w-auto w-full h-[480px]"
+                                    className="rounded-lg object-cover shadow-lg md:w-auto w-full h-60 md:h-[480px]"
                                     data-aos="zoom-in-left"
                                     data-aos-delay="750"
                                 />
@@ -247,7 +247,7 @@ const LandingPage = ({ auth }) => {
                     id="cara-kerja"
                     className="bg-white py-16 h-full md:h-screen flex justify-center items-center box-border"
                 >
-                    <div className="container mx-auto px-4">
+                    <div className="container mx-auto md:mx-8 px-4">
                         <h3 data-aos="fade-down-right" className="text-l text-center font-bold leading-tight text-green">
                             Bagaimana cara kerjanya?
                         </h3>
@@ -255,7 +255,7 @@ const LandingPage = ({ auth }) => {
                             Langkah - langkah pengajuan masalah
                         </h2>
                         <div className="flex flex-col md:flex-row items-strech justify-center gap-8 mt-8 h-full">
-                            <div data-aos="flip-left" data-aos-delay="250" className="flex justify-center items-center flex-col border border-gray-300 rounded-lg p-6 shadow-md w-full md:w-64">
+                            <div data-aos="flip-left" data-aos-delay="250" className="flex justify-start items-center flex-col border border-gray-300 rounded-lg p-6 shadow-md w-full md:w-64">
                                 <div className="flex justify-center items-center bg-[#FAEFCF] rounded-full h-12 w-12">
                                     <img
                                         src="/img/person.svg"
@@ -290,12 +290,12 @@ const LandingPage = ({ auth }) => {
                             />
                             </div>
 
-                            <div data-aos="flip-left" data-aos-delay="500" className="flex justify-center items-center flex-col border border-gray-300 rounded-lg p-6 shadow-md w-full md:w-64">
+                            <div data-aos="flip-left" data-aos-delay="500" className="flex justify-start items-center flex-col border border-gray-300 rounded-lg p-6 shadow-md w-full md:w-64">
                                 <div className="flex justify-center items-center bg-[#CEFEF5] rounded-full h-12 w-12">
                                     <img
-                                        src="/img/icon2.svg"
+                                        src="/img/verify.svg"
                                         alt="Icon 2"
-                                        className="h-8 w-8"
+                                        className="h-6 w-6"
                                     />
                                 </div>
                                 <h3 className="mt-10 text-lg font-bold text-center text-gray-800 leading-tight">
@@ -325,12 +325,12 @@ const LandingPage = ({ auth }) => {
                             />
                             </div>
 
-                            <div data-aos="flip-left" data-aos-delay="1000" className="flex justify-center items-center flex-col border border-gray-300 rounded-lg p-6 shadow-md w-full md:w-64">
+                            <div data-aos="flip-left" data-aos-delay="1000" className="flex justify-start items-center flex-col border border-gray-300 rounded-lg p-6 shadow-md w-full md:w-64">
                                 <div className="flex justify-center items-center bg-[#EBDDFD] rounded-full h-12 w-12">
                                     <img
-                                        src="/img/icon2.svg"
+                                        src="/img/propose.svg"
                                         alt="Icon 3"
-                                        className="h-8 w-8"
+                                        className="h-6 w-6"
                                     />
                                 </div>
                                 <h3 className="mt-10 text-lg font-bold text-center text-gray-800 leading-tight">
@@ -361,12 +361,12 @@ const LandingPage = ({ auth }) => {
                             />
                             </div>
 
-                            <div data-aos="flip-left" data-aos-delay="1500" className="flex justify-center items-center flex-col border border-gray-300 rounded-lg p-6 shadow-md w-full md:w-64">
+                            <div data-aos="flip-left" data-aos-delay="1500" className="flex justify-start items-center flex-col border border-gray-300 rounded-lg p-6 shadow-md w-full md:w-64">
                                 <div className="flex justify-center items-center bg-[#EBDDFD] rounded-full h-12 w-12">
                                     <img
-                                        src="/img/icon2.svg"
+                                        src="/img/process.svg"
                                         alt="Icon 4"
-                                        className="h-8 w-8"
+                                        className="h-6 w-6"
                                     />
                                 </div>
                                 <h3 className="mt-10 text-lg font-bold text-center text-gray-800 leading-tight">
@@ -383,7 +383,7 @@ const LandingPage = ({ auth }) => {
                     </div>
                 </section>
 
-                <section id="kritik-saran" className="bg-white py-16 h-full md:h-screen box-border">
+                <section id="kritik-saran" className="bg-white md:px-0 lg:px-24 py-16 h-full box-border">
                     <div className="container mx-auto px-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                             <div className="p-8">
@@ -397,8 +397,8 @@ const LandingPage = ({ auth }) => {
                                     kepuasan bersama.
                                 </p>
                                 <form data-aos="flip-right" data-aos-delay="750" action="mailto:example@example.com" method="post" encType="text/plain">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div>
+                                    <div className="grid md:grid-cols-2 gap-4">
+                                        <div className="col-span-2 md:col-span-1">
                                             <label
                                                 htmlFor="firstName"
                                                 className="block text-sm font-medium text-gray-700"
@@ -413,7 +413,7 @@ const LandingPage = ({ auth }) => {
                                                 className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-0 border-b-2"
                                             />
                                         </div>
-                                        <div>
+                                        <div className="col-span-2 md:col-span-1">
                                             <label
                                                 htmlFor="lastName"
                                                 className="block text-sm font-medium text-gray-700"
@@ -483,15 +483,15 @@ const LandingPage = ({ auth }) => {
                                     </div>
                                 </form>
                             </div>
-                            <div data-aos="fade-left" data-aos-delay="1000" className="md:block hidden">
-                                <img src="/img/saran.png" alt="Hero Image" />
+                            <div data-aos="fade-left" data-aos-delay="1000" className="w-full md:block hidden">
+                                <img className="max-w-[480px] " src="/img/saran.png" alt="Hero Image" />
                             </div>
                         </div>
                     </div>
                 </section>
 
                 <footer className="bg-[#434A54]">
-                    <div className="bg-[url('/img/footer.png')] bg-cover py-10">
+                    <div className="bg-[url('/img/footer.png')] bg-cover py-16">
                         <div className="container mx-auto px-4 text-white">
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                 <div data-aos="fade-up" data-aos-delay="100">

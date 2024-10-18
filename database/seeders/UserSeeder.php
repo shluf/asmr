@@ -56,5 +56,25 @@ class UserSeeder extends Seeder
                 'role' => 'Admin',
             ],
         ]);
+
+        // Menambahkan data pengguna untuk Warga
+        DB::table('users')->insert([
+            [
+                'id' => 6,
+                'name' => 'John Doe',
+                'email' => 'warga01@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'Warga',
+            ],
+        ]);
+        DB::table('users')->insert([
+            [
+                'id' => 7,
+                'name' => 'Jane Doe',
+                'email' => 'warga02@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'Warga',
+            ],
+        ]);
     }
 }

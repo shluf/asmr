@@ -8,15 +8,23 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index($page = 'dashboard')
     {
         $user = Auth::user();
 
         return match ($user->role) {
-            'Admin' => Inertia::render('DashboardAdmin'),
-            'RT' => Inertia::render('DashboardRT'),
-            'RW' => Inertia::render('DashboardRW'),
-            'Warga' => Inertia::render('DashboardWarga'),
+            'Admin' => Inertia::render('DashboardAdmin', [
+                'currentPage' => $page
+            ]),
+            'RT' => Inertia::render('DashboardRT', [
+                'currentPage' => $page
+            ]),
+            'RW' => Inertia::render('DashboardRW', [
+                'currentPage' => $page
+            ]),
+            'Warga' => Inertia::render('DashboardWarga', [
+                'currentPage' => $page
+            ]),
             default => redirect('/')
         };
     }
