@@ -6,10 +6,11 @@ import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { useState } from "react";
 import RtRwSelects from "./Partials/RtRwSelects";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
 
 export default function Register({ rtRwData }) {
     // const rtrw = rtrwdata;
-    console.log(rtRwData);
+    // console.log(rtRwData);
 
     const [focusedField, setFocusedField] = useState("nama");
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -145,24 +146,25 @@ export default function Register({ rtRwData }) {
                         </div>
                         <div className="md:col-span-2">
                             <InputLabel htmlFor="agama" value="Agama" />
-                            <select
+                            <Select onValueChange={(e) =>
+                                    setData("agama", e)
+                                    }>
+                            <SelectTrigger  
+                                color="yellow"      
                                 id="agama"
                                 name="agama"
-                                value={data.agama}
-                                onChange={(e) =>
-                                    setData("agama", e.target.value)
-                                }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-yellow focus:border-yellow"
-                                required
-                            >
-                                <option value="">Pilih Agama</option>
-                                <option value="Islam">Islam</option>
-                                <option value="Kristen">Kristen</option>
-                                <option value="Katolik">Katolik</option>
-                                <option value="Hindu">Hindu</option>
-                                <option value="Buddha">Buddha</option>
-                                <option value="Khonghucu">Khonghucu</option>
-                            </select>
+                                required>
+                                <SelectValue placeholder="Agama" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="Islam">Islam</SelectItem>
+                                <SelectItem value="Kristen">Kristen</SelectItem>
+                                <SelectItem value="Katolik">Katolik</SelectItem>
+                                <SelectItem value="Hindu">Hindu</SelectItem>
+                                <SelectItem value="Buddha">Buddha</SelectItem>
+                                <SelectItem value="Khonghucu">Khonghucu</SelectItem>
+                            </SelectContent>
+                            </Select>
                             <InputError
                                 message={errors.agama}
                                 className="mt-1"
@@ -228,8 +230,9 @@ export default function Register({ rtRwData }) {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 w-full gap-6 max-w-md">
-                        <h2 className="text-center text-zinc-500 font-bold text-2xl">- Akun -</h2>
+                    <div className="grid grid-cols-1 w-full gap-6 max-w-2xl">
+                        <hr></hr>
+                        {/* <h2 className="text-center text-zinc-500 font-bold text-2xl"> Akun </h2> */}
                         <InputField
                             label="Email"
                             id="email"

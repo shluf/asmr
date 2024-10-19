@@ -114,7 +114,7 @@ const DashboardLayout = ({ header='Dashboard Warga', color='yellow', children })
                             <Button
                                 variant="secondary"
                                 size="icon"
-                                className={`rounded-full text-${color}`}
+                                className={`rounded-full text-${color} focus-visible:ring-${color}`}
                             >
                                 <CircleUser className="h-5 w-5" />
                                 <span className="sr-only">

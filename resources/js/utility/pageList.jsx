@@ -14,10 +14,9 @@ export const pageRTRWRoutes = [
 
 export const pageWargaRoutes = [
     { name: 'Dashboard', route: '', icon: 'home', notification: 0 },
-    { name: 'Profil Warga', route: 'pengajuan', icon: 'home', notification: 0 },
-    { name: 'Pengajuan', route: 'pengajuanWarga', icon: 'home', notification: 0 },
-    { name: 'Akun', route: 'profilWarga', icon: 'user' },
-    { name: 'Riwayat', route: 'riwayatWarga', icon: 'home', notification: 0 },
+    { name: 'Pengajuan', route: 'pengajuan', icon: 'home', notification: 0 },
+    { name: 'Histori Pengajuan', route: 'histori', icon: 'home', notification: 0 },
+    { name: 'Akun', route: 'akun', icon: 'user' },
     { name: 'Bantuan', route: 'bantuan', icon: 'settings' }
 ];
 

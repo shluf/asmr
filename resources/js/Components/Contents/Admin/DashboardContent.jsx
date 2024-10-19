@@ -91,13 +91,14 @@ const DashboardContent = () => {
                         {approvals.map((approval, index) => (
                             <div
                                 key={index}
-                                className="flex items-center justify-between border border-gray-200 rounded-lg p-4 shadow-sm bg-white"
+                                className="flex items-center justify-between border gap-8 border-gray-200 rounded-lg p-4 shadow-sm bg-white"
                             >
-                                <div className="flex flex-row gap-10 justify-around w-full items-center">
+                                <div className="flex flex-row gap-10 justify-around items-center">
                                     {/* Icon */}
                                     <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">
                                         {approval.icon}
                                     </div>
+                                </div>
                                     <div className="flex gap-4 justify-between w-full">
                                         <div className="flex flex-col items-start">
                                             <span className="font-semibold text-gray-700">
@@ -140,10 +141,9 @@ const DashboardContent = () => {
                                             </span>
                                         </div>
                                     </div>
-                                </div>
                                 {/* Action Button */}
                                 <div className="flex">
-                                <button className="border border-blue-500 text-blue-500 px-6 py-2 rounded-full hover:bg-blue-500 hover:text-white transition">
+                                <button className="border border-blue-500 text-blue-500 md:px-32 py-2 text-nowrap rounded-full hover:bg-blue-500 hover:text-white transition">
                                     Lihat data
                                 </button>
                                 </div>

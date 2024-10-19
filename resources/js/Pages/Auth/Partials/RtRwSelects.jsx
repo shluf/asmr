@@ -1,5 +1,6 @@
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import { useState, useEffect } from 'react';
 
 const RtRwSelects = ({ data, setData, errors, rtRwData }) => {
@@ -28,7 +29,7 @@ const RtRwSelects = ({ data, setData, errors, rtRwData }) => {
 
     // Handler untuk perubahan RW
     const handleRwChange = (e) => {
-        const selectedRw = e.target.value;
+        const selectedRw = e;
         setData("id_rw", selectedRw);
         setData("id_rt", "");
         
@@ -43,26 +44,54 @@ const RtRwSelects = ({ data, setData, errors, rtRwData }) => {
         <>
             <div>
                 <InputLabel htmlFor="id_rw" value="RW" />
-                <select
-                    id="id_rw"
-                    name="id_rw"
-                    value={data.id_rw}
-                    onChange={handleRwChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-yellow focus:border-yellow"
-                    required
-                >
-                    <option value="">Pilih RW</option>
-                    {rwOptions.map((rw) => (
-                        <option key={rw} value={rw}>
+                <Select onValueChange={handleRwChange}>
+                  <SelectTrigger  
+                     color="yellow"      
+                     id="id_rw"
+                     name="id_rw"
+                     required>
+                    <SelectValue placeholder="Pilih RW" />
+                  </SelectTrigger>
+                  <SelectContent>
+                  {rwOptions.map((rw) => (
+                        <SelectItem key={rw} value={rw}>
                             RW {rw}
-                        </option>
+                        </SelectItem>
                     ))}
-                </select>
-                <InputError message={errors.id_rw} className="mt-1" />
+                  </SelectContent>
+                </Select>
+
+                <InputError message={errors.id_rw} className="mt-1"
+                />
+            </div>
+
+
+            <div>
+                <InputLabel htmlFor="id_rt" value="RT" />
+                <Select onValueChange={(value) => setData("id_rt", value)} value={data.id_rt}>
+                  <SelectTrigger  
+                     color="yellow"      
+                     id="id_rt"
+                     name="id_rt"
+                     required
+                     disabled={!data.id_rw}>
+                    <SelectValue placeholder="Pilih RT">{`RT ${data.id_rt}`}</SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                  {rtOptions.map((rt) => (
+                        <SelectItem key={rt} value={rt}>
+                            RT {rt}
+                        </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <InputError message={errors.id_rt} className="mt-1"
+                />
             </div>
 
             
-            <div>
+            {/* <div>
                 <InputLabel htmlFor="id_rt" value="RT" />
                 <select
                     id="id_rt"
@@ -81,7 +110,7 @@ const RtRwSelects = ({ data, setData, errors, rtRwData }) => {
                     ))}
                 </select>
                 <InputError message={errors.id_rt} className="mt-1" />
-            </div>
+            </div> */}
         </>
     );
 };

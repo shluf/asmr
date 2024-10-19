@@ -13,7 +13,7 @@ export default function Dashboard({ currentPage }) {
                 return <DashboardContent />;
             case 'pengajuan':
                 return <Pengajuan />;
-            case 'historiPengajuan':
+            case 'histori':
                 return <HistoriPengajuan />;
             case 'akun':
                 return <Akun />;
