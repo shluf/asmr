@@ -5,9 +5,13 @@ import TextInput from "@/Components/TextInput";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { useState } from "react";
+import RtRwSelects from "./Partials/RtRwSelects";
 
-export default function Register() {
-    const [focusedField, setFocusedField] = useState('nama');
+export default function Register({ rtRwData }) {
+    // const rtrw = rtrwdata;
+    console.log(rtRwData);
+
+    const [focusedField, setFocusedField] = useState("nama");
     const { data, setData, post, processing, errors, reset } = useForm({
         nik_warga: "",
         email: "",
@@ -25,7 +29,6 @@ export default function Register() {
         provinsi: "",
         agama: "",
     });
-
 
     const InputField = ({
         label,
@@ -57,7 +60,7 @@ export default function Register() {
     const submit = (e) => {
         e.preventDefault();
 
-        console.log(data)
+        console.log(data);
 
         post(route("register"), {
             onFinish: () => reset("password", "password_confirmation"),
@@ -72,43 +75,51 @@ export default function Register() {
                 onSubmit={submit}
                 className="space-y-6 flex flex-col justify-center items-center"
             >
-                <div className="flex flex-col md:flex-row gap-6 justify-around items-center w-full">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-md">
-                        <InputField
-                            label="Nama"
-                            id="nama"
-                            value={data.nama}
-                            onChange={setData}
-                            error={errors.nama}
-                            required
-                        />
-                        <InputField
-                            label="NIK"
-                            id="nik_warga"
-                            type="number"
-                            value={data.nik_warga}
-                            onChange={setData}
-                            error={errors.nik_warga}
-                            required
-                        />
-                        <InputField
-                            label="Nomor KK"
-                            id="nomer_kk"
-                            type="number"
-                            value={data.nomer_kk}
-                            onChange={setData}
-                            error={errors.nomer_kk}
-                            required
-                        />
-                        <InputField
-                            label="Tempat, tgl lahir"
-                            id="tempat_dan_tanggal_lahir"
-                            value={data.tempat_dan_tanggal_lahir}
-                            onChange={setData}
-                            error={errors.tempat_dan_tanggal_lahir}
-                            required
-                        />
-                        <div>
+                <div className="flex flex-col gap-6 justify-around items-center w-full">
+                    <div className="grid grid-cols-1 gap-6 w-full max-w-2xl md:grid-cols-4">
+                        <div className="md:col-span-2">
+                            <InputField
+                                label="Nama"
+                                id="nama"
+                                value={data.nama}
+                                onChange={setData}
+                                error={errors.nama}
+                                required
+                            />
+                        </div>
+                        <div className="md:col-span-2">
+                            <InputField
+                                label="NIK"
+                                id="nik_warga"
+                                type="number"
+                                value={data.nik_warga}
+                                onChange={setData}
+                                error={errors.nik_warga}
+                                required
+                            />
+                        </div>
+                        <div className="md:col-span-2">
+                            <InputField
+                                label="Nomor KK"
+                                id="nomer_kk"
+                                type="number"
+                                value={data.nomer_kk}
+                                onChange={setData}
+                                error={errors.nomer_kk}
+                                required
+                            />
+                        </div>
+                        <div className="md:col-span-2">
+                            <InputField
+                                label="Tempat, tgl lahir"
+                                id="tempat_dan_tanggal_lahir"
+                                value={data.tempat_dan_tanggal_lahir}
+                                onChange={setData}
+                                error={errors.tempat_dan_tanggal_lahir}
+                                required
+                            />
+                        </div>
+                        <div className="md:col-span-2">
                             <InputLabel
                                 htmlFor="gender"
                                 value="Jenis Kelamin"
@@ -120,10 +131,10 @@ export default function Register() {
                                 onChange={(e) =>
                                     setData("jenis_kelamin", e.target.value)
                                 }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-yellow focus:border-yellow"
                                 required
                             >
-                                <option value=""></option>
+                                <option value="">Pilih Gender</option>
                                 <option value="laki-laki">Laki-laki</option>
                                 <option value="perempuan">Perempuan</option>
                             </select>
@@ -132,51 +143,80 @@ export default function Register() {
                                 className="mt-1"
                             />
                         </div>
-                        <InputField
-                            label="Agama"
-                            id="agama"
-                            value={data.agama}
-                            onChange={setData}
-                            error={errors.agama}
-                            required
-                        />
-                        <InputField
-                            label="Provinsi"
-                            id="provinsi"
-                            value={data.provinsi}
-                            onChange={setData}
-                            error={errors.provinsi}
-                            required
-                        />
-                        <InputField
-                            label="Kabupaten"
-                            id="kabupaten"
-                            value={data.kabupaten}
-                            onChange={setData}
-                            error={errors.kabupaten}
-                            required
-                        />
-                        <div className="grid grid-cols-2 gap-4 col-span-1">
-                            <InputField
-                                label="RT"
-                                id="id_rt"
-                                type="number"
-                                value={data.id_rt}
-                                onChange={setData}
-                                error={errors.id_rt}
+                        <div className="md:col-span-2">
+                            <InputLabel htmlFor="agama" value="Agama" />
+                            <select
+                                id="agama"
+                                name="agama"
+                                value={data.agama}
+                                onChange={(e) =>
+                                    setData("agama", e.target.value)
+                                }
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-yellow focus:border-yellow"
                                 required
+                            >
+                                <option value="">Pilih Agama</option>
+                                <option value="Islam">Islam</option>
+                                <option value="Kristen">Kristen</option>
+                                <option value="Katolik">Katolik</option>
+                                <option value="Hindu">Hindu</option>
+                                <option value="Buddha">Buddha</option>
+                                <option value="Khonghucu">Khonghucu</option>
+                            </select>
+                            <InputError
+                                message={errors.agama}
+                                className="mt-1"
                             />
+                        </div>
+                        <div className="md:col-span-2">
                             <InputField
-                                label="RW"
-                                id="id_rw"
-                                type="number"
-                                value={data.id_rw}
+                                label="Provinsi"
+                                id="provinsi"
+                                value={data.provinsi}
                                 onChange={setData}
-                                error={errors.id_rw}
+                                error={errors.provinsi}
                                 required
                             />
                         </div>
-                        <div className="md:col-span-3">
+                        <div className="md:col-span-2">
+                            <InputField
+                                label="Kabupaten"
+                                id="kabupaten"
+                                value={data.kabupaten}
+                                onChange={setData}
+                                error={errors.kabupaten}
+                                required
+                            />
+                        </div>
+                        <div className="md:col-span-2 md:grid-cols-2 gap-6">
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <RtRwSelects
+                                    data={data}
+                                    setData={(field, value) =>
+                                        setData((prev) => ({
+                                            ...prev,
+                                            [field]: value,
+                                        }))
+                                    }
+                                    errors={errors}
+                                    rtRwData={rtRwData}
+                                    />
+                            </div>
+                        </div>
+                        <div className="md:col-span-2">
+                            <InputField
+                                label="Nomor Telp"
+                                id="phone"
+                                type="tel"
+                                pattern="08[0-9]*"
+                                value={data.phone}
+                                onChange={setData}
+                                error={errors.phone}
+                                placeholder="08XXXXXXXXX"
+                                required
+                                />
+                        </div>
+                        <div className="md:col-span-4">
                             <InputField
                                 label="Alamat"
                                 id="alamat"
@@ -189,6 +229,7 @@ export default function Register() {
                     </div>
 
                     <div className="grid grid-cols-1 w-full gap-6 max-w-md">
+                        <h2 className="text-center text-zinc-500 font-bold text-2xl">- Akun -</h2>
                         <InputField
                             label="Email"
                             id="email"
@@ -196,16 +237,6 @@ export default function Register() {
                             value={data.email}
                             onChange={setData}
                             error={errors.email}
-                            required
-                        />
-                        <InputField
-                            label="Nomor Telp"
-                            id="phone"
-                            type="tel"
-                            // pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
-                            value={data.phone}
-                            onChange={setData}
-                            error={errors.phone}
                             required
                         />
                         <InputField

@@ -12,7 +12,7 @@ const RWSideBar = ({ color }) => {
   return (
     <div className="hidden border-r bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
-            <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+            <div className="flex h-14 justify-center items-center px-4 lg:h-[60px] lg:px-6">
                 <Link href="/">
                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
                 </Link>

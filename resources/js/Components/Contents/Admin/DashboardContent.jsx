@@ -93,7 +93,7 @@ const DashboardContent = () => {
                                 key={index}
                                 className="flex items-center justify-between border border-gray-200 rounded-lg p-4 shadow-sm bg-white"
                             >
-                                <div className="flex flex-row gap-20 items-center">
+                                <div className="flex flex-row gap-10 justify-around w-full items-center">
                                     {/* Icon */}
                                     <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">
                                         {approval.icon}
@@ -142,9 +142,11 @@ const DashboardContent = () => {
                                     </div>
                                 </div>
                                 {/* Action Button */}
-                                <button className="border border-blue-500 text-blue-500 px-6 py-2 rounded-full hover:bg-blue-500 hover:text-white transition pvyyyyyyyyyyyyyyyyyvcccccczzccvnm,./ytt">
+                                <div className="flex">
+                                <button className="border border-blue-500 text-blue-500 px-6 py-2 rounded-full hover:bg-blue-500 hover:text-white transition">
                                     Lihat data
                                 </button>
+                                </div>
                             </div>
                         ))}
                     </div>

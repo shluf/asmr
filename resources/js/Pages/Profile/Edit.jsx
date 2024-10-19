@@ -1,4 +1,3 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
@@ -7,7 +6,7 @@ import DashboardLayout from '@/Layouts/DashboardLayout';
 
 export default function Edit({ mustVerifyEmail, status }) {
     return (
-        <DashboardLayout header={'Profile'}>
+        <DashboardLayout header={'Profile'} color='blue'>
             <Head title="Profile" />
 
             <div className="py-12">

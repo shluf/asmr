@@ -50,6 +50,7 @@ export default function ForgotPassword({ status }) {
 
             <form onSubmit={submit} className='flex flex-col justify-center items-center'>
                 <TextInput
+                    color="green"
                     id="email"
                     type="email"
                     name="email"

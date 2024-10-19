@@ -30,6 +30,7 @@ export default function ResetPassword({ token, email }) {
                     <InputLabel htmlFor="email" value="Email" />
 
                     <TextInput
+                        color="green"
                         id="email"
                         type="email"
                         name="email"

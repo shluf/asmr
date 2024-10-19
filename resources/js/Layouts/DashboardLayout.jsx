@@ -12,7 +12,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, usePage } from "@inertiajs/react";
 import {
@@ -105,7 +104,11 @@ const DashboardLayout = ({ header='Dashboard Warga', color='yellow', children })
                         </SheetContent>
                     </Sheet>
 
-                    <div className="w-full flex-1"></div>
+                    <div className="w-full flex-1">
+                        <h1 className="text-lg font-semibold md:text-2xl">
+                            {header}
+                        </h1>
+                    </div>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button
@@ -138,11 +141,6 @@ const DashboardLayout = ({ header='Dashboard Warga', color='yellow', children })
                     </DropdownMenu>
                 </header>
                 <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-                    <div className="flex items-center">
-                        <h1 className="text-lg font-semibold md:text-2xl">
-                            {header}
-                        </h1>
-                    </div>
                     <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
                         {children}
                     </div>

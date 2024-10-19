@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
 
 class RegisteredUserController extends Controller
 {
@@ -23,7 +24,20 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        $rtRwData = [];
+        $allRt = RT::with('rw')->get();
+        
+        foreach($allRt as $rt) {
+            if (!isset($rtRwData[$rt->rw->id_rw])) {
+                $rtRwData[$rt->rw->id_rw] = [];
+            }
+            $rtRwData[$rt->rw->id_rw][] = $rt->id_rt;
+        }
+        // return response()->json($rtrwdata);
+
+        return Inertia::render('Auth/Register', [
+            'rtRwData' => $rtRwData,
+        ]);
     }
 
     /**

@@ -22,6 +22,10 @@ export default {
         "bg-orange",
         "hover:text-blue",
         "hover:bg-blue-2",
+        "border-blue",
+        "border-yellow",
+        "focus:ring-yellow",
+        "focus:border-yellow"
     ],
 
     theme: {

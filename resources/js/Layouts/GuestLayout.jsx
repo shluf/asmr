@@ -4,8 +4,8 @@ import { Link } from "@inertiajs/react";
 export default function Guest({ children, button, title, wide=false }) {
 
     return (
-        <section className="relative bg-gray-100 overflow-hidden">
-            <div className="absolute inset-0 flex justify-center z-0">
+        <section className={`relative bg-gray-100 ${wide ? 'py-20 md:py-32' : ''} overflow-hidden`}>
+            <div className="fixed inset-0 flex justify-center h-screen z-0">
                 <img
                     className="object-cover w-full h-full"
                     src="/img/bg_land_overlay.png"
@@ -94,7 +94,7 @@ export default function Guest({ children, button, title, wide=false }) {
                 <div>
                 </div>
 
-                <div className={`mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md ${wide ? "sm:max-w-4xl" : "sm:max-w-md"} sm:rounded-lg`}>
+                <div className={`mt-6 w-full overflow-hidden bg-white px-6 py-8 shadow-md ${wide ? "sm:max-w-4xl" : "sm:max-w-md"} sm:rounded-lg`}>
                     <h1 className="text-center mb-10 font-bold text-4xl">{title}</h1>
                     {children}
                 </div>

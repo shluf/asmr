@@ -39,8 +39,22 @@ class UserSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'name' => 'RT 02',
+                'name' => 'RT 01',
                 'email' => 'rt02@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'RT',
+            ],
+            [
+                'id' => 8,
+                'name' => 'RT 02',
+                'email' => 'rt03@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'RT',
+            ],
+            [
+                'id' => 9,
+                'name' => 'RT 02',
+                'email' => 'rt04@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'RT',
             ],

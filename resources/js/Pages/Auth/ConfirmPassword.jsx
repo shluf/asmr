@@ -32,6 +32,7 @@ export default function ConfirmPassword() {
                     <InputLabel htmlFor="password" value="Password" />
 
                     <TextInput
+                        color="green"
                         id="password"
                         type="password"
                         name="password"
