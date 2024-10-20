@@ -30,7 +30,7 @@ const DashboardLayout = ({ header='Dashboard Warga', color='yellow', children })
     const user = usePage().props.auth.user;
 
     return (
-        <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+        <div className="grid h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
 
             { user.role === 'RT'? 
             <RTSideBar color={color} />
@@ -41,7 +41,7 @@ const DashboardLayout = ({ header='Dashboard Warga', color='yellow', children })
             : <WargaSideBar color={color} />
             }
             
-            <div className="flex flex-col">
+            <div className="flex flex-col overflow-hidden">
                 <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
                     <Sheet>
                         <SheetTrigger asChild>
@@ -140,8 +140,8 @@ const DashboardLayout = ({ header='Dashboard Warga', color='yellow', children })
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </header>
-                <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-                    <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+                <main className="flex-1 p-4 lg:p-6 overflow-auto">
+                    <div className="flex flex-1 items-center justify-center rounded-lg border-dashed shadow-sm">
                         {children}
                     </div>
                 </main>

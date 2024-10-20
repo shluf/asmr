@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nik');
             $table->string('periode');
             $table->string('penanggung_jawab_rt');
+            $table->string('ttd')->default('');
             $table->timestamps();
 
             // Foreign key to RW

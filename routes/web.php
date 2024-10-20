@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegisterRtRwController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/rt-rw/store', [RegisterRtRwController::class, 'store'])->name('rt-rw.store');
+    Route::put('/rt-rw/{id}', [RegisterRtRwController::class, 'update'])->name('rt-rw.update');
+    Route::delete('/rt-rw/{id}', [RegisterRtRwController::class, 'destroy'])->name('rt-rw.destroy');
+
+    Route::get('/rw/list', [RegisterRtRwController::class, 'getRWList'])->name('rw.list');
+    Route::get('/rt/by-rw/{rwId}', [RegisterRtRwController::class, 'getRTByRW'])->name('rt.by-rw');
 });
 
 

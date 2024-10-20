@@ -19,8 +19,14 @@ class RT extends Model
         'nama',
         'nik',
         'periode',
+        'ttd',
         'penanggung_jawab_rt'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
 
     public function rw()
     {

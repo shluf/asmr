@@ -16,10 +16,16 @@ class RW extends Model
         'nama',
         'nik',
         'periode',
+        'ttd',
         'penanggung_jawab_rw'
     ];
 
-    public function rt()
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function rts()
     {
         return $this->hasMany(RT::class, 'id_rw');
     }
