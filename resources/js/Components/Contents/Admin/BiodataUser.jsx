@@ -47,15 +47,13 @@ const BiodataUser = () => {
     return (
         <div className="w-full p-6">
             <div>
-                <h2 className="font-semibold text-lg mb-4">
+                <h2 className="font-semibold text-lg mb-4 text-blue-5">
                     Data anggota RT/RW
                 </h2>
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[100px]">
-                                Nama Warga
-                            </TableHead>
+                            <TableHead>Nama Warga</TableHead>
                             <TableHead>Jabatan</TableHead>
                             <TableHead>Email</TableHead>
                             <TableHead>Lingkup Rt</TableHead>
@@ -65,9 +63,7 @@ const BiodataUser = () => {
                     <TableBody>
                         {dataRTDanRW.map((user, index) => (
                             <TableRow key={index}>
-                                <TableCell className="font-medium">
-                                    {user.nama}
-                                </TableCell>
+                                <TableCell>{user.nama}</TableCell>
                                 <TableCell>{user.jabatan}</TableCell>
                                 <TableCell>{user.email}</TableCell>
                                 <TableCell>{user.Lingkup}</TableCell>
@@ -95,7 +91,9 @@ const BiodataUser = () => {
                 </Table>
             </div>
             <div className="mt-10">
-                <h2 className="font-semibold text-lg mb-4">Data Warga</h2>
+                <h2 className="font-semibold text-lg mb-4 text-blue-5">
+                    Data Warga
+                </h2>
                 <Table>
                     <TableHeader>
                         <TableRow>
