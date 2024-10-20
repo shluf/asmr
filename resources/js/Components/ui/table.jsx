@@ -3,13 +3,10 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const Table = React.forwardRef(({ className, ...props }, ref) => (
-    <div className="relative w-full overflow-auto">
+    <div className="relative w-full overflow-auto rounded-2xl border-2">
         <table
             ref={ref}
-            className={cn(
-                "w-full  border-black-100 border-2 text-sm",
-                className
-            )}
+            className={cn("w-full text-sm ", className)}
             {...props}
         />
     </div>
@@ -17,18 +14,14 @@ const Table = React.forwardRef(({ className, ...props }, ref) => (
 Table.displayName = "Table";
 
 const TableHeader = React.forwardRef(({ className, ...props }, ref) => (
-    <thead
-        ref={ref}
-        className={cn("[&_tr]: rounded-t-md", className)}
-        {...props}
-    />
+    <thead ref={ref} className={cn("[&_tr]: ", className)} {...props} />
 ));
 TableHeader.displayName = "TableHeader";
 
 const TableBody = React.forwardRef(({ className, ...props }, ref) => (
     <tbody
         ref={ref}
-        className={cn("[&_tr:last-child]: rounded-b-md", className)}
+        className={cn("[&_tr:last-child]: ", className)}
         {...props}
     />
 ));
@@ -38,7 +31,7 @@ const TableFooter = React.forwardRef(({ className, ...props }, ref) => (
     <tfoot
         ref={ref}
         className={cn(
-            "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0 rounded-b-md",
+            " bg-muted/50 font-medium [&>tr]:last: rounded-b-md",
             className
         )}
         {...props}
@@ -50,7 +43,7 @@ const TableRow = React.forwardRef(({ className, ...props }, ref) => (
     <tr
         ref={ref}
         className={cn(
-            "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+            " transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
             className
         )}
         {...props}
