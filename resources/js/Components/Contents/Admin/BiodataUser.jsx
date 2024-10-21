@@ -22,9 +22,9 @@ const BiodataUser = () => {
     const fetchData = async () => {
         try {
             const response = await axios.get(route("biodataUser"));
-            setDataRT(response.data.dataRT);
-            setDataRW(response.data.dataRW);
-            setDataWarga(response.data.dataWarga);
+            setDataRT(response.data.rt);
+            setDataRW(response.data.rw);
+            setDataWarga(response.data.warga);
         } catch (error) {
             console.error("Error fetching data:", error);
         }

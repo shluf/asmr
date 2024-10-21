@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/rw/list', [RegisterRtRwController::class, 'getRWList'])->name('rw.list');
     Route::get('/rt/by-rw/{rwId}', [RegisterRtRwController::class, 'getRTByRW'])->name('rt.by-rw');
     
-    Route::get('/biodatasUser', [BiodatasUserController::class, 'index'])->name('biodatasUser');
+    Route::get('/biodatasUser', [BiodatasUserController::class, 'index'])->name('biodataUser');
 });
     
 
