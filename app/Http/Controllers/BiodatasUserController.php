@@ -15,7 +15,6 @@ class BiodatasUserController extends Controller
         try {
             // Fetch data for RT and RW
             $dataRT = RT::select( 'nama', 'nik', 'periode', 'penanggung_jawab_rt')
-
                         ->get();
 
             $dataRW = RW::select('id_rw', 'nama')

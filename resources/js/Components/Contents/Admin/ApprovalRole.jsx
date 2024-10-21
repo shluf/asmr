@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
     Table,
     TableBody,
@@ -10,31 +11,45 @@ import {
 } from "@/components/ui/table";
 
 const ApprovalRole = () => {
-    const dataWarga = [
-        {
-            nomerKK: "111111",
-            namaWarga: "Agus Waluyo",
-            JenisKelamin: "Laki-Laki",
-            NIK: "123242526",
-            RT: "001",
-            RW: "002",
-        },
-    ];
-    const handleApprove = (id) => {
-        Inertia.post(
-            `/approve-user/${id}`,
-            {},
-            {
-                onSuccess: () => {
-                    alert("Akun warga berhasil diaktifkan.");
-                },
-                onError: () => {
-                    alert("Terjadi kesalahan. Silakan coba lagi.");
-                },
-            }
-        );
+    const [dataWarga, setDataWarga] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(route("approvalRole"));
+            setDataWarga(response.data.warga);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     };
 
+    const handleApprove = async (nik_warga) => {
+        try {
+            const response = await axios.post(
+                `/approvalRole/approve/${nik_warga}`
+            );
+            alert(response.data.message);
+            fetchData(); // Refresh data setelah approve
+        } catch (error) {
+            console.error("Error approving user:", error);
+            alert("Terjadi kesalahan saat mengapprove warga.");
+        }
+    };
+
+    const handleDisapprove = async (nik_warga) => {
+        try {
+            const response = await axios.post(
+                `/approvalRole/disapprove/${nik_warga}`
+            );
+            alert(response.data.message);
+            fetchData(); // Refresh data setelah disapprove
+        } catch (error) {
+            console.error("Error disapproving user:", error);
+            alert("Terjadi kesalahan saat mendisapprove warga.");
+        }
+    };
     return (
         <div className="w-full p-6">
             <div className="mt-10">
@@ -52,56 +67,54 @@ const ApprovalRole = () => {
                             <TableHead>NIK</TableHead>
                             <TableHead>RT</TableHead>
                             <TableHead>RW</TableHead>
+                            <TableHead>RT</TableHead>
+                            <TableHead>RW</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {dataWarga.map((user, index) => (
+                        {dataWarga.map((warga, index) => (
                             <TableRow key={index}>
                                 <TableCell className="font-medium">
-                                    {user.nomerKK}
+                                    {warga.nomer_kk}
                                 </TableCell>
-                                <TableCell>{user.namaWarga}</TableCell>
-                                <TableCell>{user.JenisKelamin}</TableCell>
-                                <TableCell>{user.NIK}</TableCell>
-                                <TableCell>{user.RT}</TableCell>
-                                <TableCell>{user.RW}</TableCell>
+                                <TableCell>{warga.nik_warga}</TableCell>
+                                <TableCell>{warga.nama}</TableCell>
+                                <TableCell>{warga.jenis_kelamin}</TableCell>
+                                <TableCell>{warga.phone}</TableCell>
+                                <TableCell>
+                                    {warga.tempat_dan_tanggal_lahir}
+                                </TableCell>
+                                <TableCell>{warga.alamat}</TableCell>
                                 <TableCell>
                                     <button
                                         type="button"
-                                        onClick={() => handleApprove(user.id)}
+                                        onClick={() =>
+                                            handleApprove(warga.nik_warga)
+                                        }
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="16"
-                                            height="16"
-                                            fill="currentColor"
-                                            class="bi bi-check-circle"
-                                            viewBox="0 0 16 16"
-                                        >
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                            <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
-                                        </svg>
-                                    </button>
-                                </TableCell>
-                                <TableCell>
-                                    <button type="button">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="16"
-                                            height="16"
-                                            fill="currentColor"
-                                            class="bi bi-x-circle"
-                                            viewBox="0 0 16 16"
-                                        >
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                                        </svg>
+                                        <img
+                                            src="/img/check-circle.svg"
+                                            alt="Check Circle"
+                                        />
                                     </button>
                                 </TableCell>
                                 <TableCell>
                                     <button
                                         type="button"
-                                        class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                                        onClick={() =>
+                                            handleDisapprove(warga.nik_warga)
+                                        }
+                                    >
+                                        <img
+                                            src="/img/x-circle.svg"
+                                            alt="x Circle"
+                                        />
+                                    </button>
+                                </TableCell>
+                                <TableCell>
+                                    <button
+                                        type="button"
+                                        className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                                     >
                                         view detail
                                     </button>

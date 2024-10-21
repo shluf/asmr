@@ -24,6 +24,7 @@ class WargaSeeder extends Seeder
             'kabupaten' => 'Jakarta',
             'provinsi' => 'DKI Jakarta',
             'agama' => 'Islam',
+            
         ],
         [
             'nik_warga' => '1234567890123457',
@@ -39,6 +40,7 @@ class WargaSeeder extends Seeder
             'kabupaten' => 'Bandung',
             'provinsi' => 'Jawa Barat',
             'agama' => 'Kristen',
+
         ],
     ]);
 

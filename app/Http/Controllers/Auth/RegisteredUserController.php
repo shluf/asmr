@@ -65,49 +65,6 @@ class RegisteredUserController extends Controller
             'agama' => 'required|string',
         ]);
 
-        // $rt = RT::find($request->id_rt);
-        // if (!$rt) {
-        //     $rt = RT::create([
-        //         'id_rt' => $request->id_rt,
-        //         'id_rw' => $request->id_rw, // Asumsi RT baru juga membutuhkan RW
-        //         'nama' => 'RT ' . $request->id_rt,
-        //         'nik' => '',
-        //         'periode' => '',
-        //         'penanggung_jawab_rt' => '',
-        //     ]);
-        // }
-        // $rw = Rw::find($request->id_rw);
-        // if (!$rw) {
-        //     $rw = Rw::create([
-        //         'id_rw' => $request->id_rw,
-        //         'nama' => 'RW ' . $request->id_rw,
-        //         'nik' => '',
-        //         'periode' => '',
-        //         'penanggung_jawab_rw' => '',
-        //     ]);
-        // }
-
-        // $rt = RT::find($request->id_rt);
-        // if (!$rt) {
-        //     $rt = RT::create([
-        //         'id_rt' => $request->id_rt,
-        //         'id_rw' => $request->id_rw, // Asumsi RT baru juga membutuhkan RW
-        //         'nama' => 'RT ' . $request->id_rt,
-        //         'nik' => '',
-        //         'periode' => '',
-        //         'penanggung_jawab_rt' => '',
-        //     ]);
-        // }
-        // $rw = Rw::find($request->id_rw);
-        // if (!$rw) {
-        //     $rw = Rw::create([
-        //         'id_rw' => $request->id_rw,
-        //         'nama' => 'RW ' . $request->id_rw,
-        //         'nik' => '',
-        //         'periode' => '',
-        //         'penanggung_jawab_rw' => '',
-        //     ]);
-        // }
 
         $user = User::create([
             'name' => $request->nama,

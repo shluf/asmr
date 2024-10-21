@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
+use App\Models\Warga;
 
 class LoginRequest extends FormRequest
 {
@@ -49,7 +50,6 @@ class LoginRequest extends FormRequest
 
         // If not email, check if user exists with this username and has correct role
         $user = User::where('name', $login)->first();
-        
         if ($user && in_array($user->role, ['RT', 'RW', 'Admin'])) {
             return [
                 'name' => $login,
@@ -81,6 +81,18 @@ class LoginRequest extends FormRequest
                 'login' => trans('auth.failed'),
             ]);
         }
+         // Check if the authenticated user is 'Warga' and is approved
+         $user = Auth::user();
+         if ($user->role === 'Warga') {
+             $warga = Warga::where('id_user', $user->id)->first();
+             // If 'Warga' is not approved, logout and throw an exception
+             if (!$warga || !$warga->approved) {
+                 Auth::logout();
+                 throw ValidationException::withMessages([
+                     'login' => 'Akun Anda belum disetujui oleh admin.',
+                 ]);
+             }
+         }
 
         RateLimiter::clear($this->throttleKey());
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApprovalRoleController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -43,7 +44,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/rt/by-rw/{rwId}', [RegisterRtRwController::class, 'getRTByRW'])->name('rt.by-rw');
     
     Route::get('/biodatasUser', [BiodatasUserController::class, 'index'])->name('biodataUser');
+
+    Route::get('/approvalRole', [ApprovalRoleController::class, 'index'])->name('approvalRole');
+    Route::post('/approvalRole/approve/{nik_warga}',[ApprovalRoleController::class,'approveUser'])->name("approveUser");
+    Route::post('/approvalRole/disapprove/{nik_warga}',[ApprovalRoleController::class,'disapproveUser'])->name("disapproveUser");
 });
-    
+
 
 require __DIR__.'/auth.php';
