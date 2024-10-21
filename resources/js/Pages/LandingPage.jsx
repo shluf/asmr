@@ -147,8 +147,11 @@ const LandingPage = ({ auth }) => {
                             <img
                                 className="object-cover w-full h-full"
                                 src="/img/bg_land_overlay.png"
-                                alt="overlay"
+                                // alt="overlay"
                                 data-aos="zoom-in"
+                                onLoad={(e) => {
+                                    e.target.setAttribute('data-aos', 'zoom-in');
+                                }}
                             />
                         </div>
                         <div className="container mx-auto px-4 h-full z-10 relative">
@@ -584,7 +587,7 @@ const LandingPage = ({ auth }) => {
                     </section>
 
                     <footer className="bg-[#434A54]">
-                        <div className="bg-[url('/img/footer.png')] bg-cover py-16">
+                        <div className="bg-[url('/img/footer.png')] bg-cover px-10 py-16">
                             <div className="container mx-auto px-4 text-white">
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                     <div

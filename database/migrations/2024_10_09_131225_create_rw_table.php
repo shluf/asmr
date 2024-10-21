@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('nik');
             $table->string('periode');
             $table->string('penanggung_jawab_rw');
+            $table->string('ttd')->default('');
             $table->timestamps();
         });
     }

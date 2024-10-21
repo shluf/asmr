@@ -1,8 +1,8 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import NavLink from "@/Components/NavLink";
 import { Badge } from "@/components/ui/badge";
-import { pageWargaRoutes } from "@/lib/pageList";
-import renderIcon from "@/lib/renderIcon";
+import { pageWargaRoutes } from "@/utility/pageList";
+import renderIcon from "@/utility/renderIcon";
 import { Link } from "@inertiajs/react";
 
 const WargaSideBar = ({ color }) => {
