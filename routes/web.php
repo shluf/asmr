@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RegisterRtRwController;
-use Illuminate\Foundation\Application;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BiodatasUserController;
+use App\Http\Controllers\RegisterRtRwController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -40,7 +41,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/rw/list', [RegisterRtRwController::class, 'getRWList'])->name('rw.list');
     Route::get('/rt/by-rw/{rwId}', [RegisterRtRwController::class, 'getRTByRW'])->name('rt.by-rw');
+    
+    Route::get('/biodatasUser', [BiodatasUserController::class, 'index'])->name('biodatasUser');
 });
-
+    
 
 require __DIR__.'/auth.php';
