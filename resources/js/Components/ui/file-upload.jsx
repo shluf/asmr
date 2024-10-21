@@ -2,8 +2,10 @@ import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Upload } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import InputLabel from '../InputLabel';
+import InputError from '../InputError';
 
-export default function FileUpload({ setData, id, accept, required }) {
+export default function FileUpload({ setData, id, accept, errors, required }) {
   const [previews, setPreviews] = useState([]);
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -26,10 +28,11 @@ export default function FileUpload({ setData, id, accept, required }) {
   });
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="flex flex-col items-start gap-1 max-w-md mx-auto">
+      <InputLabel htmlFor="ttd" value="Tanda Tangan (JPG/PNG, max 2MB)" />
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+        className={`border-2 border-dashed w-full  rounded-lg p-8 text-center cursor-pointer transition-colors ${
           isDragActive ? 'border-primary bg-primary/10' : 'border-gray-300 hover:border-primary'
         }`}
       >
@@ -58,6 +61,7 @@ export default function FileUpload({ setData, id, accept, required }) {
           </>
         )}
       </div>
+      <InputError message={errors} className="mt-1" />
     </div>
   );
 }

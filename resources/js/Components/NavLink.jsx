@@ -11,7 +11,7 @@ export default function NavLink({
         <Link
             {...props}
             className={
-                `flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-${color} ` +
+                `flex items-center gap-3 px-3 py-4 transition-all hover:text-${color} ` +
                 (active
                     ? `border-l-4 border-${color} bg-muted text-${color}`
                     : 'text-muted-foreground') +

@@ -5,11 +5,16 @@ import { pageAdminRoutes } from "@/utility/pageList";
 import renderIcon from "@/utility/renderIcon";
 import { Link } from "@inertiajs/react";
 
+import { useState } from "react"
+import { cn } from "@/lib/utils"
+
 const AdminSidebBar = ({ color }) => {
+  const [activeItem, setActiveItem] = useState("")
 
   const pageList = pageAdminRoutes;
 
   return (
+    <>
     <div className="hidden border-r bg-muted/40 md:block">
                 <div className="flex h-full max-h-screen flex-col gap-2">
                     <div className="flex h-14 justify-center items-center px-4 lg:h-[60px] lg:px-6">
@@ -19,7 +24,7 @@ const AdminSidebBar = ({ color }) => {
                     </div>
                     <div className="flex-1">
 
-                        <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+                        <nav className="grid items-start text-sm font-medium">
                             {pageList.map((data, index) => (
                                 <NavLink
                                     key={index}
@@ -44,6 +49,28 @@ const AdminSidebBar = ({ color }) => {
                     </div>
                 </div>
             </div>
+
+        <div className="absolute z-20 block md:hidden bottom-0 left-0 right-0 bg-white border-t border-gray-200">
+            <nav className="flex">
+            {pageList.map((data, index) => (
+                <Link
+                key={index}
+                href={data.route === 'dashboard' ? route('dashboard') : route('dashboard', { page: data.route })}
+                className={cn(
+                    "flex flex-col items-center justify-center flex-1 py-2 px-1",
+                    "transition-colors duration-200 ease-in-out",
+                    route().current('dashboard', { page: data.route })
+                    ? "text-blue-600 bg-blue-50"
+                    : "text-gray-600 hover:bg-gray-50"
+                )}
+                >
+                {renderIcon(data.icon, 6)}
+                <span className="text-xs font-medium">{data.name}</span>
+                </Link>
+            ))}
+            </nav>
+        </div>
+</>
   )
 }
 

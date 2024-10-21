@@ -252,20 +252,20 @@ const TambahRTRW = () => {
               </div>
 
               <div className="col-span-2">
-                <InputLabel htmlFor="ttd" value="Tanda Tangan (JPG/PNG, max 2MB)" />
                 <FileUpload
                   id="ttd"
                   accept="image/jpeg,image/png"
                   setData={setData}
                   className="mt-1"
+                  errors={errors.ttd}
                   required
                 />
-                <InputError message={errors.ttd} className="mt-1" />
               </div>
             </div>
 
             <div className="flex justify-end mt-6">
               <PrimaryButton
+                color="green"
                 className="px-6 py-2"
                 disabled={processing || isLoading}
               >
@@ -374,21 +374,21 @@ const TambahRTRW = () => {
               </div>
 
               <div className="col-span-2">
-                <InputLabel htmlFor="ttd" value="Tanda Tangan (JPG/PNG, max 2MB)" />
                 <FileUpload
                   id="ttd"
                   setData={setData}
                   accept="image/jpeg,image/png"
                   onChange={handleFileChange}
                   className="mt-1"
+                  errors={errors.ttd}
                   required
                 />
-                <InputError message={errors.ttd} className="mt-1" />
               </div>
             </div>
 
             <div className="flex justify-end mt-6">
               <PrimaryButton
+                color="green"
                 className="px-6 py-2"
                 disabled={processing || isLoading}
               >
