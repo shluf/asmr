@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import {
     Table,
     TableBody,
@@ -10,40 +12,24 @@ import {
 } from "@/components/ui/table";
 
 const BiodataUser = () => {
-    const dataRTDanRW = [
-        {
-            nama: "Agus Waluyo",
-            jabatan: "Ketua RT",
-            email: "Agus@mail.com",
-            Lingkup: "RT 01",
-            alamat: "Jl. Jendral Sudirman No. 1",
-        },
-        {
-            nama: "Agus Waluyo",
-            jabatan: "Ketua RT",
-            email: "Agus@mail.com",
-            Lingkup: "RT 01",
-            alamat: "Jl. Jendral Sudirman No. 1",
-        },
-    ];
-    const dataWarga = [
-        {
-            nomerKK: "111111",
-            namaWarga: "Agus Waluyo",
-            JenisKelamin: "Laki-Laki",
-            NIK: "123242526",
-            RT: "001",
-            RW: "002",
-        },
-        {
-            nomerKK: "111111",
-            namaWarga: "Agus Waluyo",
-            JenisKelamin: "Laki-Laki",
-            NIK: "123242526",
-            RT: "001",
-            RW: "002",
-        },
-    ];
+    const [dataRT, setDataRT] = useState([]);
+    const [dataRW, setDataRW] = useState([]);
+    const [dataWarga, setDataWarga] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(route("biodataUser"));
+            setDataRT(response.data.dataRT);
+            setDataRW(response.data.dataRW);
+            setDataWarga(response.data.dataWarga);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
     return (
         <div className="w-full p-6">
             <div>
@@ -53,7 +39,7 @@ const BiodataUser = () => {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Nama Warga</TableHead>
+                            <TableHead>Nama</TableHead>
                             <TableHead>Jabatan</TableHead>
                             <TableHead>Email</TableHead>
                             <TableHead>Lingkup Rt</TableHead>
@@ -61,13 +47,13 @@ const BiodataUser = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {dataRTDanRW.map((user, index) => (
+                        {dataRT.map((RT, index) => (
                             <TableRow key={index}>
-                                <TableCell>{user.nama}</TableCell>
-                                <TableCell>{user.jabatan}</TableCell>
-                                <TableCell>{user.email}</TableCell>
-                                <TableCell>{user.Lingkup}</TableCell>
-                                <TableCell>{user.alamat}</TableCell>
+                                <TableCell>{RT.nama}</TableCell>
+                                <TableCell>{RT.nik}</TableCell>
+                                <TableCell>{RT.email}</TableCell>
+                                <TableCell>{RT.periode}</TableCell>
+                                <TableCell>{RT.penangung_jawab_rt}</TableCell>
                                 <TableCell className="text-right">
                                     <button
                                         type="button"
