@@ -8,6 +8,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BiodatasUserController;
+use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\RegisterRtRwController;
 
 // Route::get('/', function () {
@@ -42,9 +43,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/rw/list', [RegisterRtRwController::class, 'getRWList'])->name('rw.list');
     Route::get('/rt/by-rw/{rwId}', [RegisterRtRwController::class, 'getRTByRW'])->name('rt.by-rw');
-    
-    Route::get('/biodatasUser', [BiodatasUserController::class, 'index'])->name('biodataUser');
 
+
+    Route::get('/biodatasUser', [BiodatasUserController::class, 'index'])->name('biodataUser');
     Route::get('/approvalRole', [ApprovalRoleController::class, 'index'])->name('approvalRole');
     Route::post('/approvalRole/approve/{nik_warga}',[ApprovalRoleController::class,'approveUser'])->name("approveUser");
     Route::post('/approvalRole/disapprove/{nik_warga}',[ApprovalRoleController::class,'disapproveUser'])->name("disapproveUser");

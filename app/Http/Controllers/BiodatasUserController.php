@@ -14,17 +14,9 @@ class BiodatasUserController extends Controller
     {
         try {
             // Fetch data for RT and RW
-            $dataRT = RT::select( 'nama', 'nik', 'periode', 'penanggung_jawab_rt')
-                        ->get();
-
-            $dataRW = RW::select('id_rw', 'nama')
-                        ->orderBy('id_rw')
-                        ->get();
-
-            // Fetch warga data (assuming Warga model exists)
-            $dataWarga = Warga::select('nik_warga','nomer_kk', 'nama', 'jenis_kelamin', 'id_rw', 'id_rt')
-                        ->get();
-
+            $dataRW = RW::leftJoin('users', 'rw.id_user', '=', 'users.id')->select('rw.*', 'users.email') ->get();
+            $dataRT = RT::leftJoin('users','rt.id_user','=','users.id')->select('rt.*','users.email')->get();
+            $dataWarga = Warga::all();
             return response()->json([
                 'rt' => $dataRT,
                 'rw' => $dataRW,

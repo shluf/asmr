@@ -62,13 +62,13 @@ const ApprovalRole = () => {
                             <TableHead className="w-[100px]">
                                 Nomer KK
                             </TableHead>
+                            <TableHead>NIK Warga</TableHead>
                             <TableHead>Nama Warga</TableHead>
                             <TableHead>Jenis Kelamin</TableHead>
-                            <TableHead>NIK</TableHead>
-                            <TableHead>RT</TableHead>
-                            <TableHead>RW</TableHead>
-                            <TableHead>RT</TableHead>
-                            <TableHead>RW</TableHead>
+                            <TableHead>nomer telephone</TableHead>
+                            <TableHead>Tempat dan Tanggal Lahir</TableHead>
+                            <TableHead>Alamat</TableHead>
+                            <TableHead>Approval</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -85,6 +85,11 @@ const ApprovalRole = () => {
                                     {warga.tempat_dan_tanggal_lahir}
                                 </TableCell>
                                 <TableCell>{warga.alamat}</TableCell>
+                                <TableCell>
+                                    {warga.approved
+                                        ? "Approved"
+                                        : "Not Approved"}
+                                </TableCell>
                                 <TableCell>
                                     <button
                                         type="button"

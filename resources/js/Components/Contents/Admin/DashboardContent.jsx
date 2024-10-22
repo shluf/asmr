@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
+import axios from "axios";
 
 const DashboardContent = () => {
     const wargaStats = [
@@ -15,24 +16,19 @@ const DashboardContent = () => {
         { label: "Total Pengaduan Dalam Proses", value: 10 },
         { label: "Total Pengaduan Menunggu Tindakan", value: 5 },
     ];
+    const [dataWarga, setDataWarga] = useState([]);
 
-    const approvals = [
-        {
-            name: "Agus Waluyo",
-            nik: "330222299900",
-            rt: "007",
-            rw: "008",
-            status: "Pending",
-        },
-        {
-            name: "Ahmad Budiman",
-            nik: "330399111222",
-            rt: "007",
-            rw: "008",
-            status: "Pending",
-        },
-    ];
-
+    // useEffect(() => {
+    //     fetchData();
+    // }, []);
+    // const fetchData = async () => {
+    //     try {
+    //         const response = await axios.get(route("dashboard"));
+    //         setDataWarga(response.data.warga);
+    //     } catch (error) {
+    //         console.error("Error fetching data:", error);
+    //     }
+    // };
     return (
         <div className="flex flex-col w-full">
             <div className="flex w-full h-full">
@@ -88,7 +84,7 @@ const DashboardContent = () => {
                         Approval warga pending
                     </h2>
                     <div className="space-y-4">
-                        {approvals.map((approval, index) => (
+                        {dataWarga.map((warga, index) => (
                             <div
                                 key={index}
                                 className="flex items-center justify-between border gap-8 border-gray-200 rounded-lg p-4 shadow-sm bg-white"
@@ -96,56 +92,56 @@ const DashboardContent = () => {
                                 <div className="flex flex-row gap-10 justify-around items-center">
                                     {/* Icon */}
                                     <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">
-                                        {approval.icon}
+                                        {warga.icon}
                                     </div>
                                 </div>
-                                    <div className="flex gap-4 justify-between w-full">
-                                        <div className="flex flex-col items-start">
-                                            <span className="font-semibold text-gray-700">
-                                                Nama
-                                            </span>
-                                            <span className="text-gray-900">
-                                                {approval.name}
-                                            </span>
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <span className="font-semibold text-gray-700">
-                                                NIK
-                                            </span>
-                                            <span className="text-gray-900">
-                                                {approval.nik}
-                                            </span>
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <span className="font-semibold text-gray-700">
-                                                RT
-                                            </span>
-                                            <span className="text-blue-600">
-                                                {approval.rt}
-                                            </span>
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <span className="font-semibold text-gray-700">
-                                                RW
-                                            </span>
-                                            <span className="text-blue-600">
-                                                {approval.rw}
-                                            </span>
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <span className="font-semibold text-gray-700">
-                                                Status
-                                            </span>
-                                            <span className="text-orange-500">
-                                                {approval.status}
-                                            </span>
-                                        </div>
+                                <div className="flex gap-4 justify-between w-full">
+                                    <div className="flex flex-col items-start">
+                                        <span className="font-semibold text-gray-700">
+                                            Nama
+                                        </span>
+                                        <span className="text-gray-900">
+                                            {warga.nama}
+                                        </span>
                                     </div>
+                                    <div className="flex flex-col">
+                                        <span className="font-semibold text-gray-700">
+                                            NIK
+                                        </span>
+                                        <span className="text-gray-900">
+                                            {warga.nik_warga}
+                                        </span>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="font-semibold text-gray-700">
+                                            RT
+                                        </span>
+                                        <span className="text-blue-600">
+                                            {warga.id_rt}
+                                        </span>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="font-semibold text-gray-700">
+                                            RW
+                                        </span>
+                                        <span className="text-blue-600">
+                                            {warga.id_rw}
+                                        </span>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="font-semibold text-gray-700">
+                                            Status
+                                        </span>
+                                        <span className="text-orange-500">
+                                            {warga.approved}
+                                        </span>
+                                    </div>
+                                </div>
                                 {/* Action Button */}
                                 <div className="flex">
-                                <button className="border border-blue-500 text-blue-500 md:px-32 py-2 text-nowrap rounded-full hover:bg-blue-500 hover:text-white transition">
-                                    Lihat data
-                                </button>
+                                    <button className="border border-blue-500 text-blue-500 md:px-32 py-2 text-nowrap rounded-full hover:bg-blue-500 hover:text-white transition">
+                                        Lihat data
+                                    </button>
                                 </div>
                             </div>
                         ))}
