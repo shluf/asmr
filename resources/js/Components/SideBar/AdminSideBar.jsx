@@ -65,7 +65,7 @@ const AdminSidebBar = ({ color }) => {
                 )}
                 >
                 {renderIcon(data.icon, 6)}
-                <span className="text-xs font-medium">{data.name}</span>
+                <span className="text-xs text-center font-medium">{data.name}</span>
                 </Link>
             ))}
             </nav>

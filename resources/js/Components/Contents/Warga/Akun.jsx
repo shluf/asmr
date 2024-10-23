@@ -65,6 +65,10 @@ const Akun = () => {
   };
 
   return (
+    <div className="flex justify-between items-start p-8">
+    <div className="flex justify-start mr-10 h-full">
+        <img src="/img/warga-ic.svg" alt="Warga Icon" className="w-20 h-20" />
+    </div>
     <form
     onSubmit={submit}
     className="space-y-6 flex flex-col justify-center items-center"
@@ -242,6 +246,7 @@ const Akun = () => {
         </PrimaryButton>
     </div>
 </form>
+</div>
   )
 }
 

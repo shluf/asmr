@@ -42,6 +42,7 @@ export default {
                 green: {
                     DEFAULT: "hsl(var(--green))",
                     2: "#2E937E",
+                    3: "#CEF1EA",
                 },
                 yellow: {
                     DEFAULT: "hsl(var(--yellow))",
