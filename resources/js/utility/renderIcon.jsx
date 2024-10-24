@@ -1,5 +1,6 @@
-import { Home, LineChart, Settings, ShoppingCart, User } from 'lucide-react';
+import { Home, LineChart, Settings, ShoppingCart, User, User2 } from 'lucide-react';
 import React from 'react'
+import { UserFilled } from './svg-icons';
 
 const renderIcon = (keyword, size) => {
     switch (keyword) {
@@ -9,6 +10,8 @@ const renderIcon = (keyword, size) => {
         return <Settings className={`h-${size} w-${size}`} />;
         case 'user':
         return <User className={`h-${size} w-${size}`} />;
+        case 'user-filled':
+        return <UserFilled className={`h-${size} w-${size}`} />
         case 'linechart':
         return <LineChart className={`h-${size} w-${size}`} />;
         case 'shoppingchart':

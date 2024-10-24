@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import axios from "axios";
+import renderIcon from "@/utility/renderIcon";
 
 const DashboardContent = () => {
     const wargaStats = [
@@ -33,7 +34,7 @@ const DashboardContent = () => {
         <div className="flex flex-col w-full">
             <div className="flex w-full h-full">
                 <div className="container mx-auto p-6 ">
-                    <div className="grid grid-cols-2 gap-10 mb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-8">
                         {/* Kartu Data Warga */}
                         <div className="border-2 border-blue-3 rounded-[10px]  shadow-lg">
                             <h2 className="text-lg font-bold text-blue-5 text-start border-b border-blue-3 p-4">
@@ -91,12 +92,12 @@ const DashboardContent = () => {
                         {dataWarga.map((warga, index) => (
                             <div
                                 key={index}
-                                className="flex items-center justify-between border gap-8 border-gray-200 rounded-lg p-4 shadow-sm bg-white"
+                                className="overflow-x-scroll flex items-center justify-between border gap-8 border-gray-200 rounded-lg p-4 shadow-sm bg-white"
                             >
                                 <div className="flex flex-row gap-10 justify-around items-center">
                                     {/* Icon */}
-                                    <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-2xl">
-                                        {warga.icon}
+                                    <div className="w-12 h-12 bg-green-3 rounded-[12px] flex items-center justify-center text-2xl">
+                                        {renderIcon('user-filled', 2)}
                                     </div>
                                 </div>
                                 <div className="flex gap-4 justify-between w-full">
@@ -143,9 +144,11 @@ const DashboardContent = () => {
                                 </div>
                                 {/* Action Button */}
                                 <div className="flex">
-                                    <button className="border border-blue-500 text-blue-500 md:px-32 py-2 text-nowrap rounded-full hover:bg-blue-500 hover:text-white transition">
+                                    <Link 
+                                    href={route('dashboard', { page: 'approvalRole' })}
+                                    className="border border-blue-500 text-blue-500 md:px-32 py-2 text-nowrap rounded-full hover:bg-blue-500 hover:text-white transition">
                                         Lihat data
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         ))}
