@@ -69,6 +69,7 @@ const ApprovalRole = () => {
                             <TableHead>Tempat dan Tanggal Lahir</TableHead>
                             <TableHead>Alamat</TableHead>
                             <TableHead>Approval</TableHead>
+                            <TableHead>action</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -90,31 +91,33 @@ const ApprovalRole = () => {
                                         ? "Approved"
                                         : "Not Approved"}
                                 </TableCell>
-                                <TableCell>
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            handleApprove(warga.nik_warga)
-                                        }
-                                    >
-                                        <img
-                                            src="/img/check-circle.svg"
-                                            alt="Check Circle"
-                                        />
-                                    </button>
-                                </TableCell>
-                                <TableCell>
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            handleDisapprove(warga.nik_warga)
-                                        }
-                                    >
-                                        <img
-                                            src="/img/x-circle.svg"
-                                            alt="x Circle"
-                                        />
-                                    </button>
+                                <TableCell className="col-span-2">
+                                    <div className="flex space-x-2">
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                handleApprove(warga.nik_warga)
+                                            }
+                                        >
+                                            <img
+                                                src="/img/check-circle.svg"
+                                                alt="Check Circle"
+                                            />
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                handleDisapprove(
+                                                    warga.nik_warga
+                                                )
+                                            }
+                                        >
+                                            <img
+                                                src="/img/x-circle.svg"
+                                                alt="x Circle"
+                                            />
+                                        </button>
+                                    </div>
                                 </TableCell>
                                 <TableCell>
                                     <button

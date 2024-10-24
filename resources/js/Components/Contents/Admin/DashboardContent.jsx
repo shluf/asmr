@@ -18,17 +18,17 @@ const DashboardContent = () => {
     ];
     const [dataWarga, setDataWarga] = useState([]);
 
-    // useEffect(() => {
-    //     fetchData();
-    // }, []);
-    // const fetchData = async () => {
-    //     try {
-    //         const response = await axios.get(route("dashboard"));
-    //         setDataWarga(response.data.warga);
-    //     } catch (error) {
-    //         console.error("Error fetching data:", error);
-    //     }
-    // };
+    useEffect(() => {
+        fetchData();
+    }, []);
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(route("biodataUser"));
+            setDataWarga(response.data.warga);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
     return (
         <div className="flex flex-col w-full">
             <div className="flex w-full h-full">
@@ -51,7 +51,9 @@ const DashboardContent = () => {
                                 ))}
                             </ul>
                             <div className="mt-4 w-full text-2xl text-start mb-4 p-5">
-                                <Link>BIODATA WARGA</Link>
+                                <Link href="dashboard/biodataUser">
+                                    BIODATA WARGA
+                                </Link>
                             </div>
                         </div>
 
@@ -72,7 +74,9 @@ const DashboardContent = () => {
                                 ))}
                             </ul>
                             <div className="mt-4 w-full text-2xl text-start mb- p-5">
-                                <Link>BIODATA RT/RW</Link>
+                                <Link href="dashboard/biodataUser">
+                                    BIODATA RT/RW
+                                </Link>
                             </div>
                         </div>
                     </div>
