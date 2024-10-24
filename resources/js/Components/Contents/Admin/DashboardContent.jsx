@@ -52,7 +52,9 @@ const DashboardContent = () => {
                                 ))}
                             </ul>
                             <div className="mt-4 w-full text-2xl text-start mb-4 p-5">
-                                <Link>BIODATA WARGA</Link>
+                                <Link href="dashboard/biodataUser">
+                                    BIODATA WARGA
+                                </Link>
                             </div>
                         </div>
 
@@ -73,7 +75,9 @@ const DashboardContent = () => {
                                 ))}
                             </ul>
                             <div className="mt-4 w-full text-2xl text-start mb- p-5">
-                                <Link>BIODATA RT/RW</Link>
+                                <Link href="dashboard/biodataUser">
+                                    BIODATA RT/RW
+                                </Link>
                             </div>
                         </div>
                     </div>
