@@ -55,7 +55,7 @@ const RWSideBar = ({ color }) => {
                     "flex flex-col items-center justify-center flex-1 py-2 px-1",
                     "transition-colors duration-200 ease-in-out",
                     route().current('dashboard', { page: data.route })
-                    ? "text-blue-600 bg-blue-50"
+                    ? `text-${color} bg-blue-50"`
                     : "text-gray-600 hover:bg-gray-50"
                 )}
                 >
