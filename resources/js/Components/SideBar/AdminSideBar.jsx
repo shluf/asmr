@@ -9,7 +9,6 @@ import { useState } from "react"
 import { cn } from "@/lib/utils"
 
 const AdminSidebBar = ({ color }) => {
-  const [activeItem, setActiveItem] = useState("")
 
   const pageList = pageAdminRoutes;
 
