@@ -12,17 +12,23 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { renderHeader } from "@/utility/renderHeader";
 import { Link, usePage } from "@inertiajs/react";
 import {
     CircleUser,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const DashboardLayout = ({
-    header = "Dashboard Warga",
     color = "yellow",
     children,
 }) => {
     const user = usePage().props.auth.user;
+    const [header, setHeader] = useState();
+
+    useEffect(() => {
+        renderHeader(setHeader, user);
+    }, []);
 
     return (
         <div className="grid h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -81,7 +87,7 @@ const DashboardLayout = ({
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </header>
-                <main className="flex-1 p-4 lg:p-6 overflow-auto">
+                <main className="flex-1 pb-14 md:p-4 lg:p-6 overflow-auto">
                     <div className="flex flex-1 items-center justify-center rounded-lg border-dashed shadow-sm">
                         {children}
                     </div>

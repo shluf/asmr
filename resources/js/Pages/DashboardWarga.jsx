@@ -25,7 +25,7 @@ export default function Dashboard({ currentPage }) {
     }
 
     return (
-        <DashboardLayout header={'Dashboard Warga'} color={'green'}>
+        <DashboardLayout color={'green'}>
             <Head title="Dashboard" />
             {renderContent()}
         </DashboardLayout>

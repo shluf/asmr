@@ -1,7 +1,6 @@
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import { useForm } from '@inertiajs/react';
 import React, { useEffect, useState } from 'react';
@@ -14,9 +13,9 @@ import {
 import FileUpload from '@/Components/ui/file-upload';
 import axios from 'axios';
 import { router } from '@inertiajs/react';
+import InputField from '@/Components/partials/InputFields';
 
 const TambahRTRW = () => {
-  const [focusedField, setFocusedField] = useState("nama");
   const [rwOptions, setRwOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   
@@ -46,32 +45,6 @@ const TambahRTRW = () => {
       console.error('Error fetching RW list:', error);
     }
   };
-
-  const InputField = ({
-    label,
-    id,
-    type = "text",
-    value,
-    onChange,
-    error,
-    ...props
-  }) => (
-    <div>
-      <InputLabel htmlFor={id} value={label} />
-      <TextInput
-        id={id}
-        name={id}
-        type={type}
-        value={value}
-        className="mt-1 block w-full"
-        isFocused={focusedField === id}
-        onFocus={() => setFocusedField(id)}
-        onChange={(e) => onChange(id, e.target.value)}
-        {...props}
-      />
-      <InputError message={error} className="mt-1" />
-    </div>
-  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -150,7 +123,7 @@ const TambahRTRW = () => {
                 />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputField
                   label="NIK"
                   id="nik"
@@ -161,7 +134,7 @@ const TambahRTRW = () => {
                 />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputField
                   label="Periode"
                   id="periode"
@@ -173,7 +146,7 @@ const TambahRTRW = () => {
                 />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputLabel htmlFor="jabatan" value="Jabatan" />
                 <Select 
                   onValueChange={(value) => setData('jabatan', value)}
@@ -189,7 +162,7 @@ const TambahRTRW = () => {
                 <InputError message={errors.jabatan} className="mt-1" />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputField
                   label="Nomor RT"
                   id="nomor"
@@ -200,7 +173,7 @@ const TambahRTRW = () => {
                 />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputLabel htmlFor="id_rw" value="RW" />
                 <Select onValueChange={handleRwChange} value={data.id_rw}>
                   <SelectTrigger>
@@ -228,7 +201,7 @@ const TambahRTRW = () => {
                 />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputField
                   label="Username"
                   id="username"
@@ -239,7 +212,7 @@ const TambahRTRW = () => {
                 />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputField
                   label="Password"
                   id="password"
@@ -289,7 +262,7 @@ const TambahRTRW = () => {
                 />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputField
                   label="NIK"
                   id="nik"
@@ -300,7 +273,7 @@ const TambahRTRW = () => {
                 />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputField
                   label="Periode"
                   id="periode"
@@ -312,7 +285,7 @@ const TambahRTRW = () => {
                 />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputLabel htmlFor="jabatan" value="Jabatan" />
                 <Select 
                   onValueChange={(value) => setData('jabatan', value)}
@@ -328,7 +301,7 @@ const TambahRTRW = () => {
                 <InputError message={errors.jabatan} className="mt-1" />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputField
                   label="Nomor RW"
                   id="nomor"
@@ -350,7 +323,7 @@ const TambahRTRW = () => {
                 />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputField
                   label="Username"
                   id="username"
@@ -361,7 +334,7 @@ const TambahRTRW = () => {
                 />
               </div>
 
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <InputField
                   label="Password"
                   id="password"

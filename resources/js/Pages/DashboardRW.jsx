@@ -22,7 +22,7 @@ export default function Dashboard({ currentPage }) {
     }
 
     return (
-        <DashboardLayout header={'Dashboard RW'} color={'orange'}>
+        <DashboardLayout color={'orange'}>
             <Head title="Dashboard" />
             {renderContent()}
         </DashboardLayout>
