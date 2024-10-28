@@ -13,18 +13,17 @@ class PengajuanSurat extends Model
     protected $primaryKey = 'id_pengajuan_surat';
 
     protected $fillable = [
-        'id_warga',
+        'nik_warga',
         'id_rt',
         'id_rw',
         'jenis_surat',
         'status_pengajuan',
-        'tanggal_pengajuan',
         'deskripsi'
     ];
 
     public function warga()
     {
-        return $this->belongsTo(Warga::class, 'id_warga');
+        return $this->belongsTo(Warga::class, 'nik_warga');
     }
 
     public function rt()

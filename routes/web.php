@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BiodatasUserController;
 use App\Http\Controllers\DashboardAdminController;
+use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\RegisterRtRwController;
 
 // Route::get('/', function () {
@@ -49,6 +50,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/approvalRole', [ApprovalRoleController::class, 'index'])->name('approvalRole');
     Route::post('/approvalRole/approve/{nik_warga}',[ApprovalRoleController::class,'approveUser'])->name("approveUser");
     Route::post('/approvalRole/disapprove/{nik_warga}',[ApprovalRoleController::class,'disapproveUser'])->name("disapproveUser");
+
+    Route::get('/pengajuan',[PengajuanController::class,'getDataWarga'])->name('pengajuan');
+    Route::post('/pengajuan/store',[PengajuanController::class,'store'])->name('pengajuan.store');
 });
 
 
