@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Warga;
 use Illuminate\Http\Request;
 use App\Models\PengajuanSurat;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -82,6 +83,39 @@ class PengajuanController extends Controller
             return response()->json([
                 'message' => 'Terjadi kesalahan saat menyimpan pengajuan',
                 'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+    public function getDataPengajuan()
+    {
+        try {
+            $user = Auth::user();
+            $warga = Warga::where('id_user', $user->id)->first();
+
+            // Ensure the user is logged in
+            if (!$warga) {
+                return response()->json([
+                'message' => 'Data warga tidak ditemukan untuk user ini',
+                ], 404);
+            }
+
+            // Fetch the Warga data related to the user
+            $dataPengajuan = PengajuanSurat::where('nik_warga', $warga->nik_warga)
+            ->get();
+            // ->map(function ($pengajuan) {
+            //     // Format created_at hanya menjadi tanggal
+            //     $pengajuan->created_at = Carbon::now($pengajuan->created_at)->format('Y-m-d');
+            //     return $pengajuan;
+            // });
+            // Return user and warga data as JSON
+            return response()->json([
+                'user' => $user,
+                'pengajuan' => $dataPengajuan,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengambil data',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
