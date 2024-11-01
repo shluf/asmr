@@ -1,4 +1,4 @@
-import { Home, LineChart, Settings, ShoppingCart, User, User2 } from 'lucide-react';
+import { FileUp, History, Home, LineChart, Settings, ShoppingCart, User, User2 } from 'lucide-react';
 import React from 'react'
 import { UserFilled } from './svg-icons';
 
@@ -16,6 +16,10 @@ const renderIcon = (keyword, size) => {
         return <LineChart className={`h-${size} w-${size}`} />;
         case 'shoppingchart':
         return <ShoppingCart className={`h-${size} w-${size}`} />;
+        case 'file-up':
+        return <FileUp className={`h-${size} w-${size}`} />;
+        case 'history':
+        return <History className={`h-${size} w-${size}`} />;
         default:
         return null;
     }

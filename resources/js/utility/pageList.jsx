@@ -14,8 +14,8 @@ export const pageRTRWRoutes = [
 
 export const pageWargaRoutes = [
     { name: 'Dashboard', route: '', icon: 'home', notification: 0 },
-    { name: 'Pengajuan', route: 'pengajuan', icon: 'home', notification: 0 },
-    { name: 'Histori Pengajuan', route: 'histori', icon: 'home', notification: 0 },
+    { name: 'Pengajuan', route: 'pengajuan', icon: 'file-up', notification: 0 },
+    { name: 'Histori Pengajuan', route: 'histori', icon: 'history', notification: 0 },
     { name: 'Akun', route: 'akun', icon: 'user' },
     { name: 'Bantuan', route: 'bantuan', icon: 'settings' }
 ];
