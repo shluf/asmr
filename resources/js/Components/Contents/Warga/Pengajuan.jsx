@@ -51,67 +51,75 @@ const Pengajuan = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-            <div className="bg-white shadow-lg rounded-lg w-full max-w-3xl p-8">
+        <div className="w-full  flex justify-center items-start bg-gray-100 p-3">
+            <div className="bg-white shadow-lg rounded-lg w-full h-full  p-8">
                 <h2 className="text-2xl font-bold text-blue-900 mb-6">
                     Form Pengajuan
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
+                <p className="text-blue-2    mt-4">
                     Mohon Isi Formulir dengan Benar untuk Mempercepat Proses
                     Layanan Anda
                 </p>
-
-                {/* Informasi Warga */}
-                <div className="mb-6">
-                    <p className="text-gray-700">
-                        Yang bertanda tangan di bawah ini Ketua RT. 02 RW. 01,
-                        Kelurahan Belian, Kecamatan Batam Kota, memberikan
-                        keterangan kepada:
+                <p className="text-gray-600 mt-2">
+                    Yang bertanda tangan di bawah ini Ketua RT 0
+                    {dataWarga.id_rt} RW 0{dataWarga.id_rw} {dataWarga.alamat},
+                    memberikan keterangan kepada :
+                </p>
+                <div className="text-gray-800 mt-4 space-y-1">
+                    <p className="flex">
+                        <span className="font-semibold w-60">Nama</span>
+                        <span className="w-5">:</span>
+                        <span className="flex-1">{dataWarga.nama}</span>
                     </p>
-                    <div className="text-gray-800 mt-4 space-y-1">
-                        <p>
-                            <span className="font-semibold">Nama:</span>{" "}
-                            {dataWarga.nama}
-                        </p>
-                        <p>
-                            <span className="font-semibold">NIK:</span>{" "}
-                            {dataWarga.nik_warga}
-                        </p>
-                        <p>
-                            <span className="font-semibold">NO.KK:</span>{" "}
-                            {dataWarga.nomer_kk}
-                        </p>
-                        <p>
-                            <span className="font-semibold">
-                                Jenis Kelamin:
-                            </span>{" "}
+                    <p className="flex">
+                        <span className="font-semibold w-60">NIK</span>
+                        <span className="w-5">:</span>
+                        <span className="flex-1">{dataWarga.nik_warga}</span>
+                    </p>
+                    <p className="flex">
+                        <span className="font-semibold w-60">NO.KK</span>
+                        <span className="w-5">:</span>
+                        <span className="flex-1">{dataWarga.nomer_kk}</span>
+                    </p>
+                    <p className="flex">
+                        <span className="font-semibold w-60">
+                            Jenis Kelamin
+                        </span>
+                        <span className="w-5">:</span>
+                        <span className="flex-1">
                             {dataWarga.jenis_kelamin}
-                        </p>
-                        <p>
-                            <span className="font-semibold">Agama:</span>{" "}
-                            {dataWarga.agama}
-                        </p>
-                        <p>
-                            <span className="font-semibold">
-                                Tempat, tanggal lahir:
-                            </span>{" "}
+                        </span>
+                    </p>
+                    <p className="flex">
+                        <span className="font-semibold w-60">Agama</span>
+                        <span className="w-5">:</span>
+                        <span className="flex-1">{dataWarga.agama}</span>
+                    </p>
+                    <p className="flex">
+                        <span className="font-semibold w-60">
+                            Tempat, tanggal lahir
+                        </span>
+                        <span className="w-5">:</span>
+                        <span className="flex-1">
                             {dataWarga.tempat_dan_tanggal_lahir}
-                        </p>
-                        <p>
-                            <span className="font-semibold">
-                                Alamat/Tempat tinggal:
-                            </span>{" "}
-                            {dataWarga.alamat}
-                        </p>
-                    </div>
+                        </span>
+                    </p>
+                    <p className="flex">
+                        <span className="font-semibold w-60">
+                            Alamat/Tempat tinggal
+                        </span>
+                        <span className="w-5">:</span>
+                        <span className="flex-1">{dataWarga.alamat}</span>
+                    </p>
                 </div>
 
                 {/* Pilihan Pengajuan Surat */}
                 <div className="mb-6">
                     <p className="text-gray-700">
-                        Benar bahwa yang bersangkutan adalah warga RT.02 RW.01
-                        Kelurahan Belian Kecamatan Batam Kota, dan bermaksud
-                        untuk mengurus surat:
+                        Benar bahwa yang bersangkutan adalah warga RT.
+                        {dataWarga.id_rt} RW.{dataWarga.id_rw} yang beralamat di{" "}
+                        {dataWarga.alamat}, dan bermaksud untuk mengurus surat:
                     </p>
                     <div className="mt-4 space-y-2">
                         {[
