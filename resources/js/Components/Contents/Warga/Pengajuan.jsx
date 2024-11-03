@@ -51,7 +51,7 @@ const Pengajuan = () => {
     };
 
     return (
-        <div className="w-full  flex justify-center items-start bg-gray-100 p-3">
+        <div className="w-full  flex justify-center items-start p-3">
             <div className="bg-white shadow-lg rounded-lg w-full h-full  p-8">
                 <h2 className="text-2xl font-bold text-blue-900 mb-6">
                     Form Pengajuan

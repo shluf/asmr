@@ -88,7 +88,7 @@ const DashboardLayout = ({
                     </DropdownMenu>
                 </header>
                 <main className="flex-1 pb-14 md:p-4 lg:p-6 overflow-auto">
-                    <div className="flex flex-1 items-center justify-center rounded-lg border-dashed shadow-sm">
+                    <div className="flex flex-1 items-center justify-center rounded-lg border-dashed">
                         {children}
                     </div>
                 </main>

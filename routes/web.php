@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BiodatasUserController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\ProfileWargaController;
 use App\Http\Controllers\RegisterRtRwController;
 
 // Route::get('/', function () {
@@ -52,8 +53,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/approvalRole/disapprove/{nik_warga}',[ApprovalRoleController::class,'disapproveUser'])->name("disapproveUser");
 
     Route::get('/pengajuan',[PengajuanController::class,'getDataWarga'])->name('pengajuan');
-    Route::get('/pengajuan',[PengajuanController::class,'getDataPengajuan'])->name('pengajuan.surat');
+    Route::get('/pengajuan/surat',[PengajuanController::class,'getDataPengajuan'])->name('pengajuan.surat');
     Route::post('/pengajuan/store',[PengajuanController::class,'store'])->name('pengajuan.store');
+
+    Route::get('/profile-warga/{nik_warga}', [ProfileWargaController::class, 'show']);
+    Route::put('/profile-warga/{nik_warga}', [ProfileWargaController::class, 'update']);
 });
 
 
