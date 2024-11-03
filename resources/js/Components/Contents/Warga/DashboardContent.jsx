@@ -11,9 +11,9 @@ import {
 } from "@/Components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Button } from "@/Components/ui/button";
-import { CheckCircle, HandCoins } from "lucide-react";
-import renderIcon from "@/utility/renderIcon";
 import axios from "axios";
+import { UserFilled } from "@/utility/svg-icons";
+import { Link } from "@inertiajs/react";
 
 const activities = [
     {
@@ -93,7 +93,7 @@ const DashboardContent = () => {
                         <Card key={index}>
                             <CardContent className="flex items-center p-6">
                                 <div className="w-12 h-12 bg-green-3 rounded-[12px] flex items-center justify-center text-2xl">
-                                    {renderIcon("user-filled", 2)}
+                                    <UserFilled size={6} />
                                 </div>
                                 <div className="grid grid-cols-2 gap-1 md:gap-4 ml-4 w-full justify-center items-center">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4 justify-center">
@@ -129,12 +129,14 @@ const DashboardContent = () => {
                                                 {dataPengajuan.status_pengajuan}
                                             </p>
                                         </div>
-                                        <Button
-                                            variant="outline"
-                                            className="rounded-full mt-2"
-                                        >
-                                            View Details
-                                        </Button>
+                                        <Link href="/dashboard/histori">
+                                            <Button
+                                                variant="outline"
+                                                className="rounded-full mt-2"
+                                                >
+                                                View Details
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
                             </CardContent>

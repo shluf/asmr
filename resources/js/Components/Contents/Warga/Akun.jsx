@@ -90,7 +90,7 @@ const Akun = ({ nikWarga }) => {
 
   return (
     <div className="w-full max-w-5xl mx-auto p-4">
-      <div className="flex gap-8">
+      <div className="flex flex-col justify-center items-center md:items-start md:flex-row gap-8">
         <div className="flex-shrink-0">
           <div className="relative">
             <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-green">
