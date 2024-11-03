@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import axios from "axios";
 import renderIcon from "@/utility/renderIcon";
+import { UserFilled } from "@/utility/svg-icons";
 
 const DashboardContent = () => {
     const wargaStats = [
@@ -97,7 +98,7 @@ const DashboardContent = () => {
                                 <div className="flex flex-row gap-10 justify-around items-center">
                                     {/* Icon */}
                                     <div className="w-12 h-12 bg-green-3 rounded-[12px] flex items-center justify-center text-2xl">
-                                        {renderIcon('user-filled', 2)}
+                                        <UserFilled size={6} />
                                     </div>
                                 </div>
                                 <div className="flex gap-4 justify-between w-full">

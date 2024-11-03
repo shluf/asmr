@@ -1,8 +1,12 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table"
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card"
 import { Button } from "@/Components/ui/button"
-import { CheckCircle, HandCoins } from "lucide-react"
-import renderIcon from "@/utility/renderIcon";
+import { id as idLocale } from 'date-fns/locale';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { UserFilled } from "@/utility/svg-icons";
+import { Link } from "@inertiajs/react";
+import { format } from "date-fns";
 
 const activities = [
     {
@@ -13,25 +17,23 @@ const activities = [
       responsible: "Ketua RT 02"
     },
   ]
-  
-  const letterSubmissions = [
-    {
-      date: "Rabu, 19 Agustus 2024",
-      purpose: "Surat Pengantar KTP/KK",
-      status: "Selesai",
-      icon: CheckCircle,
-      color: "text-green-500"
-    },
-    {
-      date: "Selasa, 8 September 2024",
-      purpose: "Surat Pengantar Domisili Usaha",
-      status: "Dalam Proses",
-      icon: HandCoins,
-      color: "text-blue-500"
-    }
-  ]
 
-const DashboardContent = () => {
+const DashboardContent = ({ idRT }) => {
+  const [pengajuanTerakhir, setPengajuanTerakhir] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+      try {
+          const response = await axios.get(`/surat/pengajuan/?id_rt=${idRT}&length=2`);
+          setPengajuanTerakhir(response.data);
+      } catch (error) {
+          console.error("Error fetching data:", error);
+      }
+  };
+
+
     return (
         <div className="space-y-8 overflow-hidden">
         <Card>
@@ -69,31 +71,44 @@ const DashboardContent = () => {
             <CardTitle className="text-2xl font-bold">Pengajuan Surat Terakhir</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {letterSubmissions.map((submission, index) => (
+          {!pengajuanTerakhir.data ? (<>Loading</>) : !pengajuanTerakhir.data.length > 0 ? (
+            <Alert>
+              <AlertTitle>Tidak ada surat pending</AlertTitle>
+              <AlertDescription>
+                Semua pengajuan surat telah diproses
+              </AlertDescription>
+            </Alert>
+          ) : pengajuanTerakhir.data.map((submission, index) => (
               <Card key={index}>
                 <CardContent className="flex items-center p-6">
                     <div className="w-12 h-12 bg-green-3 rounded-[12px] flex items-center justify-center text-2xl">
-                        {renderIcon('user-filled', 2)}
+                        <UserFilled size={6} />
                     </div>
                   <div className="grid grid-cols-2 gap-1 md:gap-4 ml-4 w-full justify-center items-center">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4 justify-center">
                         <div>
                             <p className="font-medium mt-2 text-left">Tanggal pengajuan</p>
-                            <p className="font-medium text-sm text-blue-600 text-left">{submission.date}</p>
+                            <p className="font-medium text-sm text-blue-600 text-left">                        
+                              {format(new Date(submission.created_at), "EEEE, dd MMMM yyyy", {
+                              locale: idLocale,
+                            })}
+                            </p>
                         </div>
                         <div>
                             <p className="font-medium mt-2 text-left">Keperluan</p>
-                            <p className="font-medium text-sm text-blue-600 text-left">{submission.purpose}</p>
+                            <p className="font-medium text-sm text-blue-600 text-left">{submission.jenis_surat}</p>
                         </div>
                     </div>
                   <div className="text-right grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4 justify-center">
                     <div>
                         <p className="font-medium mt-2 text-left">Status tindak lanjut</p>
-                        <p className="font-medium text-sm text-blue-600 text-left">{submission.status}</p>
+                        <p className="font-medium text-sm text-blue-600 text-left">{submission.status_approval}</p>
                     </div>
+                    <Link href="/dashboard/rekapPengajuan">
                     <Button variant="outline" className="rounded-full mt-2">
                       View Details
                     </Button>
+                    </Link>
                   </div>
                   </div>
                 </CardContent>

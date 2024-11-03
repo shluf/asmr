@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\RT;
+use App\Models\RW;
 use App\Models\User;
 use App\Models\Warga;
 use Inertia\Inertia;
@@ -13,16 +16,20 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $nikWarga = Warga::where('id_user', $user->id)->first()->nik_warga ?? null;
+        $idRT = RT::where('id_user', $user->id)->first()->id_rt ?? null;
+        $idRW = RW::where('id_user', $user->id)->first()->id_rw ?? null;
 
         return match ($user->role) {
             'Admin' => Inertia::render('DashboardAdmin', [
                 'currentPage' => $page,
             ]),
             'RT' => Inertia::render('DashboardRT', [
-                'currentPage' => $page
+                'currentPage' => $page,
+                'idRT' => $idRT
             ]),
             'RW' => Inertia::render('DashboardRW', [
-                'currentPage' => $page
+                'currentPage' => $page,
+                'idRW' => $idRW
             ]),
             'Warga' => Inertia::render('DashboardWarga', [
                 'currentPage' => $page,

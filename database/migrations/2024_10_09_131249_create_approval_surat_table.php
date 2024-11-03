@@ -10,17 +10,15 @@ return new class extends Migration
         Schema::create('approval_surat', function (Blueprint $table) {
             $table->id('id_approval_surat');
             $table->unsignedBigInteger('id_pengajuan_surat');
-            $table->unsignedBigInteger('id_rt');
-            $table->unsignedBigInteger('id_rw');
-            $table->string('status_approval');
+            $table->enum('status_rw', ['approved', 'rejected', 'pending'])->default('pending');
+            $table->enum('status_rt', ['approved', 'rejected', 'pending'])->default('pending');
+            $table->string('status_approval')->nullable();
             $table->date('tanggal_approval_rt')->nullable();
-            $table->date('tanggal_approval')->nullable();
+            $table->date('tanggal_approval_rw')->nullable();
             $table->timestamps();
 
             // Foreign key references
             $table->foreign('id_pengajuan_surat')->references('id_pengajuan_surat')->on('pengajuan_surat')->onDelete('cascade');
-            $table->foreign('id_rt')->references('id_rt')->on('rt')->onDelete('cascade');
-            $table->foreign('id_rw')->references('id_rw')->on('rw')->onDelete('cascade');
         });
     }
 

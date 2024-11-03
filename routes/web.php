@@ -12,6 +12,7 @@ use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\ProfileWargaController;
 use App\Http\Controllers\RegisterRtRwController;
+use App\Http\Controllers\SuratController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -58,6 +59,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile-warga/{nik_warga}', [ProfileWargaController::class, 'show']);
     Route::put('/profile-warga/{nik_warga}', [ProfileWargaController::class, 'update']);
+
+    Route::prefix('surat')->group(function () {
+        Route::get('/pending/rt/{id_rt}', [SuratController::class, 'getPendingSuratRT']);
+        Route::get('/pending/rw/{id_rw}', [SuratController::class, 'getPendingSuratRW']);
+        Route::put('/approval/{id_pengajuan_surat}', [SuratController::class, 'updateApprovalStatus']);
+        Route::get('/pengajuan', [SuratController::class, 'getAllPengajuanSurat']);
+    });
 });
 
 

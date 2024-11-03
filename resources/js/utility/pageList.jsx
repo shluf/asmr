@@ -7,7 +7,7 @@ export const pageAdminRoutes = [
 
 export const pageRTRWRoutes = [
     { name: 'Dashboard', route: '', icon: 'home', notification: 0 },
-    { name: 'Pengajuan Masalah', route: 'pengajuanMasalah', icon: 'user', notification: 0 },
+    { name: 'Pengajuan Warga', route: 'pengajuanMasalah', icon: 'user', notification: 2 },
     { name: 'Rekap Pengajuan', route: 'rekapPengajuan', icon: 'history', notification: 0 },
     { name: 'Bantuan', route: 'bantuan', icon: 'settings' }
 ];

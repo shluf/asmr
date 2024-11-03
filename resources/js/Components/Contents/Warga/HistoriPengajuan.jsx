@@ -25,8 +25,8 @@ const dummyData = [
       status_pengajuan: "Selesai",
       progress: [
         { title: "Pemeriksaan Berkas", description: "Berkas diperiksa oleh tim", status: "completed" },
-        { title: "Proses Verifikasi RT", description: "Menunggu verifikasi lebih lanjut", status: "completed" },
-        { title: "Proses Verifikasi RW", description: "Menunggu verifikasi lebih lanjut", status: "completed" },
+        { title: "Proses Verifikasi RT", description: "Menunggu verifikasi lebih lanjut", tgl_approval: "", status: "completed" },
+        { title: "Proses Verifikasi RW", description: "Menunggu verifikasi lebih lanjut", tgl_approval: "", status: "completed" },
         { title: "Penerbitan Surat", description: "Surat sedang dalam proses penerbitan", status: "completed" },
       ],
     },
