@@ -7,6 +7,7 @@ import axios from "axios";
 import { Link } from "@inertiajs/react";
 import { id as idLocale } from 'date-fns/locale';
 import { format } from "date-fns";
+import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
 
 const activities = [
     {
