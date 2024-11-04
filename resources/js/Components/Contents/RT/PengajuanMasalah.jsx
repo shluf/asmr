@@ -92,33 +92,31 @@ const PengajuanMasalah = ({ idRT }) => {
 
                       {/* Surat Info */}
                       <div className="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                        <div>
-                          <p className="font-medium">Tanggal Pengajuan</p>
-                          <p className="text-sm text-blue-600">
-                            {format(new Date(surat.created_at), "EEEE, dd MMMM yyyy", {
-                              locale: idLocale,
-                            })}
+                        <div className='flex flex-col h-full justify-between'>
+                          <p className="font-medium flex items-center h-1/2">Tanggal Pengajuan</p>
+                          <p className="text-sm flex h-1/2 text-blue-600">
+                            {format(new Date(surat.created_at), "EEEE, dd MMMM yyyy", { locale: idLocale })}
                           </p>
                         </div>
-                        <div>
-                          <p className="font-medium">Nama Pemohon</p>
-                          <p className="text-sm text-blue-600">{surat.nama}</p>
+                        <div className='flex flex-col h-full justify-between'>
+                          <p className="font-medium flex items-center h-1/2">Nama Pemohon</p>
+                          <p className="text-sm flex h-1/2 text-blue-600">{surat.nama}</p>
                         </div>
-                        <div>
-                          <p className="font-medium">Status Tindak Lanjut</p>
-                          <p className="text-sm text-blue-600">{surat.status_approval}</p>
+                        <div className='flex flex-col h-full justify-between'>
+                          <p className="font-medium flex items-center h-1/2">Status Tindak Lanjut</p>
+                          <p className="text-sm flex h-1/2 text-blue-600">{surat.status_approval}</p>
                         </div>
-                        <div>
-                          <p className="font-medium">Penanggung Jawab</p>
-                          <p className="text-sm text-blue-600">{surat.penanggung_jawab_rt}</p>
+                        <div className='flex flex-col h-full justify-between'>
+                          <p className="font-medium flex items-center h-1/2">Penanggung Jawab</p>
+                          <p className="text-sm flex h-1/2 text-blue-600">{surat.penanggung_jawab_rt}</p>
                         </div>
-                        <div>
-                          <p className="font-medium">Keperluan</p>
-                          <p className="text-sm text-blue-600">{surat.jenis_surat}</p>
+                        <div className='flex flex-col h-full justify-between'>
+                          <p className="font-medium flex items-center h-1/2">Keperluan</p>
+                          <p className="text-sm flex h-1/2 text-blue-600">{surat.jenis_surat}</p>
                         </div>
-                        <div>
-                          <p className="font-medium">NIK</p>
-                          <p className="text-sm text-blue-600">{surat.nik_warga}</p>
+                        <div className='flex flex-col h-full justify-between'>
+                          <p className="font-medium flex items-center h-1/2">NIK</p>
+                          <p className="text-sm flex h-1/2 text-blue-600">{surat.nik_warga}</p>
                         </div>
                       </div>
 
