@@ -45,6 +45,8 @@ const Pengajuan = () => {
                 deskripsi: description,
             });
             alert("Pengajuan berhasil diajukan!");
+            setSelectedJenisSurat("");
+            setDescription("");
         } catch (error) {
             console.error("Error submitting pengajuan:", error);
         }

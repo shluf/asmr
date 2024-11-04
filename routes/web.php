@@ -54,7 +54,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/approvalRole/disapprove/{nik_warga}',[ApprovalRoleController::class,'disapproveUser'])->name("disapproveUser");
 
     Route::get('/pengajuan',[PengajuanController::class,'getDataWarga'])->name('pengajuan');
+<<<<<<< HEAD
+    Route::get('/pengajuan/history',[PengajuanController::class,'getDataPengajuan'])->name('pengajuan.surat');
+=======
     Route::get('/pengajuan/surat',[PengajuanController::class,'getDataPengajuan'])->name('pengajuan.surat');
+>>>>>>> 12306c9f9a1cc7efa80ce361a82c2b4264520f69
     Route::post('/pengajuan/store',[PengajuanController::class,'store'])->name('pengajuan.store');
 
     Route::get('/profile-warga/{nik_warga}', [ProfileWargaController::class, 'show']);
@@ -68,5 +72,5 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-
+    
 require __DIR__.'/auth.php';
