@@ -7,6 +7,7 @@ import axios from "axios";
 import { UserFilled } from "@/utility/svg-icons";
 import { Link } from "@inertiajs/react";
 import { format } from "date-fns";
+import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
 
 const activities = [
     {

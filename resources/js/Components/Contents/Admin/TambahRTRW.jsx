@@ -169,6 +169,7 @@ const TambahRTRW = () => {
                   value={data.nomor}
                   onChange={(id, value) => setData(id, value)}
                   error={errors.nomor}
+                  placeholder="01"
                   required
                 />
               </div>
@@ -182,7 +183,7 @@ const TambahRTRW = () => {
                   <SelectContent>
                     {rwOptions.map((rw) => (
                       <SelectItem key={rw.id_rw} value={rw.id_rw.toString()}>
-                         {rw.nama}
+                         {rw.penanggung_jawab_rw} | {rw.nama}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -308,6 +309,7 @@ const TambahRTRW = () => {
                   value={data.nomor}
                   onChange={(id, value) => setData(id, value)}
                   error={errors.nomor}
+                  placeholder='01'
                   required
                 />
               </div>

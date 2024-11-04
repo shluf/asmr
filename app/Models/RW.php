@@ -15,6 +15,7 @@ class RW extends Model
         'id_user',
         'nama',
         'nik',
+        'alamat',
         'periode',
         'ttd',
         'penanggung_jawab_rw'

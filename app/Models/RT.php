@@ -18,6 +18,7 @@ class RT extends Model
         'id_rw',
         'nama',
         'nik',
+        'alamat',
         'periode',
         'ttd',
         'penanggung_jawab_rt'

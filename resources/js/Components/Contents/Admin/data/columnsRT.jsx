@@ -57,7 +57,18 @@ export const columnsRT = [
     },
     {
         accessorKey: "id_rw",
-        header: () => <div className="text-right">Penanggung Jawab</div>,
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    } className="text-right">
+                    Penanggung Jawab
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
         cell: ({ row }) => {
             return <div className="text-right font-medium text-nowrap">RW {row.getValue("id_rw")}</div>;
         },

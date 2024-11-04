@@ -125,20 +125,22 @@ export default function Register({ rtRwData }) {
                                 htmlFor="gender"
                                 value="Jenis Kelamin"
                             />
-                            <select
-                                id="jenis_kelamin"
-                                name="jenis_kelamin"
-                                value={data.jenis_kelamin}
+                            <Select  
                                 onChange={(e) =>
                                     setData("jenis_kelamin", e.target.value)
-                                }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-yellow focus:border-yellow"
-                                required
-                            >
-                                <option value="">Pilih Gender</option>
-                                <option value="laki-laki">Laki-laki</option>
-                                <option value="perempuan">Perempuan</option>
-                            </select>
+                                }>
+                            <SelectTrigger  
+                                color="yellow"      
+                                id="jenis_kelamin"
+                                name="jenis_kelamin"
+                                required>
+                                <SelectValue placeholder="Jenis Kelamin" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="laki-laki">Laki-laki</SelectItem>
+                                <SelectItem value="perempuan">Perempuan</SelectItem>
+                            </SelectContent>
+                            </Select>
                             <InputError
                                 message={errors.jenis_kelamin}
                                 className="mt-1"
