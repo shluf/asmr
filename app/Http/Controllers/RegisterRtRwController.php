@@ -57,19 +57,20 @@ class RegisterRtRwController extends Controller
                 'nama' => $request->nama,
                 'nik' => $request->nik,
                 'periode' => $request->periode,
+                'alamat' => $request->alamat,
                 'ttd' => $ttdPath,
             ];
 
             if ($request->jabatan === 'RW') {
                 // Tambah data RW
                 $rw = RW::create(array_merge($commonData, [
-                    'penanggung_jawab_rw' => $request->nama,
+                    'penanggung_jawab_rw' => 'RW '. $request->nomor,
                 ]));
             } else {
                 // Tambah data RT
                 $rt = RT::create(array_merge($commonData, [
                     'id_rw' => $request->id_rw,
-                    'penanggung_jawab_rt' => $request->nama,
+                    'penanggung_jawab_rt' => 'RT ' . $request->nomor,
                 ]));
             }
 
@@ -196,7 +197,7 @@ class RegisterRtRwController extends Controller
     public function getRWList()
     {
         try {
-            $rwList = RW::select('id_rw', 'nama')
+            $rwList = RW::select('id_rw', 'nama', 'penanggung_jawab_rw')
                 ->orderBy('id_rw')
                 ->get();
 

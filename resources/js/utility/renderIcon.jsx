@@ -6,6 +6,8 @@ import {
     User,
     User2,
     ShieldCheck,
+    History,
+    FileUp,
 } from "lucide-react";
 import React from "react";
 import { UserFilled } from "./svg-icons";
@@ -26,6 +28,10 @@ const renderIcon = (keyword, size) => {
             return <ShoppingCart className={`h-${size} w-${size}`} />;
         case "shield-check":
             return <ShieldCheck className={`h-${size} w-${size}`} />;
+        case 'history':
+            return <History className={`h-${size} w-${size}`} />;
+        case 'file-up':
+            return <FileUp className={`h-${size} w-${size}`} />;
         default:
             return null;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApprovalSurat;
 use App\Models\Warga;
 use Illuminate\Http\Request;
 use App\Models\PengajuanSurat;
@@ -72,6 +73,12 @@ class PengajuanController extends Controller
         try {
             // Simpan data pengajuan ke dalam database
             $pengajuan = PengajuanSurat::create($request->all());
+            ApprovalSurat::create([
+                'id_pengajuan_surat' => $pengajuan->id_pengajuan_surat,
+                'status_approval' => 'Surat telah diajukan',
+                'tanggal_approval_rt' => null,
+                'tanggal_approval_rw' => null,
+            ]);
 
             // Beri respons sukses ke frontend
             return response()->json([

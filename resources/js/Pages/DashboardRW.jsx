@@ -5,19 +5,19 @@ import RekapPengajuan from '@/Components/Contents/RW/RekapPengajuan';
 import DashboardLayout from '@/Layouts/DashboardLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ currentPage }) {
+export default function Dashboard({ currentPage, idRW }) {
     const renderContent = () => {
         switch(currentPage) {
             case 'dashboard':
-                return <DashboardContent />;
+                return <DashboardContent idRW={idRW} />;
             case 'pengajuanMasalah':
-                return <PengajuanMasalah />;
+                return <PengajuanMasalah idRW={idRW} />;
             case 'rekapPengajuan':
-                return <RekapPengajuan />;
+                return <RekapPengajuan idRW={idRW} />;
             case 'bantuan':
                 return <Bantuan />;
             default:
-                return <DashboardContent />;
+                return <DashboardContent idRW={idRW} />;
         }
     }
 

@@ -16,7 +16,8 @@ export const renderHeader = (setHeader, user) => {
                     }
                 });
                 break;
-            case "RT" || "RW":
+            case "RT":
+            case "RW":
                 pageListRtRw.forEach((data) => {
                     if(route().current('dashboard', {page: data.route})) {
                         setHeader(data.name);
