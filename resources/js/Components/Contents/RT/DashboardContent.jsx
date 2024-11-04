@@ -36,7 +36,7 @@ const DashboardContent = ({ idRT }) => {
 
 
     return (
-        <div className="space-y-8 overflow-hidden">
+        <div className="space-y-8 overflow-hidden w-full">
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl font-bold">Kegiatan RT/RW</CardTitle>
@@ -85,26 +85,30 @@ const DashboardContent = ({ idRT }) => {
                     <div className="w-12 h-12 bg-green-3 rounded-[12px] flex items-center justify-center text-2xl">
                         <UserFilled size={6} />
                     </div>
-                  <div className="grid grid-cols-2 gap-1 md:gap-4 ml-4 w-full justify-center items-center">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4 justify-center">
+                  <div className="flex gap-1 md:gap-4 ml-6 w-full justify-center items-center">
+                    <div className="grid grid-cols-1 w-full md:grid-cols-4 gap-1 md:gap-4 justify-center">
                         <div>
                             <p className="font-medium mt-2 text-left">Tanggal pengajuan</p>
                             <p className="font-medium text-sm text-blue-600 text-left">                        
                               {format(new Date(submission.created_at), "EEEE, dd MMMM yyyy", {
-                              locale: idLocale,
-                            })}
+                                locale: idLocale,
+                              })}
                             </p>
+                        </div>
+                        <div>
+                            <p className="font-medium mt-2 text-left">Nama Warga</p>
+                            <p className="font-medium text-sm text-blue-600 text-left">{submission.nama_warga}</p>
                         </div>
                         <div>
                             <p className="font-medium mt-2 text-left">Keperluan</p>
                             <p className="font-medium text-sm text-blue-600 text-left">{submission.jenis_surat}</p>
                         </div>
-                    </div>
-                  <div className="text-right grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4 justify-center">
                     <div>
-                        <p className="font-medium mt-2 text-left">Status tindak lanjut</p>
-                        <p className="font-medium text-sm text-blue-600 text-left">{submission.status_approval}</p>
+                        <p className="font-medium mt-2 text-left">NIK</p>
+                        <p className="font-medium text-sm text-blue-600 text-left">{submission.nik_warga}</p>
                     </div>
+                    </div>
+                  <div className="text-right justify-center">
                     <Link href="/dashboard/rekapPengajuan">
                     <Button variant="outline" className="rounded-full mt-2">
                       View Details
