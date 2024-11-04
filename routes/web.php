@@ -52,9 +52,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/approvalRole/disapprove/{nik_warga}',[ApprovalRoleController::class,'disapproveUser'])->name("disapproveUser");
 
     Route::get('/pengajuan',[PengajuanController::class,'getDataWarga'])->name('pengajuan');
-    Route::get('/pengajuan',[PengajuanController::class,'getDataPengajuan'])->name('pengajuan.surat');
+    Route::get('/pengajuan/history',[PengajuanController::class,'getDataPengajuan'])->name('pengajuan.surat');
     Route::post('/pengajuan/store',[PengajuanController::class,'store'])->name('pengajuan.store');
 });
 
-
+    
 require __DIR__.'/auth.php';

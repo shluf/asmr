@@ -102,12 +102,7 @@ class PengajuanController extends Controller
             // Fetch the Warga data related to the user
             $dataPengajuan = PengajuanSurat::where('nik_warga', $warga->nik_warga)
             ->get();
-            // ->map(function ($pengajuan) {
-            //     // Format created_at hanya menjadi tanggal
-            //     $pengajuan->created_at = Carbon::now($pengajuan->created_at)->format('Y-m-d');
-            //     return $pengajuan;
-            // });
-            // Return user and warga data as JSON
+            
             return response()->json([
                 'user' => $user,
                 'pengajuan' => $dataPengajuan,
@@ -117,6 +112,6 @@ class PengajuanController extends Controller
                 'message' => 'Terjadi kesalahan saat mengambil data',
                 'error' => $e->getMessage()
             ], 500);
-        }
+        }   
     }
 }
