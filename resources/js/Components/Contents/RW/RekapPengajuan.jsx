@@ -20,6 +20,7 @@ import {
   AlertTitle 
 } from '@/components/ui/alert';
 import axios from 'axios';
+import PrimaryButton from '@/Components/PrimaryButton';
 
 const RekapPengajuan = ({ idRW, select }) => {
   const [openItems, setOpenItems] = useState( select ? ({[select]: isOpen}) : {} );
@@ -64,71 +65,54 @@ const RekapPengajuan = ({ idRW, select }) => {
               <Card>
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                    {/* Icon */}
+                    {/* <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                      <ShieldCheck className="h-6 w-6 text-blue-600" />
+                    </div> */}
 
                     {/* Surat Info */}
                     <div className="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                      <div>
-                        <p className="font-medium">Tanggal Pengajuan</p>
-                        <p className="text-sm text-blue-600">
-                          {format(new Date(surat.created_at), "EEEE, dd MMMM yyyy", {
-                            locale: idLocale,
-                          })}
+                      <div className="flex flex-col h-full justify-between">
+                        <p className="font-medium flex items-center h-1/2">Tanggal Pengajuan</p>
+                        <p className="text-sm flex h-1/2 text-blue-600">
+                          {format(new Date(surat.created_at), "EEEE, dd MMMM yyyy", { locale: idLocale })}
                         </p>
                       </div>
-                      <div>
-                        <p className="font-medium">Nama Warga</p>
-                        <p className="text-sm text-blue-600">{surat.nama_warga}</p>
+                      <div className="flex flex-col h-full justify-between">
+                        <p className="font-medium flex items-center h-1/2">Nama Warga</p>
+                        <p className="text-sm flex h-1/2 text-blue-600">{surat.nama_warga}</p>
                       </div>
-                      <div>
-                        <p className="font-medium">Status Tindak Lanjut</p>
-                        <p className="text-sm text-blue-600">{surat.status_approval}</p>
+                      <div className="flex flex-col h-full justify-between">
+                        <p className="font-medium flex items-center h-1/2">Status Tindak Lanjut</p>
+                        <p className="text-sm flex h-1/2 text-blue-600">{surat.status_approval}</p>
                       </div>
-                      <div>
-                        <p className="font-medium">Penaggung Jawab</p>
-                        <p className="text-sm text-blue-600">{surat.nama_warga}</p>
+                      <div className="flex flex-col h-full justify-between">
+                        <p className="font-medium flex items-center h-1/2">Penanggung Jawab</p>
+                        <p className="text-sm flex h-1/2 text-blue-600">{surat.penanggung_jawab_rw}</p>
                       </div>
-                      <div>
-                        <p className="font-medium">Keperluan</p>
-                        <p className="text-sm text-blue-600">{surat.jenis_surat}</p>
+                      <div className="flex flex-col h-full justify-between">
+                        <p className="font-medium flex items-center h-1/2">Keperluan</p>
+                        <p className="text-sm flex h-1/2 text-blue-600">{surat.jenis_surat}</p>
                       </div>
-                      <div>
-                        <p className="font-medium">NIK</p>
-                        <p className="text-sm text-blue-600">{surat.nik_warga}</p>
+                      <div className="flex flex-col h-full justify-between">
+                        <p className="font-medium flex items-center h-1/2">NIK</p>
+                        <p className="text-sm flex h-1/2 text-blue-600">{surat.nik_warga}</p>
                       </div>
                     </div>
 
 
-{/* batas edit */}
-                    <div className="flex gap-2">
-                      {/* <Button
-                        variant="destructive"
-                        disabled={loading[surat.id_pengajuan_surat]}
-                        onClick={() => handleAction(surat.id_pengajuan_surat, 'rejected')}
-                      >
-                        <X className="w-4 h-4 mr-2" />
-                        Tolak
-                      </Button>
-                      <Button
-                        variant="default"
-                        disabled={loading[surat.id_pengajuan_surat]}
-                        onClick={() => handleAction(surat.id_pengajuan_surat, 'approved')}
-                      >
-                        <Check className="w-4 h-4 mr-2" />
-                        Setujui
-                      </Button> */}
                       <CollapsibleTrigger asChild>
                         <Button variant="outline" className="rounded-full">
                           {openItems[index] ? "Sembunyikan" : "Detail Surat"}
                         </Button>
                       </CollapsibleTrigger>
-                    </div>
                   </div>
 
                   {/* Collapsible Content */}
                   <CollapsibleContent>
                     <div className="mt-6 space-y-4">
                       <p className="text-gray-600">
-                        Yang bertanda tangan di bawah ini Ketua RT 0{surat.id_rt} RW 0{surat.id_rw} {surat.alamat},
+                        Yang bertanda tangan di bawah ini Ketua {surat.penanggung_jawab_rt} {surat.penanggung_jawab_rw} {surat.alamat},
                         memberikan keterangan kepada:
                       </p>
                       <div className="text-gray-800 space-y-2">
@@ -145,27 +129,27 @@ const RekapPengajuan = ({ idRW, select }) => {
                         <p className="flex">
                           <span className="font-semibold w-60">NO.KK</span>
                           <span className="w-5">:</span>
-                          <span className="flex-1">{surat.nomer_kk}</span>
+                          <span className="flex-1">{surat.no_kk_warga}</span>
                         </p>
                         <p className="flex">
                           <span className="font-semibold w-60">Jenis Kelamin</span>
                           <span className="w-5">:</span>
-                          <span className="flex-1">{surat.jenis_kelamin}</span>
+                          <span className="flex-1">{surat.jenis_kelamin_warga === 'L' ? 'Laki-laki' : 'Perempuan'}</span>
                         </p>
                         <p className="flex">
                           <span className="font-semibold w-60">Agama</span>
                           <span className="w-5">:</span>
-                          <span className="flex-1">{surat.agama}</span>
+                          <span className="flex-1">{surat.agama_warga}</span>
                         </p>
                         <p className="flex">
                           <span className="font-semibold w-60">Tempat, tanggal lahir</span>
                           <span className="w-5">:</span>
-                          <span className="flex-1">{surat.tempat_dan_tanggal_lahir}</span>
+                          <span className="flex-1">{surat.ttl_warga}</span>
                         </p>
                         <p className="flex">
                           <span className="font-semibold w-60">Alamat</span>
                           <span className="w-5">:</span>
-                          <span className="flex-1">{surat.alamat}</span>
+                          <span className="flex-1">{surat.alamat_warga}</span>
                         </p>
                       </div>
 
@@ -174,6 +158,34 @@ const RekapPengajuan = ({ idRW, select }) => {
                         <p className="text-gray-700">{surat.deskripsi}</p>
                       </div>
                     </div>
+
+                    <div className="flex gap-2 justify-end items-center w-full">
+                    {surat.status_rt === 'rejected' ? (
+                      <PrimaryButton
+                      color={'red'}
+                      rounded='full'
+                      >
+                          Tidak Disetujui
+                          <X className="w-4 h-4 ml-2" />
+                        </PrimaryButton>
+                        ) : surat.status_rt === 'approved' ? (
+                          <PrimaryButton
+                          color={'green'}
+                          rounded='full'
+                          >
+                          Di Setujui
+                          <Check className="w-4 h-4 ml-2" />
+                        </PrimaryButton>
+                        ) : (
+                          <PrimaryButton
+                          color={'yellow'}
+                          rounded='full'
+                          >
+                          Menunggu
+                          <Clock className="w-4 h-4 ml-2" />
+                        </PrimaryButton>
+                        )}
+                      </div>
                   </CollapsibleContent>
                 </CardContent>
               </Card>

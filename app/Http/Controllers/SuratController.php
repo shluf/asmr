@@ -15,13 +15,15 @@ class SuratController extends Controller
         $pending_surat = DB::table('pengajuan_surat')
             ->join('warga', 'pengajuan_surat.nik_warga', '=', 'warga.nik_warga')
             ->leftJoin('approval_surat', 'pengajuan_surat.id_pengajuan_surat', '=', 'approval_surat.id_pengajuan_surat')
+            ->leftJoin('rt', 'pengajuan_surat.id_rt', '=', 'rt.id_rt')
             ->where('pengajuan_surat.id_rt', $id_rt)
             ->where('approval_surat.status_rt', '=', 'pending')
             ->select(
                 'warga.*',
                 'pengajuan_surat.*',
                 'approval_surat.status_approval',
-                'approval_surat.tanggal_approval_rt'
+                'approval_surat.tanggal_approval_rt',
+                'rt.penanggung_jawab_rt as penanggung_jawab_rt'
             )
             ->get();
 
@@ -37,6 +39,7 @@ class SuratController extends Controller
         $pending_surat = DB::table('pengajuan_surat')
             ->join('warga', 'pengajuan_surat.nik_warga', '=', 'warga.nik_warga')
             ->join('approval_surat', 'pengajuan_surat.id_pengajuan_surat', '=', 'approval_surat.id_pengajuan_surat')
+            ->leftJoin('rw', 'pengajuan_surat.id_rw', '=', 'rw.id_rw')
             ->where('pengajuan_surat.id_rw', $id_rw)
             ->where('approval_surat.tanggal_approval_rt', '!=', null) // Sudah diapprove RT
             ->where(function($query) {
@@ -48,7 +51,8 @@ class SuratController extends Controller
                 'pengajuan_surat.*',
                 'approval_surat.status_approval',
                 'approval_surat.tanggal_approval_rt',
-                'approval_surat.tanggal_approval_rw'
+                'approval_surat.tanggal_approval_rw',
+                'rw.penanggung_jawab_rw as penanggung_jawab_rw'
             )
             ->get();
 
@@ -122,14 +126,22 @@ class SuratController extends Controller
         $query = DB::table('pengajuan_surat')
             ->join('warga', 'pengajuan_surat.nik_warga', '=', 'warga.nik_warga')
             ->leftJoin('approval_surat', 'pengajuan_surat.id_pengajuan_surat', '=', 'approval_surat.id_pengajuan_surat')
+            ->leftJoin('rt', 'pengajuan_surat.id_rt', '=', 'rt.id_rt')
+            ->leftJoin('rw', 'pengajuan_surat.id_rw', '=', 'rw.id_rw')
             ->select(
                 'pengajuan_surat.*',
                 'warga.nama as nama_warga',
+                'warga.nomer_kk as no_kk_warga',
+                'warga.jenis_kelamin as jenis_kelamin_warga',
+                'warga.agama as agama_warga',
+                'warga.tempat_dan_tanggal_lahir as ttl_warga',
                 'warga.alamat as alamat_warga',
                 'approval_surat.status_approval',
                 'approval_surat.status_rt',
                 'approval_surat.tanggal_approval_rt',
-                'approval_surat.tanggal_approval_rw'
+                'approval_surat.tanggal_approval_rw',
+                'rt.penanggung_jawab_rt as penanggung_jawab_rt', 
+                'rw.penanggung_jawab_rw as penanggung_jawab_rw' 
             );
 
         // Filter berdasarkan status jika ada

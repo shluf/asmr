@@ -20,6 +20,7 @@ import {
   AlertTitle 
 } from '@/components/ui/alert';
 import axios from 'axios';
+import PrimaryButton from '@/Components/PrimaryButton';
 
 const PengajuanMasalah = ({ idRT }) => {
   const [openItems, setOpenItems] = useState({});
@@ -85,54 +86,45 @@ const PengajuanMasalah = ({ idRT }) => {
                   <CardContent className="p-6">
                     <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
                       {/* Icon */}
-                      <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                      {/* <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
                         <ShieldCheck className="h-6 w-6 text-blue-600" />
-                      </div>
+                      </div> */}
 
                       {/* Surat Info */}
-                      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div>
-                          <p className="font-medium">Tanggal Pengajuan</p>
-                          <p className="text-sm text-blue-600">
-                            {format(new Date(surat.created_at), "EEEE, dd MMMM yyyy", {
-                              locale: idLocale,
-                            })}
+                      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                        <div className='flex flex-col h-full justify-between'>
+                          <p className="font-medium flex items-center h-1/2">Tanggal Pengajuan</p>
+                          <p className="text-sm flex h-1/2 text-blue-600">
+                            {format(new Date(surat.created_at), "EEEE, dd MMMM yyyy", { locale: idLocale })}
                           </p>
                         </div>
-                        <div>
-                          <p className="font-medium">Nama Pemohon</p>
-                          <p className="text-sm text-blue-600">{surat.nama}</p>
+                        <div className='flex flex-col h-full justify-between'>
+                          <p className="font-medium flex items-center h-1/2">Nama Pemohon</p>
+                          <p className="text-sm flex h-1/2 text-blue-600">{surat.nama}</p>
                         </div>
-                        <div>
-                          <p className="font-medium">Jenis Surat</p>
-                          <p className="text-sm text-blue-600">{surat.jenis_surat}</p>
+                        <div className='flex flex-col h-full justify-between'>
+                          <p className="font-medium flex items-center h-1/2">Status Tindak Lanjut</p>
+                          <p className="text-sm flex h-1/2 text-blue-600">{surat.status_approval}</p>
+                        </div>
+                        <div className='flex flex-col h-full justify-between'>
+                          <p className="font-medium flex items-center h-1/2">Penanggung Jawab</p>
+                          <p className="text-sm flex h-1/2 text-blue-600">{surat.penanggung_jawab_rt}</p>
+                        </div>
+                        <div className='flex flex-col h-full justify-between'>
+                          <p className="font-medium flex items-center h-1/2">Keperluan</p>
+                          <p className="text-sm flex h-1/2 text-blue-600">{surat.jenis_surat}</p>
+                        </div>
+                        <div className='flex flex-col h-full justify-between'>
+                          <p className="font-medium flex items-center h-1/2">NIK</p>
+                          <p className="text-sm flex h-1/2 text-blue-600">{surat.nik_warga}</p>
                         </div>
                       </div>
 
-                      {/* Action Buttons */}
-                      <div className="flex gap-2">
-                        <Button
-                          variant="destructive"
-                          disabled={loading[surat.id_pengajuan_surat]}
-                          onClick={() => handleAction(surat.id_pengajuan_surat, 'rejected')}
-                        >
-                          <X className="w-4 h-4 mr-2" />
-                          Tolak
-                        </Button>
-                        <Button
-                          variant="default"
-                          disabled={loading[surat.id_pengajuan_surat]}
-                          onClick={() => handleAction(surat.id_pengajuan_surat, 'approved')}
-                        >
-                          <Check className="w-4 h-4 mr-2" />
-                          Setujui
-                        </Button>
                         <CollapsibleTrigger asChild>
                           <Button variant="outline" className="rounded-full">
-                            {openItems[index] ? "Sembunyikan" : "Detail Surat"}
+                            {openItems[index] ? "Sembunyikan" : "Detail Pengajuan"}
                           </Button>
                         </CollapsibleTrigger>
-                      </div>
                     </div>
 
                     {/* Collapsible Content */}
@@ -184,6 +176,27 @@ const PengajuanMasalah = ({ idRT }) => {
                           <p className="font-semibold mb-2">Deskripsi Pengajuan:</p>
                           <p className="text-gray-700">{surat.deskripsi}</p>
                         </div>
+                      </div>
+                      {/* Action Buttons */}
+                      <div className="flex gap-2 justify-end items-center w-full">
+                        <PrimaryButton
+                          color="red"
+                          rounded='full'
+                          disabled={loading[surat.id_pengajuan_surat]}
+                          onClick={() => handleAction(surat.id_pengajuan_surat, 'rejected')}
+                        >
+                          <X className="w-4 h-4 mr-2" />
+                          Tolak
+                        </PrimaryButton>
+                        <PrimaryButton
+                          color="green"
+                          rounded='full'
+                          disabled={loading[surat.id_pengajuan_surat]}
+                          onClick={() => handleAction(surat.id_pengajuan_surat, 'approved')}
+                        >
+                          <Check className="w-4 h-4 mr-2" />
+                          Setujui
+                        </PrimaryButton>
                       </div>
                     </CollapsibleContent>
                   </CardContent>
