@@ -40,6 +40,10 @@ class RW extends Model
     {
         return $this->hasMany(PengajuanSurat::class, 'id_rw');
     }
+    public function programKerja()
+    {   
+        return $this->hasMany(ProgramKerja::class, 'id_rw');
+    }
 
     public function approvalSurat()
     {

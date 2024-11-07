@@ -16,10 +16,12 @@ class ProgramKerja extends Model
         'id_rw',
         'jenis_kegiatan',
         'tanggal',
-        'tempat'
+        'waktu',
+        'tempat',
+        'penanggung_jawab'
     ];
 
-    public function rw()
+    public function RW()
     {
         return $this->belongsTo(RW::class, 'id_rw');
     }

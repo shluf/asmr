@@ -13,8 +13,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id_rw');
             $table->foreign('id_rw')->references('id_rw')->on('rw')->onDelete('cascade');
             $table->string('jenis_kegiatan');
+            $table->string('waktu');
             $table->date('tanggal');
             $table->string('tempat');
+            $table->string('penanggung_jawab');
             $table->timestamps();
         });
     }

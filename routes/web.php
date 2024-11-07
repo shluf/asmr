@@ -11,6 +11,7 @@ use App\Http\Controllers\BiodatasUserController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\ProfileWargaController;
+use App\Http\Controllers\ProgramKerjaController;
 use App\Http\Controllers\RegisterRtRwController;
 use App\Http\Controllers\SuratController;
 
@@ -54,15 +55,19 @@ Route::middleware('auth')->group(function () {
     Route::post('/approvalRole/disapprove/{nik_warga}',[ApprovalRoleController::class,'disapproveUser'])->name("disapproveUser");
 
     Route::get('/pengajuan',[PengajuanController::class,'getDataWarga'])->name('pengajuan');
-<<<<<<< HEAD
-    Route::get('/pengajuan/history',[PengajuanController::class,'getDataPengajuan'])->name('pengajuan.surat');
-=======
     Route::get('/pengajuan/surat',[PengajuanController::class,'getDataPengajuan'])->name('pengajuan.surat');
->>>>>>> 12306c9f9a1cc7efa80ce361a82c2b4264520f69
     Route::post('/pengajuan/store',[PengajuanController::class,'store'])->name('pengajuan.store');
 
     Route::get('/profile-warga/{nik_warga}', [ProfileWargaController::class, 'show']);
     Route::put('/profile-warga/{nik_warga}', [ProfileWargaController::class, 'update']);
+
+    // Route::get('/program-kerja',[ProgramKerjaController::class,'index'])->name('program-kerja');
+    Route::prefix('program-kerja')->group(function(){
+        Route::get('/list',[ProgramKerjaController::class,'index'])->name('program-kerja.show');
+        Route::post('/store',[ProgramKerjaController::class,'store'])->name('program-kerja.store');
+        Route::put('/update/{id_program_kerja}',[ProgramKerjaController::class,'update'])->name('program-kerja.update');
+        Route::delete('/delete/{id_program_kerja}',[ProgramKerjaController::class,'destroy'])->name('program-kerja.destroy');
+    });
 
     Route::prefix('surat')->group(function () {
         Route::get('/pending/rt/{id_rt}', [SuratController::class, 'getPendingSuratRT']);

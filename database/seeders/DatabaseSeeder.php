@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         RWSeeder::class,
         RTSeeder::class,
         WargaSeeder::class,
+        ProgramKerjaSeeder::class,
     ]);
 
     }

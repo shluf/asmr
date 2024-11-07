@@ -8,6 +8,9 @@ import {
     ShieldCheck,
     History,
     FileUp,
+    CirclePlus,
+    Pencil,
+    CircleMinus,
 } from "lucide-react";
 import React from "react";
 import { UserFilled } from "./svg-icons";
@@ -28,10 +31,16 @@ const renderIcon = (keyword, size) => {
             return <ShoppingCart className={`h-${size} w-${size}`} />;
         case "shield-check":
             return <ShieldCheck className={`h-${size} w-${size}`} />;
-        case 'history':
+        case "history":
             return <History className={`h-${size} w-${size}`} />;
-        case 'file-up':
+        case "file-up":
             return <FileUp className={`h-${size} w-${size}`} />;
+        case "circle-minus":
+            return <circleMinus className={`h-${size} w-${size}`} />;
+        case "circle-plus":
+            return <circlePlus className={`h-${size} w-${size}`} />;
+        case "pencil":
+            return <pencil className={`h-${size} w-${size}`} />;
         default:
             return null;
     }

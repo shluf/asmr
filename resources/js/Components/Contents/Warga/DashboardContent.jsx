@@ -26,14 +26,26 @@ const activities = [
 ];
 
 const DashboardContent = () => {
+    const [dataProker, setDataProker] = useState([]);
     const [dataPengajuan, setDataPengajuan] = useState([]);
+    useEffect(() => {
+        fetchDataProker();
+    }, []);
+    const fetchDataProker = async () => {
+        try {
+            const response = await axios.get(route("program-kerja.show"));
+            console.log(response.data.proker);
+            setDataProker(response.data.proker);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
     useEffect(() => {
         fetchData();
     }, []);
     const fetchData = async () => {
         try {
             const response = await axios.get(route("pengajuan.surat"));
-
             console.log(response.data.pengajuan);
             setDataPengajuan(response.data.pengajuan);
         } catch (error) {
@@ -60,20 +72,20 @@ const DashboardContent = () => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {activities.map((activity, index) => (
+                            {dataProker.map((activity, index) => (
                                 <TableRow key={index}>
                                     <TableCell className="font-medium text-blue-600">
-                                        {activity.date}
+                                        {activity.tanggal}
                                     </TableCell>
-                                    <TableCell>{activity.time}</TableCell>
+                                    <TableCell>{activity.waktu}</TableCell>
                                     <TableCell className="text-blue-600">
-                                        {activity.activity}
+                                        {activity.jenis_kegiatan}
                                     </TableCell>
                                     <TableCell className="text-blue-600">
-                                        {activity.location}
+                                        {activity.tempat}
                                     </TableCell>
                                     <TableCell>
-                                        {activity.responsible}
+                                        {activity.penanggung_jawab}
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -133,7 +145,7 @@ const DashboardContent = () => {
                                             <Button
                                                 variant="outline"
                                                 className="rounded-full mt-2"
-                                                >
+                                            >
                                                 View Details
                                             </Button>
                                         </Link>
