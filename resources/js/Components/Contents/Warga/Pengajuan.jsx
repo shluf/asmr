@@ -58,7 +58,7 @@ const Pengajuan = () => {
                 <h2 className="text-2xl font-bold text-blue-900 mb-6">
                     Form Pengajuan
                 </h2>
-                <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
+                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
                 <p className="text-blue-2    mt-4">
                     Mohon Isi Formulir dengan Benar untuk Mempercepat Proses
                     Layanan Anda
@@ -157,7 +157,7 @@ const Pengajuan = () => {
                     <textarea
                         className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         rows="4"
-                        placeholder="Deskripsi keluhan"
+                        placeholder="Detail Pengajuan"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />

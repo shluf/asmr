@@ -14,7 +14,7 @@ export default function Dashboard({ currentPage, nik }) {
             case 'pengajuan':
                 return <Pengajuan />;
             case 'histori':
-                return <HistoriPengajuan />;
+                return <HistoriPengajuan nikWarga={nik} />;
             case 'akun':
                 return <Akun nikWarga={nik} />;
             case 'bantuan':

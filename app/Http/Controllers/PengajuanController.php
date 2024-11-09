@@ -108,6 +108,7 @@ class PengajuanController extends Controller
 
             // Fetch the Warga data related to the user
             $dataPengajuan = PengajuanSurat::where('nik_warga', $warga->nik_warga)
+            ->limit(2)
             ->get();
             
             return response()->json([
@@ -120,5 +121,55 @@ class PengajuanController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }   
+    }
+
+    public function getHistoryData($nik_warga)
+    {
+        $pengajuanSurat = PengajuanSurat::with('approvalSurat')
+        ->where('nik_warga', $nik_warga)
+        ->get();
+
+        $result = $pengajuanSurat->map(function ($pengajuan) {
+            $progress = [];
+
+            if ($pengajuan->approvalSurat) {
+                $approval = $pengajuan->approvalSurat;
+
+                $progress[] = [
+                    'title' => 'Pengajuan sedang diproses',
+                    'description' => 'Menunggu persetujuan RT',
+                    'status' => $approval->status_rt === 'pending' ? 'in-progress' : 'approved',
+                ];
+
+                $progress[] = [
+                    'title' => 'Proses Verifikasi RT',
+                    'description' => $approval->status_rt === "pending" ? 'Menunggu persetujuan RT' : ($approval->status_rt === "approved" ? "Pengajuan telah disetujui RT" : "Pengajuan ditolak RT"),
+                    'tgl_approval' => $approval->tanggal_approval_rt,
+                    'status' => $approval->status_rt,
+                ];
+
+                $progress[] = [
+                    'title' => 'Proses Verifikasi RW',
+                    'description' => $approval->status_rw === "pending" ? 'Menunggu persetujuan RT' : ($approval->status_rw === "approved" ? "Pengajuan telah disetujui RW" : "Pengajuan ditolak RW"),
+                    'tgl_approval' => $approval->tanggal_approval_rw,
+                    'status' => $approval->status_rw,
+                ];
+
+                $progress[] = [
+                    'title' => 'Penerbitan Surat',
+                    'description' => 'Surat sedang dalam proses penerbitan',
+                    'status' => $approval->status_rw === 'approved' && $approval->status_rt === 'approved' ? 'completed' : 'pending',
+                ];
+            }
+
+            return [
+                'created_at' => $pengajuan->created_at->format('Y-m-d'),
+                'jenis_surat' => $pengajuan->jenis_surat,
+                'status_pengajuan' => $pengajuan->status_pengajuan,
+                'progress' => $progress,
+            ];
+        });
+
+        return response()->json($result);
     }
 }

@@ -47,7 +47,7 @@ const DashboardContent = ({ idRT }) => {
     };
 
     return (
-        <div className="space-y-8 overflow-hidden">
+        <div className="space-y-8 overflow-hidden w-full">
             <Card>
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold">

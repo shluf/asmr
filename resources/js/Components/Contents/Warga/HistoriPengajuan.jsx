@@ -49,27 +49,27 @@ const dummyData = [
     },
   ]
 
-const HistoriPengajuan = ({ dataPengajuan = dummyData }) => {
-    // const [dataPengajuan, setDataPengajuan] = useState([]);
-    // useEffect(() => {
-    //     fetchData();
-    // }, []);
-    // const fetchData = async () => {
-    //     try {
-    //         const response = await axios.get(route("pengajuan.surat"));
+const HistoriPengajuan = ({ nikWarga }) => {
+    const [dataPengajuan, setDataPengajuan] = useState([]);
+    useEffect(() => {
+        fetchData();
+    }, []);
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(`/history-warga/${nikWarga}`);
 
-    //         console.log(response.data.pengajuan);
-    //         setDataPengajuan(response.data.pengajuan);
-    //     } catch (error) {
-    //         console.error("Error fetching data:", error);
-    //     }
-    // };
+            // console.log(response.data.pengajuan);
+            setDataPengajuan(response.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
     const [openItems, setOpenItems] = useState({})
 
     const getStatusIcon = (status) => {
       switch (status) {
-        case "completed":
+        case "approved":
           return <Check className="h-6 w-6 text-white" />
         case "in-progress":
           return <Cog className="h-6 w-6 text-white" />
@@ -82,7 +82,7 @@ const HistoriPengajuan = ({ dataPengajuan = dummyData }) => {
   
     const getStatusColor = (status) => {
       switch (status) {
-        case "completed":
+        case "approved":
           return "bg-green-500"
         case "in-progress":
           return "bg-yellow-500"
@@ -143,6 +143,7 @@ const HistoriPengajuan = ({ dataPengajuan = dummyData }) => {
                         <CollapsibleContent>
                         <div className="mt-6 space-y-4">
                             {submission.progress.map((step, stepIndex) => (
+                               step.status !== "pending" ?
                             <div key={stepIndex} className="flex gap-4">
                                 <div
                                 className={`w-10 h-10 rounded-full flex items-center justify-center ${getStatusColor(
@@ -156,6 +157,7 @@ const HistoriPengajuan = ({ dataPengajuan = dummyData }) => {
                                 <p className="text-sm text-gray-500">{step.description}</p>
                                 </div>
                             </div>
+                              : '' 
                             ))}
                         </div>
                         </CollapsibleContent>

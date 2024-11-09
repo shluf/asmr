@@ -38,6 +38,6 @@ class PengajuanSurat extends Model
 
     public function approvalSurat()
     {
-        return $this->hasMany(ApprovalSurat::class, 'id_pengajuan_surat');
+        return $this->hasOne(ApprovalSurat::class, 'id_pengajuan_surat', 'id_pengajuan_surat');
     }
 }
