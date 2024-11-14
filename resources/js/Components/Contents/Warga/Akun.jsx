@@ -5,13 +5,13 @@ import TextInput from '@/Components/TextInput'
 import { useForm } from '@inertiajs/react'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { PenSquare } from 'lucide-react'
+import { PenSquare, User2, UserCircle } from 'lucide-react'
 import { Card } from '@/Components/ui/card'
 import { Input } from '@/Components/ui/input'
+import { fetchAkunData } from '@/hooks/Warga'
 
 const Akun = ({ nikWarga }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [focusedField, setFocusedField] = useState("phone");
   const [profileWarga, setProfileWarga] = useState({
     user: {}
   });
@@ -25,52 +25,8 @@ const Akun = ({ nikWarga }) => {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`/profile-warga/${nikWarga}`);
-        if (response.data.status === 'success') {
-          setProfileWarga(response.data.data);
-          // Pre-fill form data
-          setData({
-            phone: response.data.data.phone || "",
-            alamat: response.data.data.alamat || "",
-            kabupaten: response.data.data.kabupaten || "",
-            provinsi: response.data.data.provinsi || "",
-            agama: response.data.data.agama || "",
-          });
-        }
-      } catch (error) {
-        console.error('Error fetching profile:', error);
-      }
-    };
-    fetchData();
+    fetchAkunData(setProfileWarga, setData, nikWarga);
   }, [nikWarga]);
-
-  const InputField = ({
-    label,
-    id,
-    type = "text",
-    value,
-    onChange,
-    error,
-    ...props
-  }) => (
-    <div>
-      <InputLabel htmlFor={id} value={label} />
-      <TextInput
-        id={id}
-        name={id}
-        type={type}
-        value={value}
-        className="mt-1 block w-full"
-        isFocused={focusedField === id}
-        onFocus={() => setFocusedField(id)}
-        onChange={(e) => onChange(id, e.target.value)}
-        {...props}
-      />
-      <InputError message={error} className="mt-1" />
-    </div>
-  );
 
   const submit = async (e) => {
     e.preventDefault();
@@ -93,17 +49,13 @@ const Akun = ({ nikWarga }) => {
       <div className="flex flex-col justify-center items-center md:items-start md:flex-row gap-8">
         <div className="flex-shrink-0">
           <div className="relative">
-            <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-green">
-              <img
-                alt="Profile"
-                className="w-full h-full object-fit"
-                src="/img/profile.png"
-              />
+            <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-green p-6 text-green">
+              <User2 className='w-full h h-full' />
             </div>
             <div className="absolute bottom-0 right-0 bg-green text-white px-3 py-1 rounded-full text-sm font-medium">
               WARGA
             </div>
-            <button className="absolute -right-2 -top-2 bg-white rounded-full p-1.5 shadow-lg border">
+            <button onClick={() => setIsEditMode(!isEditMode)} className="absolute -right-2 -top-2 bg-white rounded-full p-1.5 shadow-lg border">
               <PenSquare className="w-4 h-4 text-green" />
             </button>
           </div>

@@ -23,7 +23,6 @@ import axios from "axios";
 import { Link } from "@inertiajs/react";
 import { ca, id as idLocale } from "date-fns/locale";
 import { format } from "date-fns";
-import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
 import { Calendar } from "@/components/ui/calendar";
 import {
     Popover,
@@ -33,11 +32,16 @@ import {
 import { CalendarIcon, CirclePlus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CircleMinus, Pencil } from "lucide-react";
+import { fetchProkerData } from "@/hooks/Common";
+import { fetchPengajuanTerbaruData } from "@/hooks/RW";
+import PrimaryButton from "@/Components/PrimaryButton";
+import { Skeleton } from "@/Components/ui/skeleton";
 
 const DashboardContent = ({ idRW }) => {
     const [dataProker, setDataProker] = useState([]);
     const [pengajuanTerakhir, setPengajuanTerakhir] = useState([]);
     const [showEditDialog, setShowEditDialog] = useState(false);
+    const [prokerIsLoading, setProkerIsLoading] = useState(true);
     const [editProker, setEditProker] = useState({
         tanggal: "",
         waktu: "",
@@ -47,31 +51,9 @@ const DashboardContent = ({ idRW }) => {
     });
 
     useEffect(() => {
-        fetchDataProker();
+        fetchProkerData(setDataProker, setProkerIsLoading);
+        fetchPengajuanTerbaruData(setPengajuanTerakhir, idRW);
     }, []);
-    const fetchDataProker = async () => {
-        try {
-            const response = await axios.get(route("program-kerja.show"));
-            console.log(response.data.proker);
-            setDataProker(response.data.proker);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(
-                `/surat/pengajuan/?id_rw=${idRW}&length=2`
-            );
-            setPengajuanTerakhir(response.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
 
     const handleEditChange = (e) => {
         setEditProker({ ...editProker, [e.target.name]: e.target.value });
@@ -85,8 +67,8 @@ const DashboardContent = ({ idRW }) => {
     const DeletehandleApprove = async (id) => {
         try {
             const response = await axios.delete(`/program-kerja/delete/${id}`);
-            console.log(response);
-            fetchDataProker();
+            // console.log(response);
+            fetchProkerData(setDataProker);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -98,8 +80,8 @@ const DashboardContent = ({ idRW }) => {
                 `/program-kerja/update/${editProker.id_program_kerja}`,
                 editProker
             );
-            console.log(response);
-            fetchDataProker();
+            // console.log(response);
+            fetchProkerData(setDataProker);
             setShowEditDialog(false);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -112,8 +94,8 @@ const DashboardContent = ({ idRW }) => {
                 `/program-kerja/store`,
                 tambahProker
             );
-            console.log(response);
-            fetchDataProker();
+            // console.log(response);
+            fetchProkerData(setDataProker);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -147,7 +129,6 @@ const DashboardContent = ({ idRW }) => {
                         Kegiatan RT/RW
                     </CardTitle>
                 </CardHeader>
-
                 <CardContent>
                     <Table>
                         <TableHeader>
@@ -161,52 +142,79 @@ const DashboardContent = ({ idRW }) => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {dataProker.map((Proker, index) => (
-                                <TableRow key={index}>
-                                    <TableCell className="font-medium text-blue-600">
-                                        {Proker.tanggal}
-                                    </TableCell>
-                                    <TableCell className="text-blue-600">
-                                        {Proker.waktu}
-                                    </TableCell>
-
-                                    <TableCell circle-minus>
-                                        {Proker.jenis_kegiatan}
-                                    </TableCell>
-                                    <TableCell className="text-blue-600">
-                                        {Proker.tempat}
-                                    </TableCell>
-                                    <TableCell>
-                                        {Proker.penanggung_jawab}
-                                    </TableCell>
-                                    <TableCell>
-                                        <div className="flex space-x-2">
-                                            <Button
-                                                type="button"
-                                                variant="outline"
-                                                className="rounded-full mt-2"
-                                                onClick={() =>
-                                                    handleEditApprove(Proker)
-                                                }
-                                            >
-                                                <Pencil size={12} />
-                                            </Button>
-                                            <Button
-                                                type="button"
-                                                variant="outline"
-                                                className="rounded-full mt-2"
-                                                onClick={() =>
-                                                    DeletehandleApprove(
-                                                        Proker.id_program_kerja
-                                                    )
-                                                }
-                                            >
-                                                <CircleMinus size={12} />
-                                            </Button>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                            {prokerIsLoading
+                                ? [...Array(3)].map((_, index) => (
+                                      <TableRow key={`skeleton-${index}`}>
+                                          <TableCell>
+                                              <Skeleton className="h-6 w-24" />
+                                          </TableCell>
+                                          <TableCell>
+                                              <Skeleton className="h-6 w-16" />
+                                          </TableCell>
+                                          <TableCell>
+                                              <Skeleton className="h-6 w-32" />
+                                          </TableCell>
+                                          <TableCell>
+                                              <Skeleton className="h-6 w-24" />
+                                          </TableCell>
+                                          <TableCell>
+                                              <Skeleton className="h-6 w-28" />
+                                          </TableCell>
+                                          <TableCell>
+                                              <div className="flex space-x-2">
+                                                  <Skeleton className="h-8 w-8 rounded-full" />
+                                                  <Skeleton className="h-8 w-8 rounded-full" />
+                                              </div>
+                                          </TableCell>
+                                      </TableRow>
+                                  ))
+                                : dataProker.map((Proker, index) => (
+                                      <TableRow key={index}>
+                                          <TableCell className="font-medium text-blue-600">
+                                              {Proker.tanggal}
+                                          </TableCell>
+                                          <TableCell className="text-blue-600">
+                                              {Proker.waktu}
+                                          </TableCell>
+                                          <TableCell>
+                                              {Proker.jenis_kegiatan}
+                                          </TableCell>
+                                          <TableCell className="text-blue-600">
+                                              {Proker.tempat}
+                                          </TableCell>
+                                          <TableCell>
+                                              {Proker.penanggung_jawab}
+                                          </TableCell>
+                                          <TableCell>
+                                              <div className="flex space-x-2">
+                                                  <Button
+                                                      type="button"
+                                                      variant="outline"
+                                                      className="rounded-full mt-2"
+                                                      onClick={() =>
+                                                          handleEditApprove(
+                                                              Proker
+                                                          )
+                                                      }
+                                                  >
+                                                      <Pencil size={12} />
+                                                  </Button>
+                                                  <Button
+                                                      type="button"
+                                                      variant="outline"
+                                                      className="rounded-full mt-2"
+                                                      onClick={() =>
+                                                          DeletehandleApprove(
+                                                              Proker.id_program_kerja
+                                                          )
+                                                      }
+                                                  >
+                                                      <CircleMinus size={12} />
+                                                  </Button>
+                                              </div>
+                                          </TableCell>
+                                      </TableRow>
+                                  ))}
                         </TableBody>
                         <TableHeader>
                             <TableRow>
@@ -311,14 +319,46 @@ const DashboardContent = ({ idRW }) => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                     {!pengajuanTerakhir.data ? (
-                        <>Loading</>
+                        <>
+                            {[...Array(2)].map((_, index) => (
+                                <Card key={index}>
+                                    <CardContent className="p-6">
+                                        <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                                            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                                                {[...Array(6)].map((_, i) => (
+                                                    <div
+                                                        key={i}
+                                                        className="flex flex-col h-full justify-between"
+                                                    >
+                                                        <Skeleton className="h-4 w-24 mb-2" />
+                                                        <Skeleton className="h-4 w-32" />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <Skeleton className="h-10 w-32 rounded-full" />
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </>
                     ) : !pengajuanTerakhir.data.length > 0 ? (
-                        <Alert>
-                            <AlertTitle>Tidak ada surat pending</AlertTitle>
-                            <AlertDescription>
-                                Semua pengajuan surat telah diproses
-                            </AlertDescription>
-                        </Alert>
+                        <Card>
+                            <CardContent className="p-6">
+                                <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                                    <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                                        <ShieldCheck className="h-6 w-6 text-orange" />
+                                    </div>
+                                    <div className="flex flex-col h-full justify-between">
+                                        <p className="font-medium flex items-center h-1/2">
+                                            Tidak ada surat pending
+                                        </p>
+                                        <p className="text-sm flex h-1/2 text-orange">
+                                            Semua pengajuan surat telah diproses
+                                        </p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
                     ) : (
                         pengajuanTerakhir.data.map((submission, index) => (
                             <Card key={index}>
@@ -428,15 +468,18 @@ const DashboardContent = ({ idRW }) => {
                             />
                         </div>
                         <DialogFooter>
-                            <Button
-                                variant="outline"
+                            <PrimaryButton
+                                color={"yellow"}
                                 onClick={() => setShowEditDialog(false)}
                             >
                                 Cancel
-                            </Button>
-                            <Button onClick={handleSubmitEdit}>
+                            </PrimaryButton>
+                            <PrimaryButton
+                                color={"green"}
+                                onClick={handleSubmitEdit}
+                            >
                                 Save Changes
-                            </Button>
+                            </PrimaryButton>
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>

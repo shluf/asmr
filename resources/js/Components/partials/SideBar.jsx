@@ -1,16 +1,14 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import NavLink from "@/Components/NavLink";
 import { Badge } from "@/components/ui/badge";
-import { pageAdminRoutes } from "@/utility/pageList";
+import { useNotificationPolling } from "@/utility/SideBarList";
 import renderIcon from "@/utility/renderIcon";
 import { Link } from "@inertiajs/react";
-
-import { useState } from "react"
 import { cn } from "@/lib/utils"
 
-const AdminSidebBar = ({ color }) => {
 
-  const pageList = pageAdminRoutes;
+const SidebBar = ({ color, userRole }) => {
+  const routes = useNotificationPolling(userRole);
 
   return (
     <>
@@ -24,7 +22,7 @@ const AdminSidebBar = ({ color }) => {
                     <div className="flex-1">
 
                         <nav className="grid items-start text-sm font-medium">
-                            {pageList.map((data, index) => (
+                            {routes.map((data, index) => (
                                 <NavLink
                                     key={index}
                                     href={data.route === 'dashboard' ? route('dashboard') : route('dashboard', { page: data.route })}
@@ -51,7 +49,7 @@ const AdminSidebBar = ({ color }) => {
 
         <div className="absolute z-20 block md:hidden bottom-0 left-0 right-0 bg-white border-t border-gray-200">
             <nav className="flex">
-            {pageList.map((data, index) => (
+            {routes.map((data, index) => (
                 <Link
                 key={index}
                 href={data.route === 'dashboard' ? route('dashboard') : route('dashboard', { page: data.route })}
@@ -59,7 +57,7 @@ const AdminSidebBar = ({ color }) => {
                     "flex flex-col items-center justify-center flex-1 py-2 px-1",
                     "transition-colors duration-200 ease-in-out",
                     route().current('dashboard', { page: data.route })
-                    ? "text-blue-600 bg-blue-50"
+                    ? `text-${color} bg-${color}-50`
                     : "text-gray-600 hover:bg-gray-50"
                 )}
                 >
@@ -69,8 +67,8 @@ const AdminSidebBar = ({ color }) => {
             ))}
             </nav>
         </div>
-</>
+    </>
   )
 }
 
-export default AdminSidebBar
+export default SidebBar

@@ -21,11 +21,11 @@ import {
 } from '@/components/ui/alert';
 import axios from 'axios';
 import PrimaryButton from '@/Components/PrimaryButton';
+import { Skeleton } from '@/Components/ui/skeleton';
 
 const RekapPengajuan = ({ idRT }) => {
   const [openItems, setOpenItems] = useState({});
   const [pendingSurat, setPendingSurat] = useState([]);
-  const [loading, setLoading] = useState({});
 
   useEffect(() => {
     fetchData();
@@ -39,26 +39,6 @@ const RekapPengajuan = ({ idRT }) => {
       }
   };
 
-  // Handle approval/rejection
-  const handleAction = async (id_pengajuan_surat, status) => {
-    setLoading({ ...loading, [id_pengajuan_surat]: true });
-    
-    try {
-      await axios.put(`/surat/approval/${id_pengajuan_surat}`, {
-        status_approval: status,
-        approver_type: 'rt',
-        id_approver: idRT
-      });
-      
-      fetchData();
-      
-    } catch (error) {
-      console.error('Error updating status:', error);
-    }
-    
-    setLoading({ ...loading, [id_pengajuan_surat]: false });
-  };
-
   return (
     <div className="w-full space-y-4">
     <Card>
@@ -66,7 +46,27 @@ const RekapPengajuan = ({ idRT }) => {
         <CardTitle>Rekapitulasi Pengajuan</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {!pendingSurat.data ? (<>Loading</>) : !pendingSurat.data.length > 0 ? (
+        {!pendingSurat.data ? (
+              <>
+              {[...Array(3)].map((_, index) => (
+                <Card key={index}>
+                  <CardContent className="p-6">
+                    <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                        {[...Array(6)].map((_, i) => (
+                          <div key={i} className='flex flex-col h-full justify-between'>
+                            <Skeleton className="h-4 w-24 mb-2" />
+                            <Skeleton className="h-4 w-32" />
+                          </div>
+                        ))}
+                      </div>
+                      <Skeleton className="h-10 w-32" />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </>
+        ) : !pendingSurat.data.length > 0 ? (
           <Alert>
             <AlertTitle>Tidak ada surat pending</AlertTitle>
             <AlertDescription>

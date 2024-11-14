@@ -11,47 +11,24 @@ import {
 } from "@/Components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Button } from "@/Components/ui/button";
-import axios from "axios";
 import { UserFilled } from "@/utility/svg-icons";
 import { Link } from "@inertiajs/react";
+import { fetchPengajuanData } from "@/hooks/Warga";
+import { fetchProkerData } from "@/hooks/Common";
+import { Skeleton } from "@/Components/ui/skeleton";
 
-const activities = [
-    {
-        date: "Senin, 10 September 2024",
-        time: "19.00-21.00",
-        activity: "Rapat Koordinasi RT",
-        location: "Balai Warga RT 02",
-        responsible: "Ketua RT 02",
-    },
-];
 
 const DashboardContent = () => {
     const [dataProker, setDataProker] = useState([]);
     const [dataPengajuan, setDataPengajuan] = useState([]);
+    const [prokerIsLoading, setProkerIsLoading] = useState(true);
+    const [pengajuanIsLoading, setPengajuanIsLoading] = useState(true);
+
     useEffect(() => {
-        fetchDataProker();
+        fetchProkerData(setDataProker, setProkerIsLoading);
+        fetchPengajuanData(setDataPengajuan, setPengajuanIsLoading);
     }, []);
-    const fetchDataProker = async () => {
-        try {
-            const response = await axios.get(route("program-kerja.show"));
-            console.log(response.data.proker);
-            setDataProker(response.data.proker);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-    useEffect(() => {
-        fetchData();
-    }, []);
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(route("pengajuan.surat"));
-            console.log(response.data.pengajuan);
-            setDataPengajuan(response.data.pengajuan);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
+
     return (
         <div className="space-y-8 overflow-hidden w-full">
             <Card>
@@ -72,23 +49,45 @@ const DashboardContent = () => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {dataProker.map((activity, index) => (
-                                <TableRow key={index}>
-                                    <TableCell className="font-medium text-blue-600">
-                                        {activity.tanggal}
-                                    </TableCell>
-                                    <TableCell>{activity.waktu}</TableCell>
-                                    <TableCell className="text-blue-600">
-                                        {activity.jenis_kegiatan}
-                                    </TableCell>
-                                    <TableCell className="text-blue-600">
-                                        {activity.tempat}
-                                    </TableCell>
-                                    <TableCell>
-                                        {activity.penanggung_jawab}
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                        {prokerIsLoading
+                                ? [...Array(3)].map((_, index) => (
+                                    <TableRow key={`skeleton-${index}`}>
+                                        <TableCell>
+                                            <Skeleton className="h-6 w-24" />
+                                        </TableCell>
+                                        <TableCell>
+                                            <Skeleton className="h-6 w-16" />
+                                        </TableCell>
+                                        <TableCell>
+                                            <Skeleton className="h-6 w-32" />
+                                        </TableCell>
+                                        <TableCell>
+                                            <Skeleton className="h-6 w-24" />
+                                        </TableCell>
+                                        <TableCell>
+                                            <Skeleton className="h-6 w-28" />
+                                        </TableCell>
+                                    </TableRow>
+                                  ))
+                                : dataProker.map((Proker, index) => (
+                                      <TableRow key={index}>
+                                          <TableCell className="font-medium text-blue-600">
+                                              {Proker.tanggal}
+                                          </TableCell>
+                                          <TableCell className="text-blue-600">
+                                              {Proker.waktu}
+                                          </TableCell>
+                                          <TableCell>
+                                              {Proker.jenis_kegiatan}
+                                          </TableCell>
+                                          <TableCell className="text-blue-600">
+                                              {Proker.tempat}
+                                          </TableCell>
+                                          <TableCell>
+                                              {Proker.penanggung_jawab}
+                                          </TableCell>
+                                      </TableRow>
+                                  ))}
                         </TableBody>
                     </Table>
                 </CardContent>
@@ -101,7 +100,30 @@ const DashboardContent = () => {
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    {dataPengajuan.map((dataPengajuan, index) => (
+                {pengajuanIsLoading ? (
+                        <>
+                            {[...Array(2)].map((_, index) => (
+                                <Card key={index}>
+                                    <CardContent className="p-6">
+                                        <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                                            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                                                {[...Array(6)].map((_, i) => (
+                                                    <div
+                                                        key={i}
+                                                        className="flex flex-col h-full justify-between"
+                                                    >
+                                                        <Skeleton className="h-4 w-24 mb-2" />
+                                                        <Skeleton className="h-4 w-32" />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <Skeleton className="h-10 w-32 rounded-full" />
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </>
+                    ) : dataPengajuan.map((dataPengajuan, index) => (
                         <Card key={index}>
                             <CardContent className="flex items-center p-6">
                                 <div className="w-12 h-12 bg-green-3 rounded-[12px] flex items-center justify-center text-2xl">
@@ -141,14 +163,14 @@ const DashboardContent = () => {
                                                 {dataPengajuan.status_pengajuan}
                                             </p>
                                         </div>
-                                        <Link href="/dashboard/histori">
                                             <Button
                                                 variant="outline"
                                                 className="rounded-full mt-2"
                                             >
+                                        <Link href="/dashboard/histori">
                                                 View Details
-                                            </Button>
                                         </Link>
+                                            </Button>
                                     </div>
                                 </div>
                             </CardContent>

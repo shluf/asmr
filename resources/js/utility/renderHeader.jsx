@@ -1,4 +1,22 @@
-import { pageAdminRoutes, pageRTRWRoutes, pageWargaRoutes } from "./pageList";
+const pageAdminRoutes = [
+    { name: 'Dashboard', route: ''},
+    { name: 'Biodata User', route: 'biodataUser'},
+    { name: 'Approval Role', route: 'approvalRole'},
+    { name: 'Tambah RT/RW', route: 'tambahRTRW'}
+  ]
+const pageRTRWRoutes = [
+    { name: 'Dashboard', route: ''},
+    { name: 'Pengajuan Warga', route: 'pengajuanMasalah'},
+    { name: 'Rekap Pengajuan', route: 'rekapPengajuan'},
+    { name: 'Bantuan', route: 'bantuan'}
+  ]
+const pageWargaRoutes = [
+    { name: 'Dashboard', route: ''},
+    { name: 'Pengajuan', route: 'pengajuan'},
+    { name: 'Histori Pengajuan', route: 'histori' },
+    { name: 'Akun', route: 'akun'},
+    { name: 'Bantuan', route: 'bantuan'}
+  ]
 
 export const renderHeader = (setHeader, user) => {
     const pageListRtRw = pageRTRWRoutes;
@@ -30,6 +48,9 @@ export const renderHeader = (setHeader, user) => {
                         setHeader(data.name);
                     }
                 });
+                break;
+            default:
+                setHeader("Aplikasi Surat Menyurat");
                 break;
         }
     }

@@ -15,36 +15,19 @@ import { UserFilled } from "@/utility/svg-icons";
 import { Link } from "@inertiajs/react";
 import { format } from "date-fns";
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
+import { fetchProkerData } from "@/hooks/Common";
+import { fetchPengajuanTerbaruData } from "@/hooks/RT";
+import { Skeleton } from "@/Components/ui/skeleton";
 
 const DashboardContent = ({ idRT }) => {
     const [pengajuanTerakhir, setPengajuanTerakhir] = useState([]);
     const [dataProker, setDataProker] = useState([]);
+    const [prokerIsLoading, setProkerIsLoading] = useState(true);
+    
     useEffect(() => {
-        fetchDataProker();
+        fetchProkerData(setDataProker, setProkerIsLoading);
+        fetchPengajuanTerbaruData(setPengajuanTerakhir, idRT);
     }, []);
-    const fetchDataProker = async () => {
-        try {
-            const response = await axios.get(route("program-kerja.show"));
-            console.log(response.data.proker);
-            setDataProker(response.data.proker);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(
-                `/surat/pengajuan/?id_rt=${idRT}&length=2`
-            );
-            setPengajuanTerakhir(response.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
 
     return (
         <div className="space-y-8 overflow-hidden w-full">
@@ -66,7 +49,33 @@ const DashboardContent = ({ idRT }) => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {dataProker.map((activity, index) => (
+                        {prokerIsLoading
+                                ? [...Array(3)].map((_, index) => (
+                                      <TableRow key={`skeleton-${index}`}>
+                                          <TableCell>
+                                              <Skeleton className="h-6 w-24" />
+                                          </TableCell>
+                                          <TableCell>
+                                              <Skeleton className="h-6 w-16" />
+                                          </TableCell>
+                                          <TableCell>
+                                              <Skeleton className="h-6 w-32" />
+                                          </TableCell>
+                                          <TableCell>
+                                              <Skeleton className="h-6 w-24" />
+                                          </TableCell>
+                                          <TableCell>
+                                              <Skeleton className="h-6 w-28" />
+                                          </TableCell>
+                                          <TableCell>
+                                              <div className="flex space-x-2">
+                                                  <Skeleton className="h-8 w-8 rounded-full" />
+                                                  <Skeleton className="h-8 w-8 rounded-full" />
+                                              </div>
+                                          </TableCell>
+                                      </TableRow>
+                                  ))
+                                : dataProker.map((activity, index) => (
                                 <TableRow key={index}>
                                     <TableCell className="font-medium text-blue-600">
                                         {activity.tanggal}
@@ -96,7 +105,28 @@ const DashboardContent = ({ idRT }) => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                     {!pengajuanTerakhir.data ? (
-                        <>Loading</>
+                        <>
+                        {[...Array(2)].map((_, index) => (
+                            <Card key={index}>
+                                <CardContent className="p-6">
+                                    <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                                        <div className="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                                            {[...Array(6)].map((_, i) => (
+                                                <div
+                                                    key={i}
+                                                    className="flex flex-col h-full justify-between"
+                                                >
+                                                    <Skeleton className="h-4 w-24 mb-2" />
+                                                    <Skeleton className="h-4 w-32" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <Skeleton className="h-10 w-32 rounded-full" />
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </>
                     ) : !pengajuanTerakhir.data.length > 0 ? (
                         <Alert>
                             <AlertTitle>Tidak ada surat pending</AlertTitle>

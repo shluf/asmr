@@ -21,6 +21,8 @@ import {
 } from '@/components/ui/alert';
 import axios from 'axios';
 import PrimaryButton from '@/Components/PrimaryButton';
+import { fetchPengajuanMasalahData } from '@/hooks/RW';
+import { Skeleton } from '@/Components/ui/skeleton';
 
 const PengajuanMasalah = ({ idRW }) => {
   const [openItems, setOpenItems] = useState({});
@@ -28,16 +30,8 @@ const PengajuanMasalah = ({ idRW }) => {
   const [loading, setLoading] = useState({});
 
   useEffect(() => {
-    fetchData();
+    fetchPengajuanMasalahData(setPendingSurat);
   }, []);
-  const fetchData = async () => {
-      try {
-          const response = await axios.get(`/surat/pending/rw/${idRW}`);
-          setPendingSurat(response.data);
-      } catch (error) {
-          console.error("Error fetching data:", error);
-      }
-  };
 
   // Handle approval/rejection
   const handleAction = async (id_pengajuan_surat, status) => {
@@ -66,13 +60,40 @@ const PengajuanMasalah = ({ idRW }) => {
           <CardTitle>Surat Menunggu Persetujuan RW</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {!pendingSurat.data ? (<>Loading</>) : !pendingSurat.data.length > 0 ? (
-            <Alert>
-              <AlertTitle>Tidak ada surat pending</AlertTitle>
-              <AlertDescription>
-                Semua pengajuan surat telah diproses
-              </AlertDescription>
-            </Alert>
+          {!pendingSurat.data ? (
+            <>
+              {[...Array(3)].map((_, index) => (
+                <Card key={index}>
+                  <CardContent className="p-6">
+                    <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                        {[...Array(6)].map((_, i) => (
+                          <div key={i} className='flex flex-col h-full justify-between'>
+                            <Skeleton className="h-4 w-24 mb-2" />
+                            <Skeleton className="h-4 w-32" />
+                          </div>
+                        ))}
+                      </div>
+                      <Skeleton className="h-10 w-32" />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </>
+            ) : !pendingSurat.data.length > 0 ? (
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                  <ShieldCheck className="h-6 w-6 text-orange" />
+                </div>               
+                <div className='flex flex-col h-full justify-between'>
+                  <p className="font-medium flex items-center h-1/2">Tidak ada surat pending</p>
+                  <p className="text-sm flex h-1/2 text-orange">Semua pengajuan surat telah diproses</p>
+                </div>
+              </div>
+              </CardContent>
+            </Card>
           ) : (
             pendingSurat.data.map((surat, index) => (
               <Collapsible
@@ -85,10 +106,6 @@ const PengajuanMasalah = ({ idRW }) => {
                 <Card>
                   <CardContent className="p-6">
                     <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
-                      {/* Icon */}
-                      {/* <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                        <ShieldCheck className="h-6 w-6 text-blue-600" />
-                      </div> */}
 
                       {/* Surat Info */}
                       <div className="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">

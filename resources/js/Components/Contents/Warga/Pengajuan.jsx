@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { fetchPengajuanWargaData } from "@/hooks/Warga";
+import { Skeleton } from "@/Components/ui/skeleton";
 
 const Pengajuan = () => {
     const [dataWarga, setDataWarga] = useState({});
@@ -8,18 +10,8 @@ const Pengajuan = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchData();
+        fetchPengajuanWargaData(setDataWarga, setLoading);
     }, []);
-
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(route("pengajuan"));
-            setDataWarga(response.data.warga);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
 
     const handleJenisSuratChange = (event) => {
         setSelectedJenisSurat(event.target.value);
@@ -36,7 +28,7 @@ const Pengajuan = () => {
             deskripsi: description,
         });
         try {
-            const response = await axios.post(route("pengajuan.store"), {
+            await axios.post(route("pengajuan.store"), {
                 id_warga: dataWarga.id,
                 id_rt: dataWarga.id_rt,
                 id_rw: dataWarga.id_rw,
@@ -72,47 +64,85 @@ const Pengajuan = () => {
                     <p className="flex">
                         <span className="font-semibold w-60">Nama</span>
                         <span className="w-5">:</span>
+                        { loading ?
+                        <span>
+                            <Skeleton className="h-4 w-32" />
+                        </span>
+                        :
                         <span className="flex-1">{dataWarga.nama}</span>
+                        }
                     </p>
                     <p className="flex">
                         <span className="font-semibold w-60">NIK</span>
                         <span className="w-5">:</span>
+                        { loading ?
+                        <span>
+                            <Skeleton className="h-4 w-32" />
+                        </span>
+                        :
                         <span className="flex-1">{dataWarga.nik_warga}</span>
+                        }
                     </p>
                     <p className="flex">
                         <span className="font-semibold w-60">NO.KK</span>
                         <span className="w-5">:</span>
+                        { loading ?
+                        <span>
+                            <Skeleton className="h-4 w-32" />
+                        </span>
+                        :
                         <span className="flex-1">{dataWarga.nomer_kk}</span>
+                        }
                     </p>
                     <p className="flex">
                         <span className="font-semibold w-60">
                             Jenis Kelamin
                         </span>
                         <span className="w-5">:</span>
-                        <span className="flex-1">
-                            {dataWarga.jenis_kelamin}
+                        { loading ?
+                        <span>
+                            <Skeleton className="h-4 w-32" />
                         </span>
+                        :
+                        <span className="flex-1">{dataWarga.jenis_kelamin}</span>
+                        }
                     </p>
                     <p className="flex">
                         <span className="font-semibold w-60">Agama</span>
                         <span className="w-5">:</span>
+                        { loading ?
+                        <span>
+                            <Skeleton className="h-4 w-32" />
+                        </span>
+                        :
                         <span className="flex-1">{dataWarga.agama}</span>
+                        }
                     </p>
                     <p className="flex">
                         <span className="font-semibold w-60">
                             Tempat, tanggal lahir
                         </span>
                         <span className="w-5">:</span>
-                        <span className="flex-1">
-                            {dataWarga.tempat_dan_tanggal_lahir}
+                        { loading ?
+                        <span>
+                            <Skeleton className="h-4 w-32" />
                         </span>
+                        :
+                        <span className="flex-1">{dataWarga.tempat_dan_tanggal_lahir}</span>
+                        }
                     </p>
                     <p className="flex">
                         <span className="font-semibold w-60">
                             Alamat/Tempat tinggal
                         </span>
                         <span className="w-5">:</span>
+                        { loading ?
+                        <span>
+                            <Skeleton className="h-4 w-32" />
+                        </span>
+                        :
                         <span className="flex-1">{dataWarga.alamat}</span>
+                        }
                     </p>
                 </div>
 
@@ -143,7 +173,7 @@ const Pengajuan = () => {
                                     name="jenis_surat"
                                     value={jenis}
                                     className="form-radio text-blue-600"
-                                    checked={selectedJenisSurat === jenis} // Ganti SetSelectedJenisSurat dengan selectedJenisSurat
+                                    checked={selectedJenisSurat === jenis} 
                                     onChange={handleJenisSuratChange}
                                 />
                                 <span className="ml-2">{jenis}</span>

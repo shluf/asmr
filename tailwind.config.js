@@ -24,6 +24,8 @@ export default {
         "hover:bg-blue-2",
         "border-blue",
         "border-yellow",
+        "border-green",
+        "border-orange",
         "focus:ring-yellow",
         "focus:border-yellow"
     ],

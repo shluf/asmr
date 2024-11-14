@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BiodatasUserController;
 use App\Http\Controllers\DashboardAdminController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\ProfileWargaController;
 use App\Http\Controllers\ProgramKerjaController;
@@ -76,6 +77,10 @@ Route::middleware('auth')->group(function () {
         Route::put('/approval/{id_pengajuan_surat}', [SuratController::class, 'updateApprovalStatus']);
         Route::get('/pengajuan', [SuratController::class, 'getAllPengajuanSurat']);
     });
+
+
+    Route::get('/notifications/count', [NotificationController::class, 'getNotificationCounts']);
+
 });
 
     

@@ -1,97 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import idLocale from "date-fns/locale/id";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/Components/ui/table";
-import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+import { Card, CardContent } from "@/Components/ui/card";
 import { Button } from "@/Components/ui/button";
 import { Check, CheckCircle, Cog, Download, HandCoins, HelpCircle, ShieldCheck, X } from "lucide-react";
-import renderIcon from "@/utility/renderIcon";
-import axios from "axios";
 import { Collapsible, CollapsibleTrigger } from "@/Components/ui/collapsible";
 import { CollapsibleContent } from "@radix-ui/react-collapsible";
+import { fetchHistoryData } from "@/hooks/Warga";
 
 
-const dummyData = [
-    {
-      created_at: "2023-10-01",
-      jenis_surat: "Surat Izin Penelitian",
-      status_pengajuan: "Selesai",
-      progress: [
-        { title: "Pemeriksaan Berkas", description: "Berkas diperiksa oleh tim", status: "completed" },
-        { title: "Proses Verifikasi RT", description: "Menunggu verifikasi lebih lanjut", tgl_approval: "", status: "completed" },
-        { title: "Proses Verifikasi RW", description: "Menunggu verifikasi lebih lanjut", tgl_approval: "", status: "completed" },
-        { title: "Penerbitan Surat", description: "Surat sedang dalam proses penerbitan", status: "completed" },
-      ],
-    },
-    {
-      created_at: "2023-10-15",
-      jenis_surat: "Surat Keterangan Aktif",
-      status_pengajuan: "Ditolak",
-      progress: [
-        { title: "Pemeriksaan Berkas", description: "Berkas tidak lengkap", status: "rejected" },
-      ],
-    },
-    {
-      created_at: "2023-09-20",
-      jenis_surat: "Surat Cuti Akademik",
-      status_pengajuan: "Sedang Diproses",
-      progress: [
-        { title: "Pemeriksaan Berkas", description: "Berkas diperiksa oleh tim", status: "completed" },
-        { title: "Proses Verifikasi", description: "Menunggu persetujuan pimpinan", status: "in-progress" },
-      ],
-    },
-  ]
+const getStatusIcon = (status) => {
+  switch (status) {
+    case "approved":
+      return <Check className="h-6 w-6 text-white" />
+    case "in-progress":
+      return <Cog className="h-6 w-6 text-white" />
+    case "rejected":
+      return <X className="h-6 w-6 text-white" />
+    default:
+      return <HelpCircle className="h-6 w-6 text-white" />
+  }
+}
+
+const getStatusColor = (status) => {
+  switch (status) {
+    case "approved":
+      return "bg-green-500"
+    case "in-progress":
+      return "bg-yellow-500"
+    case "rejected":
+      return "bg-red-500"
+    default:
+      return "bg-gray-400"
+  }
+}
+
 
 const HistoriPengajuan = ({ nikWarga }) => {
     const [dataPengajuan, setDataPengajuan] = useState([]);
-    useEffect(() => {
-        fetchData();
-    }, []);
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(`/history-warga/${nikWarga}`);
-
-            // console.log(response.data.pengajuan);
-            setDataPengajuan(response.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
-
     const [openItems, setOpenItems] = useState({})
 
-    const getStatusIcon = (status) => {
-      switch (status) {
-        case "approved":
-          return <Check className="h-6 w-6 text-white" />
-        case "in-progress":
-          return <Cog className="h-6 w-6 text-white" />
-        case "rejected":
-          return <X className="h-6 w-6 text-white" />
-        default:
-          return <HelpCircle className="h-6 w-6 text-white" />
-      }
-    }
-  
-    const getStatusColor = (status) => {
-      switch (status) {
-        case "approved":
-          return "bg-green-500"
-        case "in-progress":
-          return "bg-yellow-500"
-        case "rejected":
-          return "bg-red-500"
-        default:
-          return "bg-gray-400"
-      }
-    }
+    useEffect(() => {
+        fetchHistoryData(setDataPengajuan, nikWarga);
+    }, []);
 
     return (
         <div className="w-full">
