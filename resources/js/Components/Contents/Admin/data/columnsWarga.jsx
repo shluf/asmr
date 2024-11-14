@@ -1,5 +1,5 @@
 import { Button } from "@/Components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Check, X } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -7,6 +7,10 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
+import axios from "axios";
+import PrimaryButton from "@/Components/PrimaryButton";
+import { useState } from "react";
+
 export const columnsWarga = [
     {
         accessorKey: "nomer_kk",
@@ -38,7 +42,7 @@ export const columnsWarga = [
         accessorKey: "jenis_kelamin",
         header: () => <div className="text-center">Jenis Kelamin</div>,
         cell: ({ row }) => {
-            return <div className="text-left font-medium">{row.getValue("jenis_kelamin") === "L"? "Laki-laki" : "Perempuan"}</div>;
+            return <div className="text-left font-medium">{row.getValue("jenis_kelamin") === "L" ? "Laki-laki" : "Perempuan"}</div>;
         },
     },
     {
@@ -98,6 +102,33 @@ export const columnsWarga = [
         enableHiding: false,
         header: () => <div className="text-center">Action</div>,
         cell: ({ row }) => {
+            const nikWarga = row.getValue("nik_warga");
+            const [loading, setLoading] = useState({});
+
+            const handleApprove = async (nik_warga) => {
+                setLoading((prev) => ({ ...prev, [nik_warga]: true }));
+                try {
+                    await axios.post(`/approvalRole/approve/${nik_warga}`);
+                    setLoading((prev) => ({ ...prev, [nik_warga]: false }));
+                } catch (error) {
+                    console.error("Error approving user:", error);
+                    alert("Terjadi kesalahan saat mengapprove warga.");
+                    setLoading((prev) => ({ ...prev, [nik_warga]: false }));
+                }
+            };
+
+            const handleDisapprove = async (nik_warga) => {
+                setLoading((prev) => ({ ...prev, [nik_warga]: true }));
+                try {
+                    await axios.post(`/approvalRole/disapprove/${nik_warga}`);
+                    setLoading((prev) => ({ ...prev, [nik_warga]: false }));
+                } catch (error) {
+                    console.error("Error disapproving user:", error);
+                    alert("Terjadi kesalahan saat mendisapprove warga.");
+                    setLoading((prev) => ({ ...prev, [nik_warga]: false }));
+                }
+            };
+
             return (
                 <div className="text-center">
                     <Dialog>
@@ -131,6 +162,26 @@ export const columnsWarga = [
                                     label="Jenis Kelamin" 
                                     value={row.getValue("jenis_kelamin")} 
                                 />
+                                <div className="flex gap-2 justify-end items-center w-full">
+                                    <PrimaryButton
+                                        color="red"
+                                        rounded='full'
+                                        disabled={loading[nikWarga]}
+                                        onClick={() => handleDisapprove(nikWarga)}
+                                    >
+                                        <X className="w-4 h-4 mr-2" />
+                                        Tolak
+                                    </PrimaryButton>
+                                    <PrimaryButton
+                                        color="green"
+                                        rounded='full'
+                                        disabled={loading[nikWarga]}
+                                        onClick={() => handleApprove(nikWarga)}
+                                    >
+                                        <Check className="w-4 h-4 mr-2" />
+                                        Setujui
+                                    </PrimaryButton>
+                                </div>
                             </div>
                         </DialogContent>
                     </Dialog>

@@ -16,6 +16,7 @@ import { Link } from "@inertiajs/react";
 import { fetchPengajuanData } from "@/hooks/Warga";
 import { fetchProkerData } from "@/hooks/Common";
 import { Skeleton } from "@/Components/ui/skeleton";
+import { ShieldCheck } from "lucide-react";
 
 
 const DashboardContent = () => {
@@ -123,6 +124,24 @@ const DashboardContent = () => {
                                 </Card>
                             ))}
                         </>
+                    )  : !dataPengajuan.length > 0 ? (
+                        <Card>
+                            <CardContent className="p-6">
+                                <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                                    <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                        <ShieldCheck className="h-6 w-6 text-green" />
+                                    </div>
+                                    <div className="flex flex-col h-full justify-between">
+                                        <p className="font-medium flex items-center h-1/2">
+                                            Tidak ada pengajuan surat
+                                        </p>
+                                        <p className="text-sm flex h-1/2 text-green">
+                                            Anda belum melakukan pengajuan surat
+                                        </p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
                     ) : dataPengajuan.map((dataPengajuan, index) => (
                         <Card key={index}>
                             <CardContent className="flex items-center p-6">

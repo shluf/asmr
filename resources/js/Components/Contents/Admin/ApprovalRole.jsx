@@ -9,17 +9,23 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { Skeleton } from "@/Components/ui/skeleton";
+import Alert from "@/Components/partials/Alert";
 
 const ApprovalRole = () => {
     const [dataWarga, setDataWarga] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isAlertOpen, setIsAlertOpen] = useState(false)
 
     useEffect(() => {
         fetchData();
     }, []);
+
     const fetchData = async () => {
         try {
             const response = await axios.get(route("approvalRole"));
             setDataWarga(response.data.warga);
+            setIsLoading(false);
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -27,10 +33,8 @@ const ApprovalRole = () => {
 
     const handleApprove = async (nik_warga) => {
         try {
-            const response = await axios.post(
-                `/approvalRole/approve/${nik_warga}`
-            );
-            alert(response.data.message);
+            const response = await axios.post(`/approvalRole/approve/${nik_warga}`);
+            setIsAlertOpen(true)
             fetchData(); // Refresh data setelah approve
         } catch (error) {
             console.error("Error approving user:", error);
@@ -40,95 +44,107 @@ const ApprovalRole = () => {
 
     const handleDisapprove = async (nik_warga) => {
         try {
-            const response = await axios.post(
-                `/approvalRole/disapprove/${nik_warga}`
-            );
-            alert(response.data.message);
+            const response = await axios.post(`/approvalRole/disapprove/${nik_warga}`);
+            setIsAlertOpen(true)
             fetchData(); // Refresh data setelah disapprove
         } catch (error) {
             console.error("Error disapproving user:", error);
             alert("Terjadi kesalahan saat mendisapprove warga.");
         }
     };
+
     return (
         <div className="w-full p-6">
+            <div>
+                <Alert
+                    isOpen={isAlertOpen}
+                    onClose={() => setIsAlertOpen(false)}
+                    title="Berhasil!!"
+                    message="Status approval user telah diperbarui"
+                    iconColor="#4CAF50"
+                />
+            </div>
             <div className="mt-10">
-                <h2 className="font-semibold text-lg mb-4 text-blue-5">
-                    Data Warga
+                <h2 className="font-semibold text-lg mb-4">
+                    Permintaan Role
                 </h2>
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[100px]">
-                                Nomer KK
-                            </TableHead>
+                            <TableHead>Nomor KK</TableHead>
                             <TableHead>NIK Warga</TableHead>
                             <TableHead>Nama Warga</TableHead>
                             <TableHead>Jenis Kelamin</TableHead>
-                            <TableHead>nomer telephone</TableHead>
+                            <TableHead>Nomor Telepon</TableHead>
                             <TableHead>Tempat dan Tanggal Lahir</TableHead>
                             <TableHead>Alamat</TableHead>
                             <TableHead>Approval</TableHead>
-                            <TableHead>action</TableHead>
+                            <TableHead className="text-center">Aksi</TableHead>
+                            <TableHead className="text-center">Detail</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {dataWarga.map((warga, index) => (
-                            <TableRow key={index}>
-                                <TableCell className="font-medium">
-                                    {warga.nomer_kk}
-                                </TableCell>
-                                <TableCell>{warga.nik_warga}</TableCell>
-                                <TableCell>{warga.nama}</TableCell>
-                                <TableCell>{warga.jenis_kelamin}</TableCell>
-                                <TableCell>{warga.phone}</TableCell>
-                                <TableCell>
-                                    {warga.tempat_dan_tanggal_lahir}
-                                </TableCell>
-                                <TableCell>{warga.alamat}</TableCell>
-                                <TableCell>
-                                    {warga.approved
-                                        ? "Approved"
-                                        : "Not Approved"}
-                                </TableCell>
-                                <TableCell className="col-span-2">
-                                    <div className="flex space-x-2">
+                        {isLoading ? (
+                            Array(5).fill(null).map((_, index) => (
+                                <TableRow key={index}>
+                                    <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                                    <TableCell><Skeleton className="h-4 w-32" /></TableCell>
+                                    <TableCell><Skeleton className="h-4 w-40" /></TableCell>
+                                    <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                                    <TableCell><Skeleton className="h-4 w-32" /></TableCell>
+                                    <TableCell><Skeleton className="h-4 w-48" /></TableCell>
+                                    <TableCell><Skeleton className="h-4 w-40" /></TableCell>
+                                    <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                                    <TableCell>
+                                        <div className="flex space-x-2">
+                                            <Skeleton className="h-6 w-6 rounded-full" />
+                                            <Skeleton className="h-6 w-6 rounded-full" />
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
+                            dataWarga.map((warga, index) => (
+                                <TableRow key={warga.nik_warga || index}>
+                                    <TableCell className="font-medium">{warga.nomer_kk}</TableCell>
+                                    <TableCell>{warga.nik_warga}</TableCell>
+                                    <TableCell>{warga.nama}</TableCell>
+                                    <TableCell>{warga.jenis_kelamin}</TableCell>
+                                    <TableCell>{warga.phone}</TableCell>
+                                    <TableCell>{warga.tempat_dan_tanggal_lahir}</TableCell>
+                                    <TableCell>{warga.alamat}</TableCell>
+                                    <TableCell>{warga.approved ? "Approved" : "Not Approved"}</TableCell>
+                                    <TableCell>
+                                        <div className="flex space-x-2">
+                                            <button
+                                                type="button"
+                                                onClick={() => handleApprove(warga.nik_warga)}
+                                                aria-label="Approve Warga"
+                                                className="w-10 h-10"
+                                            >
+                                                <img className="w-6 h-6" src="/img/check-circle.svg" alt="Approve" />
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDisapprove(warga.nik_warga)}
+                                                aria-label="Disapprove Warga"
+                                                className="w-10 h-10"
+                                            >
+                                                <img className="w-6 h-6" src="/img/x-circle.svg" alt="Disapprove" />
+                                            </button>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
                                         <button
                                             type="button"
-                                            onClick={() =>
-                                                handleApprove(warga.nik_warga)
-                                            }
-                                        >
-                                            <img
-                                                src="/img/check-circle.svg"
-                                                alt="Check Circle"
-                                            />
+                                            className="text-nowrap py-2.5 px-5 mt-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                                            >
+                                            View Detail
                                         </button>
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                handleDisapprove(
-                                                    warga.nik_warga
-                                                )
-                                            }
-                                        >
-                                            <img
-                                                src="/img/x-circle.svg"
-                                                alt="x Circle"
-                                            />
-                                        </button>
-                                    </div>
-                                </TableCell>
-                                <TableCell>
-                                    <button
-                                        type="button"
-                                        className=" text-nowrap py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                                    >
-                                        view detail
-                                    </button>
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        )}
                     </TableBody>
                 </Table>
             </div>

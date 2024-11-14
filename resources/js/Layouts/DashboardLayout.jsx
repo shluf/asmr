@@ -1,5 +1,5 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
-import SidebBar from "@/Components/partials/SideBar";
+import SideBar from "@/Components/partials/SideBar";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -30,7 +30,7 @@ const DashboardLayout = ({
     return (
         <div className="grid h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
 
-            <SidebBar color={color} userRole={user.role} />
+            <SideBar color={color} userRole={user.role} />
 
             <div className="flex flex-col overflow-hidden">
                 <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 my-2 lg:h-[60px] lg:px-6">
@@ -67,22 +67,22 @@ const DashboardLayout = ({
                             <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             {user.role === "Warga" &&
-                                <DropdownMenuItem>
-                                    <Link href={route('dashboard', { page: "akun" })}>
+                                <Link href={route('dashboard', { page: "akun" })}>
+                                    <DropdownMenuItem className="cursor-pointer" >
                                         Profile
-                                    </Link>
-                                </DropdownMenuItem>
+                                    </DropdownMenuItem>
+                                </Link>
                             }
                             {user.role !== "Admin" &&
                                 <Link href={route('dashboard', { page: "bantuan" })}>
-                                    <DropdownMenuItem>
+                                    <DropdownMenuItem className="cursor-pointer">
                                         Bantuan
                                     </DropdownMenuItem>
                                 </Link>
                             }
                             <DropdownMenuSeparator />
                             <Link href={route("logout")} method="post">
-                                <DropdownMenuItem>
+                                <DropdownMenuItem className="cursor-pointer">
                                         Logout
                                 </DropdownMenuItem>
                             </Link>

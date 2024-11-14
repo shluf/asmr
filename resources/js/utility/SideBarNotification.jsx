@@ -3,11 +3,11 @@ import React from 'react';
 import axios from 'axios';
 import { create } from 'zustand';
 
-// Store untuk mengelola state notifikasi
 const useNotificationStore = create((set) => ({
   pageAdminRoutes: [
     { name: 'Dashboard', route: '', icon: 'home' },
     { name: 'Biodata User', route: 'biodataUser', icon: 'linechart', notification: 0 },
+    { name: 'Rekap Pengajuan Warga', route: 'rekapPengajuan', icon: 'history', notification: 0 },
     { name: 'Approval Role', route: 'approvalRole', icon: 'user', notification: 0 },
     { name: 'Tambah RT/RW', route: 'tambahRTRW', icon: 'settings' }
   ],

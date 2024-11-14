@@ -1,13 +1,13 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import NavLink from "@/Components/NavLink";
 import { Badge } from "@/components/ui/badge";
-import { useNotificationPolling } from "@/utility/SideBarList";
+import { useNotificationPolling } from "@/utility/SideBarNotification";
 import renderIcon from "@/utility/renderIcon";
 import { Link } from "@inertiajs/react";
 import { cn } from "@/lib/utils"
 
 
-const SidebBar = ({ color, userRole }) => {
+const SideBar = ({ color, userRole }) => {
   const routes = useNotificationPolling(userRole);
 
   return (
@@ -71,4 +71,4 @@ const SidebBar = ({ color, userRole }) => {
   )
 }
 
-export default SidebBar
+export default SideBar

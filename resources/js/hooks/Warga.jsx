@@ -1,10 +1,11 @@
 import axios from "axios";
 
-export const fetchHistoryData = async (setDataPengajuan, nikWarga) => {
+export const fetchHistoryData = async (setDataPengajuan, nikWarga, setIsLoading) => {
     try {
         const response = await axios.get(`/history-warga/${nikWarga}`);
         // console.log(response.data.pengajuan);
         setDataPengajuan(response.data);
+        setIsLoading(false)
     } catch (error) {
         console.error("Error fetching data:", error);
     }

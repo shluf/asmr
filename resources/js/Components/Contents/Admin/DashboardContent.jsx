@@ -3,13 +3,16 @@ import { Link } from "@inertiajs/react";
 import axios from "axios";
 import renderIcon from "@/utility/renderIcon";
 import { UserFilled } from "@/utility/svg-icons";
+import { Skeleton } from "@/Components/ui/skeleton";
+import { Card, CardContent } from "@/Components/ui/card";
 
 const DashboardContent = () => {
+    const [isLoading, setIsLoading] = useState(true)
     const [wargaStats, setWargaStats] = useState([
         { label: "Populasi Warga", value: 0 },
-        { label: "Total Pengaduan", value: 0 },
-        { label: "Total Pengaduan Dalam Proses", value: 0 },
-        { label: "Total Pengaduan Menunggu Tindakan", value: 0 },
+        { label: "Total Pengajuan", value: 0 },
+        { label: "Total Pengajuan Dalam Proses", value: 0 },
+        { label: "Total Pengajuan Menunggu Tindakan", value: 0 },
     ]);
     const fetchWargaStats = async () => {
         try {
@@ -20,15 +23,15 @@ const DashboardContent = () => {
                     value: response.data.CountWarga,
                 },
                 {
-                    label: "Total pengajuan Surat",
+                    label: "Total Pengajuan Surat",
                     value: response.data.CountPengajuanSurat,
                 },
                 {
-                    label: "Total Pengaduan Dalam Proses",
+                    label: "Total Pengajuan Dalam Proses",
                     value: response.data.CountDataPengajuanPending,
                 },
                 {
-                    label: "Total Pengaduan Menunggu Tindakan",
+                    label: "Total Pengajuan Menunggu Tindakan",
                     value: response.data.CountDataPengajuanSelesai,
                 },
             ]);
@@ -39,9 +42,9 @@ const DashboardContent = () => {
 
     const [RtRwStats, setRtRwStats] = useState([
         { label: "Populasi Staff", value: 0 },
-        { label: "Total Pengaduan Selesai", value: 0 },
-        { label: "Total Pengaduan Dalam Proses", value: 0 },
-        { label: "Total Pengaduan Menunggu Tindakan", value: 0 },
+        { label: "Total Pengajuan Surat", value: 0 },
+        { label: "Total Pengajuan Dalam Proses", value: 0 },
+        { label: "Total Pengajuan Menunggu Tindakan", value: 0 },
     ]);
     const fetchRtRwStats = async () => {
         try {
@@ -52,15 +55,15 @@ const DashboardContent = () => {
                     value: response.data.CountRtDanRw,
                 },
                 {
-                    label: "Total pengajuan Surat",
+                    label: "Total Pengajuan Surat",
                     value: response.data.CountPengajuanSurat,
                 },
                 {
-                    label: "Total Pengaduan Dalam Proses",
+                    label: "Total Pengajuan Dalam Proses",
                     value: response.data.CountDataPengajuanPending,
                 },
                 {
-                    label: "Total Pengaduan Menunggu Tindakan",
+                    label: "Total Pengajuan Menunggu Tindakan",
                     value: response.data.CountDataPengajuanSelesai,
                 },
             ]);
@@ -79,6 +82,7 @@ const DashboardContent = () => {
         try {
             const response = await axios.get(route("biodataUser"));
             setDataWarga(response.data.warga);
+            setIsLoading(false)
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -142,13 +146,35 @@ const DashboardContent = () => {
                         Approval warga pending
                     </h2>
                     <div className="space-y-4">
-                        {dataWarga.map((warga, index) => (
+                        {isLoading ? 
+                            <>
+                            {[...Array(2)].map((_, index) => (
+                                <Card key={index}>
+                                    <CardContent className="p-6">
+                                        <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                                            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                                                {[...Array(5)].map((_, i) => (
+                                                    <div
+                                                        key={i}
+                                                        className="flex flex-col h-full justify-between"
+                                                    >
+                                                        <Skeleton className="h-4 w-24 mb-2" />
+                                                        <Skeleton className="h-4 w-32" />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <Skeleton className="h-10 w-52 rounded-full" />
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </>
+                        : dataWarga.map((warga, index) => (
                             <div
                                 key={index}
                                 className="overflow-x-scroll flex items-center justify-between border gap-8 border-gray-200 rounded-lg p-4 shadow-sm bg-white"
                             >
                                 <div className="flex flex-row gap-10 justify-around items-center">
-                                    {/* Icon */}
                                     <div className="w-12 h-12 bg-green-3 rounded-[12px] flex items-center justify-center text-2xl">
                                         <UserFilled size={6} />
                                     </div>

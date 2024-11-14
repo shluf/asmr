@@ -14,10 +14,12 @@ import FileUpload from '@/Components/ui/file-upload';
 import axios from 'axios';
 import { router } from '@inertiajs/react';
 import InputField from '@/Components/partials/InputFields';
+import Alert from '@/Components/partials/Alert';
 
 const TambahRTRW = () => {
   const [rwOptions, setRwOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   
   const { data, setData, post, processing, errors, reset } = useForm({
     nama: "",
@@ -61,10 +63,10 @@ const TambahRTRW = () => {
       await router.post(route('rt-rw.store'), formData, {
         onSuccess: () => {
           reset();
-          alert('Data berhasil ditambahkan');
           if (data.jabatan === 'RW') {
             fetchRWList(); // Refresh RW list after adding new RW
           }
+          setIsAlertOpen(true)
         },
         onError: (errors) => {
           console.error('Error submitting form:', errors);
@@ -103,6 +105,15 @@ const TambahRTRW = () => {
 
   return (
     <div className="p-6">
+      <div>
+        <Alert
+            isOpen={isAlertOpen}
+            onClose={() => setIsAlertOpen(false)}
+            title="Akun berhasil ditambahkan"
+            message="Silahkan cek kembali di laman Biodata User"
+            iconColor="#4CAF50"
+        />
+      </div>
       <Tabs defaultValue="rtTab" className="max-w-2xl mx-auto">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="rtTab">RT</TabsTrigger>

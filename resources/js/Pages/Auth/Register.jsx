@@ -9,9 +9,6 @@ import RtRwSelects from "./Partials/RtRwSelects";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
 
 export default function Register({ rtRwData }) {
-    // const rtrw = rtrwdata;
-    // console.log(rtRwData);
-
     const [focusedField, setFocusedField] = useState("nama");
     const { data, setData, post, processing, errors, reset } = useForm({
         nik_warga: "",
@@ -137,8 +134,8 @@ export default function Register({ rtRwData }) {
                                 <SelectValue placeholder="Jenis Kelamin" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="laki-laki">Laki-laki</SelectItem>
-                                <SelectItem value="perempuan">Perempuan</SelectItem>
+                                <SelectItem value="L">Laki-laki</SelectItem>
+                                <SelectItem value="P">Perempuan</SelectItem>
                             </SelectContent>
                             </Select>
                             <InputError
