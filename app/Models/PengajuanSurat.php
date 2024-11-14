@@ -14,6 +14,12 @@ class PengajuanSurat extends Model
 
     protected $fillable = [
         'nik_warga',
+        'nama_pemohon',
+        'nik_pemohon',
+        'jenis_kelamin_pemohon',
+        'tempat_tanggal_lahir_pemohon',
+        'alamat_pemohon',
+        'agama_pemohon',
         'id_rt',
         'id_rw',
         'jenis_surat',

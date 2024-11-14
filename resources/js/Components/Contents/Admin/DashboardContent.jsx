@@ -5,23 +5,75 @@ import renderIcon from "@/utility/renderIcon";
 import { UserFilled } from "@/utility/svg-icons";
 
 const DashboardContent = () => {
-    const wargaStats = [
-        { label: "Populasi Warga", value: 36 },
-        { label: "Total Pengaduan", value: 30 },
-        { label: "Total Pengaduan Dalam Proses", value: 10 },
-        { label: "Total Pengaduan Menunggu Tindakan", value: 5 },
-    ];
+    const [wargaStats, setWargaStats] = useState([
+        { label: "Populasi Warga", value: 0 },
+        { label: "Total Pengaduan", value: 0 },
+        { label: "Total Pengaduan Dalam Proses", value: 0 },
+        { label: "Total Pengaduan Menunggu Tindakan", value: 0 },
+    ]);
+    const fetchWargaStats = async () => {
+        try {
+            const response = await axios.get("/CountUser");
+            setWargaStats([
+                {
+                    label: "Populasi Warga",
+                    value: response.data.CountWarga,
+                },
+                {
+                    label: "Total pengajuan Surat",
+                    value: response.data.CountPengajuanSurat,
+                },
+                {
+                    label: "Total Pengaduan Dalam Proses",
+                    value: response.data.CountDataPengajuanPending,
+                },
+                {
+                    label: "Total Pengaduan Menunggu Tindakan",
+                    value: response.data.CountDataPengajuanSelesai,
+                },
+            ]);
+        } catch (error) {
+            console.error("Error fetching warga stats:", error);
+        }
+    };
 
-    const rtRwStats = [
-        { label: "Populasi Staff", value: 8 },
-        { label: "Total Pengaduan Selesai", value: 15 },
-        { label: "Total Pengaduan Dalam Proses", value: 10 },
-        { label: "Total Pengaduan Menunggu Tindakan", value: 5 },
-    ];
+    const [RtRwStats, setRtRwStats] = useState([
+        { label: "Populasi Staff", value: 0 },
+        { label: "Total Pengaduan Selesai", value: 0 },
+        { label: "Total Pengaduan Dalam Proses", value: 0 },
+        { label: "Total Pengaduan Menunggu Tindakan", value: 0 },
+    ]);
+    const fetchRtRwStats = async () => {
+        try {
+            const response = await axios.get("/CountUser");
+            setRtRwStats([
+                {
+                    label: "Populasi staff ",
+                    value: response.data.CountRtDanRw,
+                },
+                {
+                    label: "Total pengajuan Surat",
+                    value: response.data.CountPengajuanSurat,
+                },
+                {
+                    label: "Total Pengaduan Dalam Proses",
+                    value: response.data.CountDataPengajuanPending,
+                },
+                {
+                    label: "Total Pengaduan Menunggu Tindakan",
+                    value: response.data.CountDataPengajuanSelesai,
+                },
+            ]);
+        } catch (error) {
+            console.error("Error fetching warga stats:", error);
+        }
+    };
     const [dataWarga, setDataWarga] = useState([]);
 
     useEffect(() => {
         fetchData();
+        fetchWargaStats();
+        fetchRtRwStats();
     }, []);
     const fetchData = async () => {
         try {
@@ -65,7 +117,7 @@ const DashboardContent = () => {
                                 Data Anggota RT/RW
                             </h2>
                             <ul>
-                                {rtRwStats.map((stat, index) => (
+                                {RtRwStats.map((stat, index) => (
                                     <li
                                         key={index}
                                         className="flex justify-between py-1 border-b text-blue-4 border-blue-3 p-4 mt-5   mb-5"
@@ -139,15 +191,20 @@ const DashboardContent = () => {
                                             Status
                                         </span>
                                         <span className="text-orange-500">
-                                            {warga.approved}
+                                            {warga.approved === 1
+                                                ? "Approved"
+                                                : "Not Approved"}
                                         </span>
                                     </div>
                                 </div>
                                 {/* Action Button */}
                                 <div className="flex">
-                                    <Link 
-                                    href={route('dashboard', { page: 'approvalRole' })}
-                                    className="border border-blue-500 text-blue-500 md:px-32 py-2 text-nowrap rounded-full hover:bg-blue-500 hover:text-white transition">
+                                    <Link
+                                        href={route("dashboard", {
+                                            page: "approvalRole",
+                                        })}
+                                        className="border border-blue-500 text-blue-500 md:px-32 py-2 text-nowrap rounded-full hover:bg-blue-500 hover:text-white transition"
+                                    >
                                         Lihat data
                                     </Link>
                                 </div>
