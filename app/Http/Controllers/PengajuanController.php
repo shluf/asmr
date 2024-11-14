@@ -56,6 +56,12 @@ class PengajuanController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nik_warga' => 'required|exists:warga,nik_warga', // Validasi harus ada di tabel wargas
+            'nama_pemohon' => 'required|string',
+            'nik_pemohon' => 'required|string',
+            'jenis_kelamin_pemohon' => 'required|string',
+            'tempat_tanggal_lahir_pemohon' => 'required|string',
+            'alamat_pemohon' => 'required|string',
+            'agama_pemohon' => 'required|string',
             'id_rt' => 'required|exists:rt,id_rt',      // Validasi harus ada di tabel rts
             'id_rw' => 'required|exists:rw,id_rw',      // Validasi harus ada di tabel rws
             'jenis_surat' => 'required|string',
@@ -72,7 +78,20 @@ class PengajuanController extends Controller
 
         try {
             // Simpan data pengajuan ke dalam database
-            $pengajuan = PengajuanSurat::create($request->all());
+            $pengajuan = PengajuanSurat::create([
+                'nik_warga' => $request->nik_warga,
+                'nama_pemohon' => $request->nama_pemohon,
+                'nik_pemohon' => $request->nik_pemohon,
+                'jenis_kelamin_pemohon' => $request->jenis_kelamin_pemohon,
+                'tempat_tanggal_lahir_pemohon' => $request->tempat_tanggal_lahir_pemohon,
+                'alamat_pemohon' => $request->alamat_pemohon,
+                'agama_pemohon' => $request->agama_pemohon,
+                'id_rt' => $request->id_rt,
+                'id_rw' => $request->id_rw,
+                'jenis_surat' => $request->jenis_surat,
+                'status_pengajuan' => $request->status_pengajuan,
+                'deskripsi' => $request->deskripsi,
+            ]);
             ApprovalSurat::create([
                 'id_pengajuan_surat' => $pengajuan->id_pengajuan_surat,
                 'status_approval' => 'Surat telah diajukan',

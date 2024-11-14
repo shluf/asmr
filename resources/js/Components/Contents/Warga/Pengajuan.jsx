@@ -24,29 +24,67 @@ const Pengajuan = () => {
     const handleJenisSuratChange = (event) => {
         setSelectedJenisSurat(event.target.value);
     };
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setPengajuan((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+    // useEffect(() => {
+    //     // Set `pengajuan` state setelah `dataWarga` diperbarui
+    //     if (dataWarga && dataWarga.id) {
+    //         setPengajuan((prev) => ({
+    //             ...prev,
+    //             id_warga: dataWarga.id,
+    //             id_rt: dataWarga.id_rt,
+    //             id_rw: dataWarga.id_rw,
+    //         }));
+    //     }
+    // }, [dataWarga]);
+    const [pengajuan, setPengajuan] = useState({
+        id_warga: "",
+        nama_pemohon: "",
+        nik_pemohon: "",
+        jenis_kelamin_pemohon: "",
+        tempat_tanggal_lahir_pemohon: "",
+        alamat_pemohon: "",
+        agama_pemohon: "",
+        id_rt: "",
+        id_rw: "",
+        jenis_surat: "",
+        status_pengajuan: "pending",
+        deskripsi: "",
+    });
 
     const handleSubmit = async () => {
-        console.log("Submitting data:", {
-            id_warga: dataWarga.id,
-            id_rt: dataWarga.id_rt,
-            id_rw: dataWarga.id_rw,
-            jenis_surat: selectedJenisSurat,
-            status_pengajuan: "pending",
-
-            deskripsi: description,
-        });
         try {
             const response = await axios.post(route("pengajuan.store"), {
-                id_warga: dataWarga.id,
+                ...pengajuan,
+                id_warga: dataWarga.nik_warga,
                 id_rt: dataWarga.id_rt,
                 id_rw: dataWarga.id_rw,
                 jenis_surat: selectedJenisSurat,
-                status_pengajuan: "pending",
                 deskripsi: description,
             });
+            console.log("Submitting data:", pengajuan);
             alert("Pengajuan berhasil diajukan!");
             setSelectedJenisSurat("");
             setDescription("");
+            setPengajuan({
+                id_warga: "",
+                nama_pemohon: "",
+                nik_pemohon: "",
+                jenis_kelamin_pemohon: "",
+                tempat_tanggal_lahir_pemohon: "",
+                alamat_pemohon: "",
+                agama_pemohon: "",
+                id_rt: "",
+                id_rw: "",
+                jenis_surat: "",
+                status_pengajuan: "pending",
+                deskripsi: "",
+            });
         } catch (error) {
             console.error("Error submitting pengajuan:", error);
         }
@@ -70,49 +108,87 @@ const Pengajuan = () => {
                 </p>
                 <div className="text-gray-800 mt-4 space-y-1">
                     <p className="flex">
-                        <span className="font-semibold w-60">Nama</span>
+                        <label className="font-semibold w-60">Nama</label>
                         <span className="w-5">:</span>
-                        <span className="flex-1">{dataWarga.nama}</span>
+                        <input
+                            type="text"
+                            name="nama_pemohon"
+                            value={pengajuan.nama_pemohon}
+                            onChange={handleInputChange}
+                            className="flex-1 p-2 border rounded"
+                        />
                     </p>
                     <p className="flex">
-                        <span className="font-semibold w-60">NIK</span>
+                        <label className="font-semibold w-60">NIK </label>
                         <span className="w-5">:</span>
-                        <span className="flex-1">{dataWarga.nik_warga}</span>
+                        <input
+                            type="text"
+                            name="nik_pemohon"
+                            value={pengajuan.nik_pemohon}
+                            onChange={handleInputChange}
+                            className="flex-1 p-2 border rounded"
+                        />
                     </p>
                     <p className="flex">
                         <span className="font-semibold w-60">NO.KK</span>
                         <span className="w-5">:</span>
-                        <span className="flex-1">{dataWarga.nomer_kk}</span>
+                        <input
+                            type="text"
+                            name="nomer_kk"
+                            value={dataWarga.nomer_kk || ""}
+                            readOnly
+                            className="flex-1 p-2 border rounded"
+                        />
                     </p>
                     <p className="flex">
-                        <span className="font-semibold w-60">
+                        <label className="font-semibold w-60">
                             Jenis Kelamin
-                        </span>
+                        </label>
                         <span className="w-5">:</span>
-                        <span className="flex-1">
-                            {dataWarga.jenis_kelamin}
-                        </span>
+                        <input
+                            type="text"
+                            name="jenis_kelamin_pemohon"
+                            value={pengajuan.jenis_kelamin_pemohon}
+                            onChange={handleInputChange}
+                            className="flex-1 p-2 border rounded"
+                        />
                     </p>
                     <p className="flex">
-                        <span className="font-semibold w-60">Agama</span>
+                        <label className="font-semibold w-60">Agama</label>
                         <span className="w-5">:</span>
-                        <span className="flex-1">{dataWarga.agama}</span>
+                        <input
+                            type="text"
+                            name="agama_pemohon"
+                            value={pengajuan.agama_pemohon}
+                            onChange={handleInputChange}
+                            className="flex-1 p-2 border rounded"
+                        />
                     </p>
                     <p className="flex">
-                        <span className="font-semibold w-60">
+                        <label className="font-semibold w-60">
                             Tempat, tanggal lahir
-                        </span>
+                        </label>
                         <span className="w-5">:</span>
-                        <span className="flex-1">
-                            {dataWarga.tempat_dan_tanggal_lahir}
-                        </span>
+                        <input
+                            type="text"
+                            name="tempat_tanggal_lahir_pemohon"
+                            value={pengajuan.tempat_tanggal_lahir_pemohon}
+                            onChange={handleInputChange}
+                            className="flex-1 p-2 border rounded"
+                        />
                     </p>
                     <p className="flex">
-                        <span className="font-semibold w-60">
+                        <label className="font-semibold w-60">
                             Alamat/Tempat tinggal
-                        </span>
+                        </label>
                         <span className="w-5">:</span>
-                        <span className="flex-1">{dataWarga.alamat}</span>
+                        <input
+                            type="text"
+                            name="alamat_pemohon"
+                            value={pengajuan.alamat_pemohon}
+                            onChange={handleInputChange}
+                            className="flex-1 p-2 border rounded"
+                        />
                     </p>
                 </div>
 

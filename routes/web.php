@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/biodatasUser', [BiodatasUserController::class, 'index'])->name('biodataUser');
+    Route::get('/CountUser',[BiodatasUserController::class,'CountData'])->name('CountUser');
     Route::get('/approvalRole', [ApprovalRoleController::class, 'index'])->name('approvalRole');
     Route::post('/approvalRole/approve/{nik_warga}',[ApprovalRoleController::class,'approveUser'])->name("approveUser");
     Route::post('/approvalRole/disapprove/{nik_warga}',[ApprovalRoleController::class,'disapproveUser'])->name("disapproveUser");
