@@ -36,6 +36,8 @@ import { fetchProkerData } from "@/hooks/Common";
 import { fetchPengajuanTerbaruData } from "@/hooks/RW";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Skeleton } from "@/Components/ui/skeleton";
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
 
 const DashboardContent = ({ idRW }) => {
     const [dataProker, setDataProker] = useState([]);
@@ -216,7 +218,7 @@ const DashboardContent = ({ idRW }) => {
                                       </TableRow>
                                   ))}
                         </TableBody>
-                        <TableHeader>
+                        {/* <TableHeader>
                             <TableRow>
                                 <TableHead>Hari/tanggal</TableHead>
                                 <TableHead>Waktu</TableHead>
@@ -225,16 +227,18 @@ const DashboardContent = ({ idRW }) => {
                                 <TableHead>Penanggung jawab</TableHead>
                                 <TableHead>Action</TableHead>
                             </TableRow>
-                        </TableHeader>
+                        </TableHeader> */}
                         <TableBody>
                             <TableRow>
                                 <TableCell>
+                                    <InputLabel htmlFor="calendar-button" className="mb-2">Hari/Tanggal</InputLabel>
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <Button
+                                                id="calendar-button"
                                                 variant={"outline"}
                                                 className={cn(
-                                                    "w-[280px] justify-start text-left font-normal",
+                                                    "w-[280px] justify-start text-left font-normal rounded-full",
                                                     !date &&
                                                         "text-muted-foreground"
                                                 )}
@@ -244,7 +248,7 @@ const DashboardContent = ({ idRW }) => {
                                                     format(date, "PPP")
                                                 ) : (
                                                     <span className="m-5">
-                                                        Pick a date
+                                                        --Tambahkan--
                                                     </span>
                                                 )}
                                             </Button>
@@ -260,37 +264,45 @@ const DashboardContent = ({ idRW }) => {
                                     </Popover>
                                 </TableCell>
                                 <TableCell>
+                                    <InputLabel htmlFor="waktu" className="mb-2">Waktu</InputLabel>
                                     <Input
                                         type="text"
-                                        placeholder="waktu"
+                                        placeholder="--Tambahkan--"
                                         name="waktu"
+                                        className="rounded-full"
                                         value={tambahProker.waktu}
                                         onChange={handleTambahChange}
                                     />
                                 </TableCell>
                                 <TableCell>
+                                    <InputLabel htmlFor="jenis_kegiatan" className="mb-2">Kegiatan</InputLabel>
                                     <Input
                                         type="text"
-                                        placeholder="kegiatan"
+                                        placeholder="--Tambahkan--"
                                         name="jenis_kegiatan"
+                                        className="rounded-full"
                                         value={tambahProker.jenis_kegiatan}
                                         onChange={handleTambahChange}
                                     />
                                 </TableCell>
                                 <TableCell>
+                                    <InputLabel htmlFor="tempat" className="mb-2">Tempat</InputLabel>
                                     <Input
                                         type="text"
-                                        placeholder="tempat"
+                                        placeholder="--Tambahkan--"
                                         name="tempat"
+                                        className="rounded-full"
                                         value={tambahProker.tempat}
                                         onChange={handleTambahChange}
                                     />
                                 </TableCell>
                                 <TableCell>
+                                    <InputLabel htmlFor="penanggung_jawab" className="mb-2 text-nowrap">Penanggung Jawab</InputLabel>
                                     <Input
                                         type="text"
-                                        placeholder="penanggung jawab"
+                                        placeholder="--Tambahkan--"
                                         name="penanggung_jawab"
+                                        className="rounded-full"
                                         value={tambahProker.penanggung_jawab}
                                         onChange={handleTambahChange}
                                     />
@@ -299,10 +311,10 @@ const DashboardContent = ({ idRW }) => {
                                     <Button
                                         type="button"
                                         variant="outline"
-                                        className="rounded-full mt-2"
+                                        className="rounded-full h-12 w-12 mt-2"
                                         onClick={handleSubmitTambah}
                                     >
-                                        <CirclePlus size={12} />
+                                        <CirclePlus className="w-full h-full" />
                                     </Button>
                                 </TableCell>
                             </TableRow>
@@ -427,14 +439,16 @@ const DashboardContent = ({ idRW }) => {
                             <DialogTitle>Edit Program Kerja</DialogTitle>
                         </DialogHeader>
                         <div className="space-y-4">
-                            <input
+                            <TextInput
+                                color="orange"
                                 type="date"
                                 name="tanggal"
                                 value={editProker.tanggal}
                                 onChange={handleEditChange}
                                 className="w-full border p-2"
                             />
-                            <input
+                            <TextInput
+                                color="orange"
                                 type="text"
                                 name="waktu"
                                 value={editProker.waktu}
@@ -442,7 +456,8 @@ const DashboardContent = ({ idRW }) => {
                                 className="w-full border p-2"
                                 placeholder="Waktu"
                             />
-                            <input
+                            <TextInput
+                                color="orange"
                                 type="text"
                                 name="jenis_kegiatan"
                                 value={editProker.jenis_kegiatan}
@@ -450,7 +465,8 @@ const DashboardContent = ({ idRW }) => {
                                 className="w-full border p-2"
                                 placeholder="Jenis Kegiatan"
                             />
-                            <input
+                            <TextInput
+                                color="orange"
                                 type="text"
                                 name="tempat"
                                 value={editProker.tempat}
@@ -458,7 +474,8 @@ const DashboardContent = ({ idRW }) => {
                                 className="w-full border p-2"
                                 placeholder="Tempat"
                             />
-                            <input
+                            <TextInput
+                                color="orange"
                                 type="text"
                                 name="penanggung_jawab"
                                 value={editProker.penanggung_jawab}

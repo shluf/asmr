@@ -30,7 +30,7 @@ const PengajuanMasalah = ({ idRW }) => {
   const [loading, setLoading] = useState({});
 
   useEffect(() => {
-    fetchPengajuanMasalahData(setPendingSurat);
+    fetchPengajuanMasalahData(setPendingSurat, idRW);
   }, []);
 
   // Handle approval/rejection

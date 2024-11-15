@@ -20,7 +20,7 @@ class BiodatasUserController extends Controller
             // Fetch data for RT and RW
             $dataRW = RW::leftJoin('users', 'rw.id_user', '=', 'users.id')->select('rw.*', 'users.email') ->get();
             $dataRT = RT::leftJoin('users','rt.id_user','=','users.id')->select('rt.*','users.email')->get();
-            $dataWarga = Warga::all();
+            $dataWarga = Warga::where('approved', 1)->get();
             return response()->json([
                 'rt' => $dataRT,
                 'rw' => $dataRW,

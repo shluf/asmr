@@ -10,7 +10,7 @@ const DashboardContent = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [wargaStats, setWargaStats] = useState([
         { label: "Populasi Warga", value: 0 },
-        { label: "Total Pengajuan", value: 0 },
+        { label: "Total Pengajuan Surat", value: 0 },
         { label: "Total Pengajuan Dalam Proses", value: 0 },
         { label: "Total Pengajuan Menunggu Tindakan", value: 0 },
     ]);

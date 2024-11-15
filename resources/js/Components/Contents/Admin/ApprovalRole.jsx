@@ -11,31 +11,40 @@ import {
 } from "@/components/ui/table";
 import { Skeleton } from "@/Components/ui/skeleton";
 import Alert from "@/Components/partials/Alert";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/Components/ui/dialog";
+import PrimaryButton from "@/Components/PrimaryButton";
+import { Check, X } from "lucide-react";
 
 const ApprovalRole = () => {
     const [dataWarga, setDataWarga] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [isAlertOpen, setIsAlertOpen] = useState(false)
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+    const [selectedWarga, setSelectedWarga] = useState(null);
+    const [loading, setLoading] = useState({});
 
     useEffect(() => {
         fetchData();
     }, []);
 
     const fetchData = async () => {
+        setIsLoading(true);
         try {
             const response = await axios.get(route("approvalRole"));
-            setDataWarga(response.data.warga);
-            setIsLoading(false);
+            setDataWarga(response.data.warga || []); // Memastikan data tidak null
         } catch (error) {
             console.error("Error fetching data:", error);
+            setDataWarga([]);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleApprove = async (nik_warga) => {
         try {
-            const response = await axios.post(`/approvalRole/approve/${nik_warga}`);
-            setIsAlertOpen(true)
+            await axios.post(`/approvalRole/approve/${nik_warga}`);
+            setIsAlertOpen(true);
             fetchData(); // Refresh data setelah approve
+            setLoading((prev) => ({ ...prev, [nik_warga]: false }));
         } catch (error) {
             console.error("Error approving user:", error);
             alert("Terjadi kesalahan saat mengapprove warga.");
@@ -44,9 +53,10 @@ const ApprovalRole = () => {
 
     const handleDisapprove = async (nik_warga) => {
         try {
-            const response = await axios.post(`/approvalRole/disapprove/${nik_warga}`);
-            setIsAlertOpen(true)
+            await axios.post(`/approvalRole/disapprove/${nik_warga}`);
+            setIsAlertOpen(true);
             fetchData(); // Refresh data setelah disapprove
+            setLoading((prev) => ({ ...prev, [nik_warga]: false }));
         } catch (error) {
             console.error("Error disapproving user:", error);
             alert("Terjadi kesalahan saat mendisapprove warga.");
@@ -55,15 +65,13 @@ const ApprovalRole = () => {
 
     return (
         <div className="w-full p-6">
-            <div>
-                <Alert
-                    isOpen={isAlertOpen}
-                    onClose={() => setIsAlertOpen(false)}
-                    title="Berhasil!!"
-                    message="Status approval user telah diperbarui"
-                    iconColor="#4CAF50"
-                />
-            </div>
+            <Alert
+                isOpen={isAlertOpen}
+                onClose={() => setIsAlertOpen(false)}
+                title="Berhasil!!"
+                message="Status approval user telah diperbarui"
+                iconColor="#4CAF50"
+            />
             <div className="mt-10">
                 <h2 className="font-semibold text-lg mb-4">
                     Permintaan Role
@@ -104,8 +112,8 @@ const ApprovalRole = () => {
                                 </TableRow>
                             ))
                         ) : (
-                            dataWarga.map((warga, index) => (
-                                <TableRow key={warga.nik_warga || index}>
+                            dataWarga.map((warga) => (
+                                <TableRow key={warga.nik_warga}>
                                     <TableCell className="font-medium">{warga.nomer_kk}</TableCell>
                                     <TableCell>{warga.nik_warga}</TableCell>
                                     <TableCell>{warga.nama}</TableCell>
@@ -135,12 +143,54 @@ const ApprovalRole = () => {
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <button
-                                            type="button"
-                                            className="text-nowrap py-2.5 px-5 mt-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                                            >
-                                            View Detail
-                                        </button>
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <button 
+                                                    onClick={() => setSelectedWarga(warga)}
+                                                    className="text-nowrap border border-blue-500 text-blue-500 px-4 py-2 rounded-full hover:bg-blue-500 hover:text-white transition"
+                                                >
+                                                    Lihat data
+                                                </button>
+                                            </DialogTrigger>
+                                            {selectedWarga && (
+                                                <DialogContent className="sm:max-w-[425px]">
+                                                    <DialogHeader>
+                                                        <DialogTitle>Data Lengkap Warga</DialogTitle>
+                                                    </DialogHeader>
+                                                    <div className="grid gap-4 py-4">
+                                                        <div><strong>Nama:</strong> {selectedWarga.nama}</div>
+                                                        <div><strong>No KK:</strong> {selectedWarga.nomer_kk}</div>
+                                                        <div><strong>NIK:</strong> {selectedWarga.nik_warga}</div>
+                                                        <div><strong>RT:</strong> {selectedWarga.id_rt}</div>
+                                                        <div><strong>RW:</strong> {selectedWarga.id_rw}</div>
+                                                        <div><strong>Status:</strong> {selectedWarga.approved ? "Disetujui" : "Ditolak"}</div>
+                                                        <div><strong>Alamat:</strong> {selectedWarga.alamat}</div>
+                                                        <div><strong>Tanggal Lahir:</strong> {selectedWarga.tempat_dan_tanggal_lahir}</div>
+                                                        <div><strong>Jenis Kelamin:</strong> {selectedWarga.jenis_kelamin}</div>
+                                                    </div>
+                                                    <div className="flex gap-2 justify-end items-center w-full">
+                                                        <PrimaryButton
+                                                            color="red"
+                                                            rounded='full'
+                                                            disabled={loading[selectedWarga.nik_warga]}
+                                                            onClick={() => handleDisapprove(selectedWarga.nik_warga)}
+                                                        >
+                                                            <X className="w-4 h-4 mr-2" />
+                                                            Tolak
+                                                        </PrimaryButton>
+                                                        <PrimaryButton
+                                                            color="green"
+                                                            rounded='full'
+                                                            disabled={loading[selectedWarga.nik_warga]}
+                                                            onClick={() => handleApprove(selectedWarga.nik_warga)}
+                                                        >
+                                                            <Check className="w-4 h-4 mr-2" />
+                                                            Setujui
+                                                        </PrimaryButton>
+                                                    </div>
+                                                </DialogContent>
+                                            )}
+                                        </Dialog>
                                     </TableCell>
                                 </TableRow>
                             ))

@@ -27,7 +27,9 @@ export default {
         "border-green",
         "border-orange",
         "focus:ring-yellow",
-        "focus:border-yellow"
+        "focus:border-yellow",
+        "focus:ring-orange",
+        "focus:border-orange",
     ],
 
     theme: {

@@ -21,7 +21,7 @@ const BiodataUser = () => {
             setDataRT(response.data.rt);
             setDataRW(response.data.rw);
             setDataWarga(response.data.warga);
-            console.log(response.data)
+            console.log(response.data.warga)
             setLoading(false);
         } catch (error) {
             console.error("Error fetching data:", error);

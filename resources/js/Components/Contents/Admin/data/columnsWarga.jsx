@@ -105,18 +105,6 @@ export const columnsWarga = [
             const nikWarga = row.getValue("nik_warga");
             const [loading, setLoading] = useState({});
 
-            const handleApprove = async (nik_warga) => {
-                setLoading((prev) => ({ ...prev, [nik_warga]: true }));
-                try {
-                    await axios.post(`/approvalRole/approve/${nik_warga}`);
-                    setLoading((prev) => ({ ...prev, [nik_warga]: false }));
-                } catch (error) {
-                    console.error("Error approving user:", error);
-                    alert("Terjadi kesalahan saat mengapprove warga.");
-                    setLoading((prev) => ({ ...prev, [nik_warga]: false }));
-                }
-            };
-
             const handleDisapprove = async (nik_warga) => {
                 setLoading((prev) => ({ ...prev, [nik_warga]: true }));
                 try {
@@ -170,16 +158,7 @@ export const columnsWarga = [
                                         onClick={() => handleDisapprove(nikWarga)}
                                     >
                                         <X className="w-4 h-4 mr-2" />
-                                        Tolak
-                                    </PrimaryButton>
-                                    <PrimaryButton
-                                        color="green"
-                                        rounded='full'
-                                        disabled={loading[nikWarga]}
-                                        onClick={() => handleApprove(nikWarga)}
-                                    >
-                                        <Check className="w-4 h-4 mr-2" />
-                                        Setujui
+                                        Nonaktifkan Akun
                                     </PrimaryButton>
                                 </div>
                             </div>
