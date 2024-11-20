@@ -44,7 +44,7 @@ const PengajuanMasalah = ({ idRW }) => {
         id_approver: idRW
       });
 
-      fetchData();
+      fetchPengajuanMasalahData(setPendingSurat, idRW);
       
     } catch (error) {
       console.error('Error updating status:', error);

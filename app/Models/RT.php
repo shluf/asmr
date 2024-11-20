@@ -49,4 +49,8 @@ class RT extends Model
         return $this->hasMany(ApprovalSurat::class, 'id_rt');
     }
 
+    public function getNoRT()
+    {
+        return $this->penanggung_jawab_rt;
+    }
 }

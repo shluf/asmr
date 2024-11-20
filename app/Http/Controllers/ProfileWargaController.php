@@ -14,6 +14,8 @@ class ProfileWargaController extends Controller
             $warga = Warga::with(['user'])
                          ->where('nik_warga', $nik_warga)
                          ->first();
+            $warga->nomor_rt = $warga->noRT();
+            $warga->nomor_rw = $warga->noRW();
 
             if (!$warga) {
                 return response()->json([

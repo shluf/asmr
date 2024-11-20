@@ -24,6 +24,8 @@ class PengajuanController extends Controller
 
             // Fetch the Warga data related to the user
             $dataWarga = Warga::where('id_user', $user->id)->first();
+            $dataWarga->nomor_rt = $dataWarga->noRT();
+            $dataWarga->nomor_rw = $dataWarga->noRW();
 
             // Return user and warga data as JSON
             return response()->json([
@@ -169,19 +171,20 @@ class PengajuanController extends Controller
 
                 $progress[] = [
                     'title' => 'Proses Verifikasi RW',
-                    'description' => $approval->status_rw === "pending" ? 'Menunggu persetujuan RT' : ($approval->status_rw === "approved" ? "Pengajuan telah disetujui RW" : "Pengajuan ditolak RW"),
+                    'description' => $approval->status_rw === "pending" ? 'Menunggu persetujuan RW' : ($approval->status_rw === "approved" ? "Pengajuan telah disetujui RW" : "Pengajuan ditolak RW"),
                     'tgl_approval' => $approval->tanggal_approval_rw,
-                    'status' => $approval->status_rw,
+                    'status' => $approval->status_rt === "approved" && $approval->status_rw === "pending" ? "in-progress"  : $approval->status_rw,
                 ];
 
                 $progress[] = [
                     'title' => 'Penerbitan Surat',
-                    'description' => 'Surat sedang dalam proses penerbitan',
-                    'status' => $approval->status_rw === 'approved' && $approval->status_rt === 'approved' ? 'completed' : 'pending',
+                    'description' => $approval->status_approval === "Selesai" ? 'Surat telah berhasil diterbitkan' : 'Surat sedang dalam proses penerbitan',
+                    'status' => $approval->status_rw === 'approved' && $approval->status_rt === 'approved' && $approval->status_approval !== "Selesai" ? 'in-progress' : ($approval->status_approval === "Selesai" ? 'approved' : 'pending'),
                 ];
             }
 
             return [
+                'id_pengajuan_surat' => $pengajuan->id_pengajuan_surat,
                 'created_at' => $pengajuan->created_at->format('Y-m-d'),
                 'jenis_surat' => $pengajuan->jenis_surat,
                 'status_pengajuan' => $pengajuan->status_pengajuan,

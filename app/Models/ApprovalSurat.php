@@ -14,11 +14,11 @@ class ApprovalSurat extends Model
 
     protected $fillable = [
         'id_pengajuan_surat',
-        'id_rt',
-        'id_rw',
+        'status_rt',
+        'status_rw',
         'status_approval',
         'tanggal_approval_rt',
-        'tanggal_approval'
+        'tanggal_approval_rw'
     ];
 
     public function pengajuanSurat()

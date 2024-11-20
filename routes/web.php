@@ -15,6 +15,8 @@ use App\Http\Controllers\ProfileWargaController;
 use App\Http\Controllers\ProgramKerjaController;
 use App\Http\Controllers\RegisterRtRwController;
 use App\Http\Controllers\SuratController;
+use App\Http\Controllers\SuratPDFController;
+use App\Models\PengajuanSurat;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -81,6 +83,11 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/notifications/count', [NotificationController::class, 'getNotificationCounts']);
+
+    Route::get('/surat/download/{pengajuan}', [SuratPDFController::class, 'download'])
+        ->name('surat.download');
+    Route::get('/surat/preview/{pengajuan}', [SuratPDFController::class, 'preview'])
+        ->name('surat.preview');
 
 });
 

@@ -6,7 +6,7 @@ import { Button } from "@/Components/ui/button";
 import { Check, Cog, Download, ShieldCheck, X, HelpCircle } from "lucide-react";
 import { Collapsible, CollapsibleTrigger } from "@/Components/ui/collapsible";
 import { CollapsibleContent } from "@radix-ui/react-collapsible";
-import { fetchHistoryData } from "@/hooks/Warga";
+import { downloadSurat, fetchHistoryData } from "@/hooks/Warga";
 import { Skeleton } from "@/Components/ui/skeleton";
 
 const getStatusIcon = (status) => {
@@ -38,17 +38,22 @@ const getStatusColor = (status) => {
 const HistoriPengajuan = ({ nikWarga }) => {
   const [dataPengajuan, setDataPengajuan] = useState([]);
   const [openItems, setOpenItems] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [isHistoryLoading, setIsHistoryLoading] = useState(true);
+  const [isDownloadLoading, setIsDownloadLoading] = useState(true);
 
   useEffect(() => {
-    fetchHistoryData(setDataPengajuan, nikWarga, setIsLoading);
+    fetchHistoryData(setDataPengajuan, nikWarga, setIsHistoryLoading);
   }, [nikWarga]);
+
+  const handleDownloadSurat = (id) => {
+    downloadSurat(id, setIsDownloadLoading)
+  }
 
   return (
     <div className="w-full">
       <Card>
         <CardContent className="space-y-4 p-6">
-          {isLoading ? (
+          {isHistoryLoading ? (
             [...Array(5)].map((_, i) => (
               <Card>
                 <CardContent className="p-6">
@@ -70,6 +75,20 @@ const HistoriPengajuan = ({ nikWarga }) => {
                 </CardContent>
               </Card>
             ))
+          ) : !dataPengajuan.length > 0 ? (
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                  <ShieldCheck className="h-6 w-6 text-green" />
+                </div>               
+                <div className='flex flex-col h-full justify-between'>
+                  <p className="font-medium flex items-center h-1/2">Tidak ada surat yang diajukan</p>
+                  <p className="text-sm flex h-1/2 text-green">Anda belum mengajukan surat</p>
+                </div>
+              </div>
+              </CardContent>
+            </Card>
           ) : (
             dataPengajuan.map((submission, index) => (
               <Collapsible
@@ -107,9 +126,9 @@ const HistoriPengajuan = ({ nikWarga }) => {
                       </div>
                       <div className="flex gap-2">
                         {submission?.progress?.some(
-                          (step) => step.title === "Penerbitan Surat" && step.status === "completed"
+                          (step) => step.title === "Penerbitan Surat" && step.status === "approved"
                         ) && (
-                          <Button variant="outline" className="rounded-full">
+                          <Button disable={isDownloadLoading} variant="outline" className="rounded-full" onClick={() => handleDownloadSurat(submission.id_pengajuan_surat)}>
                             <Download className="w-4 h-4" />
                           </Button>
                         )}

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TemplateSurat;
 use App\Models\User;
 use App\Models\Warga;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
         RTSeeder::class,
         WargaSeeder::class,
         ProgramKerjaSeeder::class,
+        TemplateSuratSeeder::class,
     ]);
 
     }

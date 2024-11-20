@@ -36,7 +36,7 @@ class RegisterRtRwController extends Controller
             $ttdPath = null;
             if ($request->hasFile('ttd')) {
                 if ($request->file('ttd')->isValid()) {
-                    $ttdPath = $request->file('ttd')->store('public/ttd');
+                    $ttdPath = $request->file('ttd')->store('ttd');
                 } else {
                     return response()->json(['message' => 'File TTD tidak valid'], 400);
                 }

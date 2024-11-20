@@ -98,11 +98,11 @@ class SuratController extends Controller
             $approval->save();
 
             // Update status pengajuan
-            $pengajuan = PengajuanSurat::find($id_pengajuan_surat);
-            $status = $request->status_approval === 'approved' ? 'disetujui' : 'ditolak';
-            $approver = $request->approver_type === 'rt' ? 'RT' : 'RW';
-            $pengajuan->status_pengajuan = "Surat " . $status . " " . $approver;
-            $pengajuan->save();
+            // $pengajuan = PengajuanSurat::find($id_pengajuan_surat);
+            // $status = $request->status_approval === 'approved' ? 'disetujui' : 'ditolak';
+            // $approver = $request->approver_type === 'rt' ? 'RT' : 'RW';
+            // $pengajuan->status_pengajuan = "Surat " . $status . " " . $approver;
+            // $pengajuan->save();
 
             DB::commit();
 

@@ -103,11 +103,11 @@ const Akun = ({ nikWarga }) => {
          <div className="grid grid-cols-2 gap-4">
            <div className="space-y-2">
              <InputLabel htmlFor="rt">RT</InputLabel>
-             <Input className="focus:ring-green focus:border-green active:ring-green focus:ring-2" id="rt" defaultValue={profileWarga.id_rt} disabled={isEditMode} readOnly={true} />
+             <Input className="focus:ring-green focus:border-green active:ring-green focus:ring-2" id="rt" defaultValue={profileWarga.nomor_rt} disabled={isEditMode} readOnly={true} />
            </div>
            <div className="space-y-2">
              <InputLabel htmlFor="rw">RW</InputLabel>
-             <Input className="focus:ring-green focus:border-green active:ring-green focus:ring-2" id="rw" defaultValue={profileWarga.id_rw} disabled={isEditMode} readOnly={true} />
+             <Input className="focus:ring-green focus:border-green active:ring-green focus:ring-2" id="rw" defaultValue={profileWarga.nomor_rw} disabled={isEditMode} readOnly={true} />
            </div>
          </div>
          <div className="space-y-2">

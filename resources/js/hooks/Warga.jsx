@@ -51,3 +51,16 @@ export const fetchAkunData = async (setProfileWarga, setData, nikWarga) => {
       console.error('Error fetching profile:', error);
     }
   };
+
+  export const downloadSurat = async (idPengajuan, setIsLoading) => {
+    try {
+        setIsLoading(true);
+        const downloadUrl = route('surat.download', idPengajuan);
+        window.location.href = downloadUrl;
+
+        setIsLoading(false);
+    } catch (error) {
+        console.error("Error download surat:", error);
+        setIsLoading(false);
+    }
+};

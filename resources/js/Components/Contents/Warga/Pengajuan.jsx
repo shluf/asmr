@@ -16,6 +16,7 @@ const Pengajuan = () => {
 
     useEffect(() => {
         fetchPengajuanWargaData(setDataWarga, setLoading);
+        console.log(dataWarga)
     }, []);
 
     const handleJenisSuratChange = (event) => {
@@ -94,17 +95,16 @@ const Pengajuan = () => {
                     Form Pengajuan
                 </h2>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
-                <p className="text-blue-2  text-sm  mt-4">
+                <div className="text-blue-2  text-sm  mt-4">
                     Mohon Isi Formulir dengan Benar untuk Mempercepat Proses
                     Layanan Anda
-                </p>
-                <p className="text-gray-600 mt-2">
-                    Yang bertanda tangan di bawah ini Ketua RT 0
-                    {dataWarga.id_rt} RW 0{dataWarga.id_rw} {dataWarga.alamat},
+                </div>
+                <div className="text-gray-600 mt-2">
+                    Yang bertanda tangan di bawah ini Ketua {dataWarga.nomor_rt} {dataWarga.nomor_rw} {dataWarga.alamat},
                     memberikan keterangan kepada :
-                </p>
+                </div>
                 <div className="text-gray-800 mx-2 md:mx-8 mt-4 space-y-1">
-                    <p className="flex">
+                    <div className="flex">
                         <label className="font-semibold w-60">Nama</label>
                         <span className="w-5">:</span>
                         <TextInput
@@ -115,8 +115,8 @@ const Pengajuan = () => {
                             onChange={handleInputChange}
                             className="flex-1 p-2 min-w-60 sm:min-w-80 border rounded"
                         />
-                    </p>
-                    <p className="flex">
+                    </div>
+                    <div className="flex">
                         <label className="font-semibold w-60">NIK </label>
                         <span className="w-5">:</span>
                         <TextInput
@@ -127,8 +127,8 @@ const Pengajuan = () => {
                             onChange={handleInputChange}
                             className="flex-1 p-2 min-w-60 sm:min-w-80 border rounded"
                         />
-                    </p>
-                    <p className="flex">
+                    </div>
+                    <div className="flex">
                         <span className="font-semibold w-60">NO.KK</span>
                         <span className="w-5">:</span>
                         <TextInput
@@ -139,8 +139,8 @@ const Pengajuan = () => {
                             readOnly
                             className="flex-1 min-w-60 sm:min-w-80 p-2 border rounded"
                         />
-                    </p>
-                    <p className="flex">
+                    </div>
+                    <div className="flex">
                         <label className="font-semibold w-60">
                             Jenis Kelamin
                         </label>
@@ -165,8 +165,8 @@ const Pengajuan = () => {
                         </Select>
                         </div>
 
-                    </p>
-                    <p className="flex">
+                    </div>
+                    <div className="flex">
                         <label className="font-semibold w-60">Agama</label>
                         <span className="w-5">:</span>
                         <div className="flex-1 min-w-60 sm:min-w-80">
@@ -192,8 +192,8 @@ const Pengajuan = () => {
                         </Select>
                         </div>
 
-                    </p>
-                    <p className="flex">
+                    </div>
+                    <div className="flex">
                         <label className="font-semibold w-60">
                             Tempat, tanggal lahir
                         </label>
@@ -206,8 +206,8 @@ const Pengajuan = () => {
                             onChange={handleInputChange}
                             className="flex-1 min-w-60 sm:min-w-80 p-2 border rounded"
                         />
-                    </p>
-                    <p className="flex">
+                    </div>
+                    <div className="flex">
                         <label className="font-semibold w-60">
                             Alamat/Tempat tinggal
                         </label>
@@ -220,19 +220,18 @@ const Pengajuan = () => {
                             onChange={handleInputChange}
                             className="flex-1 p-2 min-w-60 sm:min-w-80 border rounded"
                         />
-                    </p>
+                    </div>
                     </div>
 
-                {/* Pilihan Pengajuan Surat */}
                 <div className="mb-6">
-                    <p className="text-gray-700">
-                        Benar bahwa yang bersangkutan adalah warga RT.
-                        {dataWarga.id_rt} RW.{dataWarga.id_rw} yang beralamat di{" "}
+                    <div className="text-gray-700">
+                        Benar bahwa yang bersangkutan adalah warga {dataWarga.nomor_rt} {dataWarga.nomor_rw} yang beralamat di{" "}
                         {dataWarga.alamat}, dan bermaksud untuk mengurus surat:
-                    </p>
+                    </div>
                     <div className="mt-4 ml-6 space-y-2">
                         {[
-                            "Pengantar KTP/KK",
+                            "Pengantar KTP",
+                            "Pengantar KK",
                             "Pengantar Akta Kelahiran",
                             "Surat Keterangan Kematian",
                             "Surat Domisili Tempat tinggal",
@@ -240,7 +239,7 @@ const Pengajuan = () => {
                             "Surat Keterangan Tidak Mampu",
                             "Surat SKCK",
                             "Surat Ketenagakerjaan",
-                            "Surat pengantar nikah",
+                            "Surat Pengantar Nikah",
                             "Surat Keterangan Pindah",
                             "lainnya:",
                         ].map((jenis, index) => (

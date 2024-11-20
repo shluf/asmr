@@ -49,5 +49,10 @@ class RW extends Model
     {
         return $this->hasMany(ApprovalSurat::class, 'id_rw');
     }
+
+    public function getNoRW()
+    {
+        return $this->penanggung_jawab_rw;
+    }
 }
 

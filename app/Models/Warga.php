@@ -51,4 +51,15 @@ class Warga extends Model{
     {
         return $this->where('id_rt', $id_rt)->where('id_rw', $id_rw)->get();
     }
+
+    public function noRT()
+    {
+        return $this->rt->getNoRT();
+    }
+
+    public function noRW()
+    {
+        return $this->rw->getNoRW();
+    }
+
 }

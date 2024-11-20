@@ -24,7 +24,8 @@ class PengajuanSurat extends Model
         'id_rw',
         'jenis_surat',
         'status_pengajuan',
-        'deskripsi'
+        'deskripsi',
+        'pdf_path'
     ];
 
     public function warga()
