@@ -1,5 +1,5 @@
+import { DataField } from "@/Components/partials/dataField";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
 import { Button } from "@/Components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/Components/ui/dialog";
 import axios from "axios";
@@ -9,6 +9,7 @@ import { useState } from "react";
 export const columnsRT = [
     {
         accessorKey: "nama",
+        name: "Nama",
         header: ({ column }) => {
             return (
                 <Button
@@ -28,6 +29,7 @@ export const columnsRT = [
     },
     {
         accessorKey: "penanggung_jawab_rt",
+        name: "Jabatan", 
         header: ({ column }) => {
             return (
                 <Button
@@ -47,6 +49,7 @@ export const columnsRT = [
     },
     {
         accessorKey: "email",
+        name: "Email",
         header: "Email",
         cell: ({ row }) => (
             <div className="lowercase">{row.getValue("email")}</div>
@@ -54,13 +57,15 @@ export const columnsRT = [
     },
     {
         accessorKey: "periode",
+        name: "Periode",
         header: () => <div className="text-center">Periode</div>,
         cell: ({ row }) => {
             return <div className="text-right font-medium text-nowrap">{row.getValue("periode")}</div>;
         },
     },
     {
-        accessorKey: "id_rw",
+        accessorKey: "no_rw",
+        name: "Penanggung Jawab",
         header: ({ column }) => {
             return (
                 <Button
@@ -74,11 +79,12 @@ export const columnsRT = [
             )
         },
         cell: ({ row }) => {
-            return <div className="text-right font-medium text-nowrap">RW {row.getValue("id_rw")}</div>;
+            return <div className="text-right font-medium text-nowrap">{row.getValue("no_rw")}</div>;
         },
     },
     {
         accessorKey: "alamat",
+        name: "Alamat",
         header: () => <div className="text-right">Alamat</div>,
         cell: ({ row }) => {
             const [show, setShow] = useState(false);
@@ -129,9 +135,9 @@ export const columnsRT = [
                                 </svg>
                             </button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
+                        <DialogContent className="sm:max-w-[600px]">
                             <DialogHeader>
-                                <DialogTitle>Edit {row.getValue("penanggung_jawab_rw")}</DialogTitle>
+                                <DialogTitle>Edit {row.getValue("penanggung_jawab_rt")}</DialogTitle>
                             </DialogHeader>
                             <div className="grid gap-4 py-4">
                                 <DataField
@@ -152,15 +158,16 @@ export const columnsRT = [
                                 />
                                 <DataField
                                     label="Penanggung Jawab"
-                                    value={row.getValue("id_rw")}
+                                    value={row.getValue("no_rw")}
                                 />
                                 <DataField
                                     label="Alamat"
                                     value={row.getValue("alamat")}
+                                    textarea
                                 />
                                 <div className="flex gap-2 justify-end items-center w-full">
                                     <PrimaryButton
-                                        color="yellow"
+                                        color="green"
                                         rounded="full"
                                         disabled={loading[nikWarga]}
                                         onClick={() =>
@@ -179,10 +186,3 @@ export const columnsRT = [
         },
     },
 ];
-
-const DataField = ({ label, value }) => (
-    <div className="grid grid-cols-4 items-center gap-4">
-        <span className="font-semibold">{label}:</span>
-        <TextInput className="col-span-3" value={value} />
-    </div>
-);

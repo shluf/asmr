@@ -1,9 +1,11 @@
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
+import { AlertWrapper, showAlert } from '@/Components/partials/Alert';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, useForm } from '@inertiajs/react';
+import axios from 'axios';
 
 export default function ResetPassword({ token, email }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -13,15 +15,38 @@ export default function ResetPassword({ token, email }) {
         password_confirmation: '',
     });
 
-    const submit = (e) => {
+
+    const submit = async (e) => {
         e.preventDefault();
 
-        post(route('password.store'), {
-            onFinish: () => reset('password', 'password_confirmation'),
-        });
+        console.log(data);
+
+        try {
+            await axios.post(route('password.store'), {
+                onFinish: () => reset('password', 'password_confirmation'),
+            });
+
+            showAlert({
+                title: "Berhasil",
+                desc: "Akun Anda telah berhasil terdaftar",
+                message: "Mohon tunggu hingga admin memverifikasi data Anda",
+                success: true,
+                color: "green",
+            });
+        } catch (error) {
+            showAlert({
+                title: "Gagal",
+                desc: "Gagal melakukan registrasi",
+                message: "Silakan coba lagi",
+                succes: false,
+                color: "red",
+            });
+        }
     };
 
     return (
+        <>
+        <AlertWrapper />
         <GuestLayout button={'all'} title={'Reset Password'}>
             <Head title="Reset Password" />
 
@@ -91,5 +116,6 @@ export default function ResetPassword({ token, email }) {
                 </div>
             </form>
         </GuestLayout>
+        </>
     );
 }

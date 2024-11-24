@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/biodatasUser', [BiodatasUserController::class, 'index'])->name('biodataUser');
+    Route::get('/pending-warga', [BiodatasUserController::class, 'PendingWarga'])->name('pendingWarga');
     Route::get('/CountUser',[BiodatasUserController::class,'CountData'])->name('CountUser');
     Route::get('/approvalRole', [ApprovalRoleController::class, 'index'])->name('approvalRole');
     Route::post('/approvalRole/approve/{nik_warga}',[ApprovalRoleController::class,'approveUser'])->name("approveUser");

@@ -16,6 +16,7 @@ export default {
         "text-blue",
         "text-yellow",
         "text-orange",
+        "text-red",
         "bg-green",
         "bg-blue",
         "bg-yellow",
@@ -26,6 +27,7 @@ export default {
         "border-yellow",
         "border-green",
         "border-orange",
+        "border-red",
         "focus:ring-yellow",
         "focus:border-yellow",
         "focus:ring-orange",
@@ -62,6 +64,9 @@ export default {
                 },
                 orange: {
                     DEFAULT: "hsl(var(--orange))",
+                },
+                red: {
+                    DEFAULT: "#c12a2a",
                 },
                 background: "hsl(var(--background))",
                 foreground: "hsl(var(--foreground))",

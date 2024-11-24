@@ -18,19 +18,36 @@ class RegisterRtRwController extends Controller
         try {
             DB::beginTransaction();
 
-            $request->validate([
+            $validationRules = [
                 'nama' => 'required|string|max:255',
                 'username' => 'required|string|max:255|unique:users,email',
                 'password' => ['required', Password::defaults()],
-                'nomor' => 'required|string',
-                'alamat' => 'required|string',
                 'jabatan' => 'required|in:RT,RW',
+                'alamat' => 'required|string',
                 'ttd' => 'required|image|mimes:jpeg,png|max:2048', // max 2MB
                 'nik' => 'required|string|unique:rw,nik|unique:rt,nik',
                 'periode' => 'required|string',
-
                 'id_rw' => 'required_if:jabatan,RT|exists:rw,id_rw',
-            ]);
+            ];
+    
+            $validationRules['nomor'] = [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->jabatan === 'RT') {
+                        $combined = 'RT ' . $value;
+                        $exists = RT::where('id_rw', $request->id_rw)
+                                   ->where('penanggung_jawab_rt', $combined)
+                                   ->exists();
+                        
+                        if ($exists) {
+                            $fail("RT $value sudah terdaftar pada RW yang sama.");
+                        }
+                    }
+                }
+            ];
+    
+            $request->validate($validationRules);
 
             // Upload tanda tangan
             $ttdPath = null;
@@ -46,7 +63,7 @@ class RegisterRtRwController extends Controller
             
 
             $user = User::create([
-                'name' => $request->nama,
+                'name' => $request->username,
                 'email' => $request->username,
                 'password' => Hash::make($request->password),
                 'role' => $request->jabatan,

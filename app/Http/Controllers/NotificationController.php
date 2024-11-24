@@ -18,10 +18,10 @@ class NotificationController extends Controller
         switch ($user->role) {
             case 'Admin':
                 // Count unapproved warga for biodataUser
-                $biodataCount = Warga::where('approved', 0)->count();
+                $approvalCount = Warga::where('approved', null)->count();
                 
                 // Count pending role assignments (users without RT/RW/Warga records)
-                $approvalCount = \App\Models\User::whereNotIn('id', function($query) {
+                $biodataCount = \App\Models\User::whereNotIn('id', function($query) {
                     $query->select('id_user')
                           ->from('rt')
                           ->union(
@@ -54,7 +54,8 @@ class NotificationController extends Controller
                 }
 
                 // Count pending pengajuan surat
-                $pengajuanCount = PengajuanSurat::where('status_pengajuan', 'Menunggu persetujuan RW')
+                if ($user->role === 'RW') {
+                $pengajuanCount = PengajuanSurat::where('status_pengajuan', 'Surat disetujui RT')
                     ->when($rtId, function($query) use ($rtId) {
                         return $query->where('id_rt', $rtId);
                     })
@@ -62,6 +63,16 @@ class NotificationController extends Controller
                         return $query->where('id_rw', $rwId);
                     })
                     ->count();
+                } else {
+                    $pengajuanCount = PengajuanSurat::where('status_pengajuan', 'pending')
+                        ->when($rtId, function($query) use ($rtId) {
+                            return $query->where('id_rt', $rtId);
+                        })
+                        ->when($rwId && !$rtId, function($query) use ($rwId) {
+                            return $query->where('id_rw', $rwId);
+                        })
+                        ->count();
+                }
 
                 // Count notifications for rekap
                 $rekapCount = Notifikasi::where('jenis_notif', 'surat')
@@ -81,7 +92,9 @@ class NotificationController extends Controller
                 if ($warga) {
                     // Count pending pengajuan for this warga
                     $pengajuanCount = PengajuanSurat::where('nik_warga', $warga->nik_warga)
-                        // ->where('status_pengajuan', 'Pending')
+                        ->whereHas('approvalSurat', function($query) {
+                            $query->where('status_pengajuan', 'Selesai');
+                        })
                         ->count();
 
                     // Count notifications for histori

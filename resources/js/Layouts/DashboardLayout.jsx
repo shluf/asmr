@@ -81,7 +81,7 @@ const DashboardLayout = ({
                                 </Link>
                             }
                             <DropdownMenuSeparator />
-                            <Link href={route("logout")} method="post">
+                            <Link href={route("logout")} method="post" as="button" className="w-full">
                                 <DropdownMenuItem className="cursor-pointer">
                                         Logout
                                 </DropdownMenuItem>

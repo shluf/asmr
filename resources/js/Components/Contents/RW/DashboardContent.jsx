@@ -178,13 +178,13 @@ const DashboardContent = ({ idRW }) => {
                                           <TableCell className="text-blue-600">
                                               {Proker.waktu}
                                           </TableCell>
-                                          <TableCell>
+                                          <TableCell className="text-blue-600">
                                               {Proker.jenis_kegiatan}
                                           </TableCell>
                                           <TableCell className="text-blue-600">
                                               {Proker.tempat}
                                           </TableCell>
-                                          <TableCell>
+                                          <TableCell className="text-blue-600">
                                               {Proker.penanggung_jawab}
                                           </TableCell>
                                           <TableCell>
@@ -192,26 +192,26 @@ const DashboardContent = ({ idRW }) => {
                                                   <Button
                                                       type="button"
                                                       variant="outline"
-                                                      className="rounded-full mt-2"
+                                                      className="rounded-full h-8 w-8 p-2 mt-2"
                                                       onClick={() =>
                                                           handleEditApprove(
                                                               Proker
                                                           )
                                                       }
                                                   >
-                                                      <Pencil size={12} />
+                                                      <Pencil className="w-full h-full" />
                                                   </Button>
                                                   <Button
                                                       type="button"
                                                       variant="outline"
-                                                      className="rounded-full mt-2"
+                                                      className="rounded-full h-8 w-8 p-1 mt-2"
                                                       onClick={() =>
                                                           DeletehandleApprove(
                                                               Proker.id_program_kerja
                                                           )
                                                       }
                                                   >
-                                                      <CircleMinus size={12} />
+                                                      <CircleMinus className="w-full h-full" />
                                                   </Button>
                                               </div>
                                           </TableCell>
@@ -311,7 +311,7 @@ const DashboardContent = ({ idRW }) => {
                                     <Button
                                         type="button"
                                         variant="outline"
-                                        className="rounded-full h-12 w-12 mt-2"
+                                        className="rounded-full h-12 w-12 p-2 mt-2"
                                         onClick={handleSubmitTambah}
                                     >
                                         <CirclePlus className="w-full h-full" />

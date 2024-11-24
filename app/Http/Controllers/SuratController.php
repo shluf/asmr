@@ -16,6 +16,7 @@ class SuratController extends Controller
             ->join('warga', 'pengajuan_surat.nik_warga', '=', 'warga.nik_warga')
             ->leftJoin('approval_surat', 'pengajuan_surat.id_pengajuan_surat', '=', 'approval_surat.id_pengajuan_surat')
             ->leftJoin('rt', 'pengajuan_surat.id_rt', '=', 'rt.id_rt')
+            ->leftJoin('rw', 'pengajuan_surat.id_rw', '=', 'rw.id_rw')
             ->where('pengajuan_surat.id_rt', $id_rt)
             ->where('approval_surat.status_rt', '=', 'pending')
             ->select(
@@ -23,6 +24,7 @@ class SuratController extends Controller
                 'pengajuan_surat.*',
                 'approval_surat.status_approval',
                 'approval_surat.tanggal_approval_rt',
+                'rw.penanggung_jawab_rw as penanggung_jawab_rw',
                 'rt.penanggung_jawab_rt as penanggung_jawab_rt'
             )
             ->get();
@@ -40,6 +42,7 @@ class SuratController extends Controller
             ->join('warga', 'pengajuan_surat.nik_warga', '=', 'warga.nik_warga')
             ->join('approval_surat', 'pengajuan_surat.id_pengajuan_surat', '=', 'approval_surat.id_pengajuan_surat')
             ->leftJoin('rw', 'pengajuan_surat.id_rw', '=', 'rw.id_rw')
+            ->leftJoin('rt', 'pengajuan_surat.id_rt', '=', 'rt.id_rt')
             ->where('pengajuan_surat.id_rw', $id_rw)
             ->where('approval_surat.tanggal_approval_rt', '!=', null) // Sudah diapprove RT
             ->where(function($query) {
@@ -52,7 +55,8 @@ class SuratController extends Controller
                 'approval_surat.status_approval',
                 'approval_surat.tanggal_approval_rt',
                 'approval_surat.tanggal_approval_rw',
-                'rw.penanggung_jawab_rw as penanggung_jawab_rw'
+                'rw.penanggung_jawab_rw as penanggung_jawab_rw',
+                'rt.penanggung_jawab_rt as penanggung_jawab_rt'
             )
             ->get();
 
@@ -95,14 +99,14 @@ class SuratController extends Controller
                 $approval->status_approval = $status;
             }
 
+            $pengajuan = PengajuanSurat::find($id_pengajuan_surat);
+            $status = $request->status_approval === 'approved' ? 'disetujui' : 'ditolak';
+            $approver = $request->approver_type === 'rt' ? 'RT' : 'RW';
+            $pengajuan->status_pengajuan = "Surat " . $status . " " . $approver;
+            $pengajuan->save();
             $approval->save();
 
             // Update status pengajuan
-            // $pengajuan = PengajuanSurat::find($id_pengajuan_surat);
-            // $status = $request->status_approval === 'approved' ? 'disetujui' : 'ditolak';
-            // $approver = $request->approver_type === 'rt' ? 'RT' : 'RW';
-            // $pengajuan->status_pengajuan = "Surat " . $status . " " . $approver;
-            // $pengajuan->save();
 
             DB::commit();
 
@@ -138,6 +142,7 @@ class SuratController extends Controller
                 'warga.alamat as alamat_warga',
                 'approval_surat.status_approval',
                 'approval_surat.status_rt',
+                'approval_surat.status_rw',
                 'approval_surat.tanggal_approval_rt',
                 'approval_surat.tanggal_approval_rw',
                 'rt.penanggung_jawab_rt as penanggung_jawab_rt', 

@@ -22,6 +22,7 @@ export default function Dashboard({ currentPage }) {
         }
     };
 
+
     return (
         <DashboardLayout color={"blue"}>
             <Head title="Dashboard" />

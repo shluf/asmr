@@ -27,10 +27,10 @@ import { Skeleton } from "../ui/skeleton";
 import { Input } from "../ui/input";
 import PrimaryButton from "../PrimaryButton";
 
-const DataTable = ({ data, columns, color, pageSize = 5, isLoading = false }) => {
+const DataTable = ({ data, columns, hide = {}, pageSize = 5, isLoading = false }) => {
     const [sorting, setSorting] = useState([]);
     const [columnFilters, setColumnFilters] = useState([]);
-    const [columnVisibility, setColumnVisibility] = useState({});
+    const [columnVisibility, setColumnVisibility] = useState(hide);
     const [rowSelection, setRowSelection] = useState({});
 
     const table = useReactTable({
@@ -57,6 +57,7 @@ const DataTable = ({ data, columns, color, pageSize = 5, isLoading = false }) =>
             },
         },
     });
+    
     const SkeletonRow = ({ cellCount }) => (
         <TableRow>
           {Array.from({ length: cellCount }).map((_, index) => (
@@ -81,7 +82,7 @@ const DataTable = ({ data, columns, color, pageSize = 5, isLoading = false }) =>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="ml-auto">
-                  Columns <ChevronDown className="ml-2 h-4 w-4" />
+                  Kolom <ChevronDown className="ml-2 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -89,6 +90,7 @@ const DataTable = ({ data, columns, color, pageSize = 5, isLoading = false }) =>
                   .getAllColumns()
                   .filter((column) => column.getCanHide())
                   .map((column) => {
+                    const header = column.columnDef?.name || column.id
                     return (
                       <DropdownMenuCheckboxItem
                         key={column.id}
@@ -98,7 +100,7 @@ const DataTable = ({ data, columns, color, pageSize = 5, isLoading = false }) =>
                           column.toggleVisibility(!!value)
                         }
                       >
-                        {column.id}
+                        {header}
                       </DropdownMenuCheckboxItem>
                     )
                   })}
@@ -110,8 +112,8 @@ const DataTable = ({ data, columns, color, pageSize = 5, isLoading = false }) =>
               <TableHeader>
                 {isLoading ? (
                   <TableRow>
-                    {columns.map((column) => (
-                      <TableHead key={column.id}>
+                    {columns.map((column, index) => (
+                      <TableHead key={column.id || index}>
                         <Skeleton className="h-6 w-full" />
                       </TableHead>
                     ))}
@@ -167,12 +169,12 @@ const DataTable = ({ data, columns, color, pageSize = 5, isLoading = false }) =>
               </TableBody>
             </Table>
           </div>
-          <div className="flex items-center justify-between space-x-2 py-4">
-            <div className="flex-1 text-sm text-muted-foreground">
+          <div className="flex items-center justify-center md:justify-between space-x-2 py-4">
+            <div className="flex-1 text-sm text-muted-foreground md:block hidden">
               {isLoading ? (
                 <Skeleton className="h-4 w-[100px]" />
               ) : (
-                `Page ${table.getState().pagination.pageIndex + 1} dari ${table.getPageCount()}`
+                `Halaman ${table.getState().pagination.pageIndex + 1} dari ${table.getPageCount()}`
               )}
             </div>
             <div className="flex items-center space-x-2">

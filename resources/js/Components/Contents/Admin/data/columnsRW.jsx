@@ -1,5 +1,5 @@
+import { DataField } from "@/Components/partials/dataField";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
 import { Button } from "@/Components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/Components/ui/dialog";
 import axios from "axios";
@@ -28,6 +28,7 @@ export const columnsRW = [
     },
     {
         accessorKey: "penanggung_jawab_rw",
+        name: "Jabatan",
         header: ({ column }) => {
             return (
                 <Button
@@ -111,7 +112,7 @@ export const columnsRW = [
                                 </svg>
                             </button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
+                        <DialogContent className="sm:max-w-[600px]">
                             <DialogHeader>
                                 <DialogTitle>Edit {row.getValue("penanggung_jawab_rw")}</DialogTitle>
                             </DialogHeader>
@@ -135,10 +136,11 @@ export const columnsRW = [
                                 <DataField
                                     label="Alamat"
                                     value={row.getValue("alamat")}
+                                    textarea
                                 />
                                 <div className="flex gap-2 justify-end items-center w-full">
                                     <PrimaryButton
-                                        color="yellow"
+                                        color="green"
                                         rounded="full"
                                         disabled={loading[nikWarga]}
                                         onClick={() =>
@@ -157,10 +159,3 @@ export const columnsRW = [
         },
     },
 ];
-
-const DataField = ({ label, value }) => (
-    <div className="grid grid-cols-4 items-center gap-4">
-        <span className="font-semibold">{label}:</span>
-        <TextInput className="col-span-3" value={value} />
-    </div>
-);

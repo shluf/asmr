@@ -178,8 +178,8 @@ class PengajuanController extends Controller
 
                 $progress[] = [
                     'title' => 'Penerbitan Surat',
-                    'description' => $approval->status_approval === "Selesai" ? 'Surat telah berhasil diterbitkan' : 'Surat sedang dalam proses penerbitan',
-                    'status' => $approval->status_rw === 'approved' && $approval->status_rt === 'approved' && $approval->status_approval !== "Selesai" ? 'in-progress' : ($approval->status_approval === "Selesai" ? 'approved' : 'pending'),
+                    'description' => $approval->status_approval === "Selesai" && $approval->status_rw === "approved" ? 'Surat telah berhasil diterbitkan' : 'Surat sedang dalam proses penerbitan',
+                    'status' => $approval->status_rw !== 'pending' && $approval->status_rt !== 'pending' && $approval->status_approval !== "Selesai" ? 'in-progress' : ($approval->status_rw === 'approved' && $approval->status_rt === 'approved' && $approval->status_approval === "Selesai" ? 'approved' : 'pending'),
                 ];
             }
 

@@ -3,75 +3,76 @@ import axios from "axios";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from "@/Components/ui/skeleton";
-import Alert from "@/Components/partials/Alert";
+import { AlertWrapper, showAlert } from "@/Components/partials/Alert";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/Components/ui/dialog";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Check, X } from "lucide-react";
+import { DataField } from "@/Components/partials/dataField";
+import { fetchApprovalRoleData } from "@/hooks/Admin";
 
 const ApprovalRole = () => {
     const [dataWarga, setDataWarga] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [isAlertOpen, setIsAlertOpen] = useState(false);
     const [selectedWarga, setSelectedWarga] = useState(null);
     const [loading, setLoading] = useState({});
 
     useEffect(() => {
-        fetchData();
+        fetchApprovalRoleData(setIsLoading, setDataWarga);
     }, []);
-
-    const fetchData = async () => {
-        setIsLoading(true);
-        try {
-            const response = await axios.get(route("approvalRole"));
-            setDataWarga(response.data.warga || []); // Memastikan data tidak null
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            setDataWarga([]);
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
     const handleApprove = async (nik_warga) => {
         try {
             await axios.post(`/approvalRole/approve/${nik_warga}`);
-            setIsAlertOpen(true);
-            fetchData(); // Refresh data setelah approve
+            showAlert({
+                title: "Berhasil!!!",
+                desc: "Approval diterima",
+                message: "Status approval user telah diperbarui",
+                color: "green",
+                });
+            fetchData();
             setLoading((prev) => ({ ...prev, [nik_warga]: false }));
         } catch (error) {
             console.error("Error approving user:", error);
-            alert("Terjadi kesalahan saat mengapprove warga.");
+            showAlert({
+                title: "Terjadi Kesalahan",
+                desc: error,
+                message: "Status approval user gagal diperbarui",
+                color: "red",
+                });
         }
     };
 
     const handleDisapprove = async (nik_warga) => {
         try {
             await axios.post(`/approvalRole/disapprove/${nik_warga}`);
-            setIsAlertOpen(true);
-            fetchData(); // Refresh data setelah disapprove
+            showAlert({
+                title: "Berhasil!!!",
+                desc: "Approval ditolak",
+                message: "Status approval user telah diperbarui",
+                color: "green",
+                });
+            fetchData(); 
             setLoading((prev) => ({ ...prev, [nik_warga]: false }));
         } catch (error) {
             console.error("Error disapproving user:", error);
-            alert("Terjadi kesalahan saat mendisapprove warga.");
+            showAlert({
+                title: "Terjadi Kesalahan",
+                desc: error,
+                message: "Status approval user gagal diperbarui",
+                color: "red",
+                });
         }
     };
 
     return (
         <div className="w-full p-6">
-            <Alert
-                isOpen={isAlertOpen}
-                onClose={() => setIsAlertOpen(false)}
-                title="Berhasil!!"
-                message="Status approval user telah diperbarui"
-                iconColor="#4CAF50"
-            />
+            <AlertWrapper />
             <div className="mt-10">
                 <h2 className="font-semibold text-lg mb-4">
                     Permintaan Role
@@ -121,7 +122,7 @@ const ApprovalRole = () => {
                                     <TableCell>{warga.phone}</TableCell>
                                     <TableCell>{warga.tempat_dan_tanggal_lahir}</TableCell>
                                     <TableCell>{warga.alamat}</TableCell>
-                                    <TableCell>{warga.approved ? "Approved" : "Not Approved"}</TableCell>
+                                    <TableCell>{warga.approved ? "Disetujui" : warga.approved === false ? "Ditolak" : "Pending"}</TableCell>
                                     <TableCell>
                                         <div className="flex space-x-2">
                                             <button
@@ -153,20 +154,23 @@ const ApprovalRole = () => {
                                                 </button>
                                             </DialogTrigger>
                                             {selectedWarga && (
-                                                <DialogContent className="sm:max-w-[425px]">
+                                                <DialogContent aria-describedby="dialog-description" className="sm:max-w-[600px]">
                                                     <DialogHeader>
                                                         <DialogTitle>Data Lengkap Warga</DialogTitle>
                                                     </DialogHeader>
-                                                    <div className="grid gap-4 py-4">
-                                                        <div><strong>Nama:</strong> {selectedWarga.nama}</div>
-                                                        <div><strong>No KK:</strong> {selectedWarga.nomer_kk}</div>
-                                                        <div><strong>NIK:</strong> {selectedWarga.nik_warga}</div>
-                                                        <div><strong>RT:</strong> {selectedWarga.id_rt}</div>
-                                                        <div><strong>RW:</strong> {selectedWarga.id_rw}</div>
-                                                        <div><strong>Status:</strong> {selectedWarga.approved ? "Disetujui" : "Ditolak"}</div>
-                                                        <div><strong>Alamat:</strong> {selectedWarga.alamat}</div>
-                                                        <div><strong>Tanggal Lahir:</strong> {selectedWarga.tempat_dan_tanggal_lahir}</div>
-                                                        <div><strong>Jenis Kelamin:</strong> {selectedWarga.jenis_kelamin}</div>
+                                                    {/* <p id="dialog-description" className="text-sm text-gray-500">
+                                                        Berikut adalah data lengkap warga yang dapat Anda tinjau atau ubah statusnya.
+                                                    </p> */}
+                                                    <div className="grid gap-4 py-4 text-sm">
+                                                        <DataField label="Nama" value={selectedWarga.nama} />
+                                                        <DataField label="No KK" value={selectedWarga.nomer_kk} />
+                                                        <DataField label="NIK" value={selectedWarga.nik_warga} />
+                                                        <DataField label="RT" value={selectedWarga.no_rt} />
+                                                        <DataField label="RW" value={selectedWarga.no_rw} />
+                                                        <DataField label="Status" value={selectedWarga.approved ? "Disetujui" : selectedWarga.approved === false ? "Ditolak" : "Pending"} />
+                                                        <DataField label="Alamat" value={selectedWarga.alamat} />
+                                                        <DataField label="Tanggal Lahir" value={selectedWarga.tempat_dan_tanggal_lahir} />
+                                                        <DataField label="Jenis Kelamin" value={selectedWarga.jenis_kelamin === "L" ? "Laki-laki" : "Perempuan"} />
                                                     </div>
                                                     <div className="flex gap-2 justify-end items-center w-full">
                                                         <PrimaryButton

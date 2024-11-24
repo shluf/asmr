@@ -1,8 +1,10 @@
 import InputError from '@/Components/InputError';
+import { AlertWrapper, showAlert } from '@/Components/partials/Alert';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, useForm } from '@inertiajs/react';
+import axios from 'axios';
 import { useRef } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -20,7 +22,13 @@ export default function ForgotPassword({ status }) {
 
         const recaptchaValue = recaptchaRef.current.getValue();
         if (!recaptchaValue) {
-            alert("Silakan selesaikan CAPTCHA");
+            showAlert({
+                title: "Gagal Reset Password",
+                desc: "Captcha belum terselesaikan",
+                message: "Silakan selesaikan CAPTCHA",
+                succes: false,
+                color: "red",
+              });
             return;
         }
 
@@ -29,10 +37,28 @@ export default function ForgotPassword({ status }) {
             recaptcha: recaptchaValue,
         };
 
-        post(route('password.email'), formData);
+        try {
+            await axios.post(route('password.email'), formData);
+            showAlert({
+                title: "Berhasil",
+                desc: "Link untuk mereset password telah terkirim",
+                message: "Silakan cek email anda untuk melanjutkan",
+                color: "green",
+            });
+        } catch (error) {
+            showAlert({
+                title: "Gagal",
+                desc: "Gagal mengirim link reset password",
+                message: "Silakan coba lagi",
+                succes: false,
+                color: "red",
+            });
+        }
     };
 
     return (
+        <>
+        <AlertWrapper />
         <GuestLayout button={'all'} title={'Lupa Password'}>
             <Head title="Forgot Password" />
 
@@ -77,5 +103,6 @@ export default function ForgotPassword({ status }) {
                 </div>
             </form>
         </GuestLayout>
+    </>
     );
 }

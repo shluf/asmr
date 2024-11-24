@@ -1,5 +1,5 @@
 export default function PrimaryButton({
-    className = '',
+    className,
     disabled,
     color = 'red',
     rounded = 'md',
@@ -47,6 +47,8 @@ export default function PrimaryButton({
                 focus:outline-none 
                 focus:ring-2 
                 focus:ring-offset-2
+                justify-center
+                md:w-fit w-full
                 ${variant === 'default' ? 'border border-transparent text-white' : 'bg-transparent border-2'}
                 ${getColorClasses()}
                 ${disabled && 'opacity-25'} 

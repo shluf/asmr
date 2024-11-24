@@ -1,17 +1,16 @@
-import InputError from '@/Components/InputError'
 import InputLabel from '@/Components/InputLabel'
 import PrimaryButton from '@/Components/PrimaryButton'
-import TextInput from '@/Components/TextInput'
 import { useForm } from '@inertiajs/react'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { PenSquare, User2, UserCircle } from 'lucide-react'
+import { PenSquare, User2 } from 'lucide-react'
 import { Card } from '@/Components/ui/card'
 import { Input } from '@/Components/ui/input'
 import { fetchAkunData } from '@/hooks/Warga'
 
 const Akun = ({ nikWarga }) => {
   const [isEditMode, setIsEditMode] = useState(false);
+  const [jenisKelamin, setJenisKelamin] = useState(null);
   const [profileWarga, setProfileWarga] = useState({
     user: {}
   });
@@ -24,8 +23,14 @@ const Akun = ({ nikWarga }) => {
     agama: "",
   });
 
-  useEffect(() => {
-    fetchAkunData(setProfileWarga, setData, nikWarga);
+
+  useEffect( () => {
+    const fetchData = async () => {
+      const gender = await fetchAkunData(setProfileWarga, setData, nikWarga);
+      setJenisKelamin(gender === "P" ? "Perempuan" : "Laki-Laki");
+    };
+
+    fetchData();
   }, [nikWarga]);
 
   const submit = async (e) => {
@@ -33,10 +38,18 @@ const Akun = ({ nikWarga }) => {
     try {
       const response = await axios.put(`/profile-warga/${nikWarga}`, data);
       if (response.data.status === 'success') {
-        setProfileWarga({
-          user: {}
-        })
-        setProfileWarga(response.data.data);
+        setProfileWarga((prevState) => ({
+          ...prevState,
+          user: {
+            ...prevState.user,
+            phone: response.data.data.phone,
+            alamat: response.data.data.alamat,
+            kabupaten: response.data.data.kabupaten,
+            provinsi: response.data.data.provinsi,
+            agama: response.data.data.agama,
+          },
+        }));
+
         setIsEditMode(false);
       }
     } catch (error) {
@@ -98,7 +111,7 @@ const Akun = ({ nikWarga }) => {
          </div>
          <div className="space-y-2">
            <InputLabel htmlFor="gender">Jenis kelamin</InputLabel>
-           <Input className="focus:ring-green focus:border-green active:ring-green focus:ring-2" id="gender" defaultValue={profileWarga.jenis_kelamin == 'P' ? 'Perempuan' : 'Laki-laki'} disabled={isEditMode} readOnly={true} />
+           <Input className="focus:ring-green focus:border-green active:ring-green focus:ring-2" id="gender" defaultValue={jenisKelamin} disabled={isEditMode} readOnly={true} />
          </div>
          <div className="grid grid-cols-2 gap-4">
            <div className="space-y-2">
@@ -138,7 +151,7 @@ const Akun = ({ nikWarga }) => {
             color="yellow"
            onClick={() => setIsEditMode(false)}
          >
-           Cancel
+           Batal
          </PrimaryButton>
          <PrimaryButton
           type="submit" 
@@ -146,7 +159,7 @@ const Akun = ({ nikWarga }) => {
           disabled={processing}
           color="green"
           >
-           Save
+           Simpan
          </PrimaryButton>
            </>
          )}

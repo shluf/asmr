@@ -21,7 +21,7 @@
                     $table->unsignedBigInteger('id_rw');
                     $table->string('jenis_surat');
                     $table->string('status_pengajuan');
-                    $table->text('deskripsi');
+                    $table->text('deskripsi')->nullable();
                     $table->timestamps();
 
                     // Foreign keys for RT and RW

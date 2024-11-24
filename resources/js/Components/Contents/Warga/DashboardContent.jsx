@@ -78,13 +78,13 @@ const DashboardContent = () => {
                                           <TableCell className="text-blue-600">
                                               {Proker.waktu}
                                           </TableCell>
-                                          <TableCell>
+                                          <TableCell className="text-blue-600">
                                               {Proker.jenis_kegiatan}
                                           </TableCell>
                                           <TableCell className="text-blue-600">
                                               {Proker.tempat}
                                           </TableCell>
-                                          <TableCell>
+                                          <TableCell className="text-blue-600">
                                               {Proker.penanggung_jawab}
                                           </TableCell>
                                       </TableRow>
@@ -151,7 +151,7 @@ const DashboardContent = () => {
                                 <div className="grid grid-cols-2 gap-1 md:gap-4 ml-4 w-full justify-center items-center">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4 justify-center">
                                         <div>
-                                            <p className="font-medium mt-2 text-left">
+                                            <p className="font-medium mt-2 text-left mb-1">
                                                 Tanggal pengajuan
                                             </p>
                                             <p className="font-medium text-sm text-blue-600 text-left">
@@ -165,7 +165,7 @@ const DashboardContent = () => {
                                             </p>
                                         </div>
                                         <div>
-                                            <p className="font-medium mt-2 text-left">
+                                            <p className="font-medium mt-2 text-left mb-1">
                                                 Keperluan
                                             </p>
                                             <p className="font-medium text-sm text-blue-600 text-left">
@@ -175,7 +175,7 @@ const DashboardContent = () => {
                                     </div>
                                     <div className="text-right grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4 justify-center">
                                         <div>
-                                            <p className="font-medium mt-2 text-left">
+                                            <p className="font-medium mt-2 text-left mb-1">
                                                 Status tindak lanjut
                                             </p>
                                             <p className="font-medium text-sm text-blue-600 text-left">

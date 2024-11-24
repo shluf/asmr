@@ -9,7 +9,12 @@ class ApprovalRoleController extends Controller
 {
     public function index(){
         try{
-            $dataWarga = Warga::all();
+            $dataWarga = Warga::all()
+                        ->map(function ($warga) {
+                            $warga->no_rt = $warga->noRT();
+                            $warga->no_rw = $warga->noRW();
+                            return $warga;
+                        });
             return response()->json([
                 'warga' => $dataWarga,
             ], 200);
@@ -20,22 +25,23 @@ class ApprovalRoleController extends Controller
             ], 500);
         }
     }
+
     public function approveUser($nik_warga)
-{
-    $warga = Warga::findOrFail($nik_warga);
-    $warga->approved = true; // Ganti dengan field yang sesuai
-    $warga->save();
+    {
+        $warga = Warga::findOrFail($nik_warga);
+        $warga->approved = true; // Ganti dengan field yang sesuai
+        $warga->save();
 
-    return response()->json(['message' => 'User approved successfully']);
-}
+        return response()->json(['message' => 'User approved successfully']);
+    }
 
-public function disapproveUser($nik_warga)
-{
-    $warga = Warga::findOrFail($nik_warga);
-    $warga->approved = false; // Ganti dengan field yang sesuai
-    $warga->save();
+    public function disapproveUser($nik_warga)
+    {
+        $warga = Warga::findOrFail($nik_warga);
+        $warga->approved = false; // Ganti dengan field yang sesuai
+        $warga->save();
 
-    return response()->json(['message' => 'User disapproved successfully']);
-}
+        return response()->json(['message' => 'User disapproved successfully']);
+    }
 
 }

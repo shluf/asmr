@@ -228,8 +228,6 @@ export default function Register({ rtRwData }) {
                     </div>
 
                     <div className="grid grid-cols-1 w-full gap-6 max-w-2xl">
-                        <hr></hr>
-                        {/* <h2 className="text-center text-zinc-500 font-bold text-2xl"> Akun </h2> */}
                         <InputField
                             label="Email"
                             id="email"

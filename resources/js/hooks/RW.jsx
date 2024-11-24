@@ -21,3 +21,12 @@ export const fetchPengajuanMasalahData = async (setPendingSurat, idRW) => {
         console.error("Error fetching data:", error);
     }
 };
+
+export const fetchRekapRWData = async (setPendingSurat, idRW) => {
+    try {
+        const response = await axios.get(`/surat/pengajuan/?id_rw=${idRW}`);
+        setPendingSurat(response.data);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+};

@@ -63,7 +63,7 @@ export const useNotificationPolling = (role) => {
 
     // Polling setiap 30 detik
     pollNotifications();
-    const interval = setInterval(pollNotifications, 30000);
+    const interval = setInterval(pollNotifications, 20000);
 
     return () => clearInterval(interval);
   }, [role, updateNotifications]);

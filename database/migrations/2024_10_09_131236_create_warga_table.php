@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('kabupaten');
             $table->string('provinsi');
             $table->string('agama');
-            $table->boolean('approved')->default(false);
+            $table->boolean('approved')->default(null)->nullable();
             $table->timestamps();
 
             // Set up foreign keys

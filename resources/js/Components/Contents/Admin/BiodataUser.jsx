@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import DataTable from "@/Components/partials/DataTable";
 import { columnsRT } from "./data/columnsRT";
 import { columnsRW } from "./data/columnsRW";
 import { columnsWarga } from "./data/columnsWarga";
+import { fetchBiodataUserData } from "@/hooks/Admin";
 
 const BiodataUser = () => {
     const [dataRT, setDataRT] = useState([]);
@@ -12,22 +12,8 @@ const BiodataUser = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchData();
+        fetchBiodataUserData(setDataRT, setDataRW, setDataWarga, setLoading);
     }, []);
-
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(route("biodataUser"));
-            setDataRT(response.data.rt);
-            setDataRW(response.data.rw);
-            setDataWarga(response.data.warga);
-            console.log(response.data.warga)
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-            setLoading(false);
-        }
-    };
 
     return (
         <div className="w-full p-6">
@@ -49,7 +35,7 @@ const BiodataUser = () => {
                 <h2 className="font-semibold text-lg mb-4 text-blue-5">
                     Data Warga
                 </h2>
-                <DataTable data={dataWarga} columns={columnsWarga} pageSize={10} isLoading={loading} />
+                <DataTable data={dataWarga} columns={columnsWarga} setDataWarga={setDataWarga} pageSize={10} hide={{tempat_dan_tanggal_lahir: false, approval: false, alamat: false }} isLoading={loading} />
             </div>
 
         </div>

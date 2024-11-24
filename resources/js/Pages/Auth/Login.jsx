@@ -1,10 +1,12 @@
 import Checkbox from '@/Components/Checkbox';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
+import { AlertWrapper, showAlert } from '@/Components/partials/Alert';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useEffect } from 'react';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -21,7 +23,21 @@ export default function Login({ status, canResetPassword }) {
         });
     };
 
+    useEffect(() => {
+        if (status) {
+            showAlert({
+                title: "Berhasil",
+                desc: "Akun Anda telah berhasil terdaftar",
+                message: "Mohon tunggu hingga admin memverifikasi data Anda",
+                success: true,
+                color: "green",
+            });
+        }
+    }, [status]);
+
     return (
+        <>
+        <AlertWrapper />
         <GuestLayout button={'register'} title={'Login'}>
             <Head title="Log in" />
 
@@ -98,5 +114,6 @@ export default function Login({ status, canResetPassword }) {
                 </div>
             </form>
         </GuestLayout>
+        </>
     );
 }

@@ -85,14 +85,7 @@ export default function Guest({ children, button, title, wide=false }) {
                 </div>
             </nav>
 
-            <div className="flex relative z-10 min-h-screen flex-col items-center pt-6 sm:justify-center sm:pt-0">
-                {/* <div>
-                    <Link href="/">
-                        <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
-                    </Link>
-                </div> */}
-                <div>
-                </div>
+            <div className="flex relative z-10 min-h-screen flex-col items-center pt-6 sm:pt-0 justify-center">
 
                 <div className={`mt-6 w-full overflow-hidden bg-white px-6 py-8 shadow-md ${wide ? "sm:max-w-4xl" : "sm:max-w-md"} sm:rounded-lg`}>
                     <h1 className="text-center mb-10 font-bold text-4xl">{title}</h1>

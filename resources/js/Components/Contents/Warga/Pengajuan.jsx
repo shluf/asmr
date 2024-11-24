@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { fetchPengajuanWargaData } from "@/hooks/Warga";
-import { Skeleton } from "@/Components/ui/skeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
 import TextInput from "@/Components/TextInput";
 import { Textarea } from "@headlessui/react";
-import Alert from "@/Components/partials/Alert";
+import { AlertWrapper, showAlert } from "@/Components/partials/Alert";
 
 const Pengajuan = () => {
     const [dataWarga, setDataWarga] = useState({});
-    const [selectedJenisSurat, setSelectedJenisSurat] = useState(""); // Ganti nama state di sini
+    const [selectedJenisSurat, setSelectedJenisSurat] = useState("");
     const [description, setDescription] = useState("");
     const [loading, setLoading] = useState(true);
-    const [isAlertOpen, setIsAlertOpen] = useState(false)
+    const [isLainnya, setIsLainnya] = useState(false)
 
     useEffect(() => {
         fetchPengajuanWargaData(setDataWarga, setLoading);
-        console.log(dataWarga)
     }, []);
 
     const handleJenisSuratChange = (event) => {
         setSelectedJenisSurat(event.target.value);
+        if (event.target.value==="lainnya:") {
+            setIsLainnya(true)
+        } else {
+            setIsLainnya(false)
+        }
     };
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -56,8 +59,13 @@ const Pengajuan = () => {
                 deskripsi: description,
             });
             console.log("Submitting data:", pengajuan);
-            // alert("Pengajuan berhasil diajukan!");
-            setIsAlertOpen(true)
+            showAlert({
+                title: "Berhasil",
+                desc: "Surat berhasil diajukan",
+                message: "Silahkan tunggu status selanjutnya di laman histori pengajuan",
+                success: true,
+                color: "green",
+            });
             setSelectedJenisSurat("");
             setDescription("");
             setPengajuan({
@@ -76,34 +84,35 @@ const Pengajuan = () => {
             });
         } catch (error) {
             console.error("Error submitting pengajuan:", error);
+            showAlert({
+                title: "Gagal",
+                desc: error.response.data.message,
+                message: "Silahkan periksa kembali data yang anda berikan",
+                success: false,
+                color: "red",
+            });
         }
     };
 
     return (
         <div className="w-full  flex justify-center items-start p-3">
             <div>
-                <Alert
-                    isOpen={isAlertOpen}
-                    onClose={() => setIsAlertOpen(false)}
-                    title="Berhasil!!"
-                    message="Pengajuan surat berhasil, silahkan tunggu status selanjutnya di laman histori pengajuan"
-                    iconColor="#4CAF50"
-                />
+                <AlertWrapper />
             </div>
             <div className="bg-white shadow-lg rounded-lg w-full h-full  p-8">
                 <h2 className="text-2xl font-bold text-blue-900 mb-6">
                     Form Pengajuan
                 </h2>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
-                <div className="text-blue-2  text-sm  mt-4">
+                <div className="text-blue-2  md:text-sm text-xs  mt-4">
                     Mohon Isi Formulir dengan Benar untuk Mempercepat Proses
                     Layanan Anda
                 </div>
-                <div className="text-gray-600 mt-2">
+                <div className="text-gray-600 mt-2 md:text-base text-sm">
                     Yang bertanda tangan di bawah ini Ketua {dataWarga.nomor_rt} {dataWarga.nomor_rw} {dataWarga.alamat},
                     memberikan keterangan kepada :
                 </div>
-                <div className="text-gray-800 mx-2 md:mx-8 mt-4 space-y-1">
+                <div className="text-gray-800 mx-2 md:mx-8 mt-4 md:text-base text-sm space-y-1">
                     <div className="flex">
                         <label className="font-semibold w-60">Nama</label>
                         <span className="w-5">:</span>
@@ -223,7 +232,7 @@ const Pengajuan = () => {
                     </div>
                     </div>
 
-                <div className="mb-6">
+                <div className="mb-6 mt-4 md:text-base text-sm">
                     <div className="text-gray-700">
                         Benar bahwa yang bersangkutan adalah warga {dataWarga.nomor_rt} {dataWarga.nomor_rw} yang beralamat di{" "}
                         {dataWarga.alamat}, dan bermaksud untuk mengurus surat:
@@ -266,6 +275,7 @@ const Pengajuan = () => {
                         rows="4"
                         placeholder="Detail Pengajuan"
                         value={description}
+                        disabled={!isLainnya}
                         onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>

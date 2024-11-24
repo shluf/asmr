@@ -106,7 +106,7 @@ const HistoriPengajuan = ({ nikWarga }) => {
                       </div>
                       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div>
-                          <p className="font-medium">Tanggal Pengajuan</p>
+                          <p className="font-medium mb-1">Tanggal Pengajuan</p>
                           <p className="text-sm text-blue-600">
                             {submission?.created_at
                               ? format(new Date(submission.created_at), "EEEE, dd MMMM yyyy", {
@@ -116,11 +116,11 @@ const HistoriPengajuan = ({ nikWarga }) => {
                           </p>
                         </div>
                         <div>
-                          <p className="font-medium">Keperluan</p>
+                          <p className="font-medium mb-1">Keperluan</p>
                           <p className="text-sm text-blue-600">{submission?.jenis_surat || "Keperluan tidak tersedia"}</p>
                         </div>
                         <div>
-                          <p className="font-medium">Status Tindak Lanjut</p>
+                          <p className="font-medium mb-1">Status Tindak Lanjut</p>
                           <p className="text-sm text-blue-600">{submission?.status_pengajuan || "Status tidak tersedia"}</p>
                         </div>
                       </div>
@@ -128,7 +128,7 @@ const HistoriPengajuan = ({ nikWarga }) => {
                         {submission?.progress?.some(
                           (step) => step.title === "Penerbitan Surat" && step.status === "approved"
                         ) && (
-                          <Button disable={isDownloadLoading} variant="outline" className="rounded-full" onClick={() => handleDownloadSurat(submission.id_pengajuan_surat)}>
+                          <Button disable={`${isDownloadLoading}`} variant="outline" className="rounded-full" onClick={() => handleDownloadSurat(submission.id_pengajuan_surat)}>
                             <Download className="w-4 h-4" />
                           </Button>
                         )}
@@ -139,8 +139,11 @@ const HistoriPengajuan = ({ nikWarga }) => {
                         </CollapsibleTrigger>
                       </div>
                     </div>
-                    <CollapsibleContent>
-                      <div className="mt-6 space-y-4">
+                    </CardContent>
+                    </Card>
+
+                    <CollapsibleContent className="mx-2 py-6 rounded-b-lg px-8 md:px-16 bg-[#d9d9d926] shadow-inner">
+                      <div className="space-y-4">
                         {submission?.progress?.map((step, stepIndex) =>
                           step.status !== "pending" ? (
                             <div key={stepIndex} className="flex gap-4">
@@ -160,8 +163,7 @@ const HistoriPengajuan = ({ nikWarga }) => {
                         )}
                       </div>
                     </CollapsibleContent>
-                  </CardContent>
-                </Card>
+
               </Collapsible>
             ))
           )}

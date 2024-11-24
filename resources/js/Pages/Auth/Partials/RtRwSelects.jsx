@@ -36,7 +36,7 @@ const RtRwSelects = ({ data, setData, errors, rtRwData }) => {
         if (selectedRw) {
             updateRtOptions(selectedRw);
         } else {
-            setRtOptions([]); // Reset RT options if no RW selected
+            setRtOptions([]);
         }
     };
 

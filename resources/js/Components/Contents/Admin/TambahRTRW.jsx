@@ -12,14 +12,12 @@ import {
 } from "@/Components/ui/tabs";
 import FileUpload from '@/Components/ui/file-upload';
 import axios from 'axios';
-import { router } from '@inertiajs/react';
 import InputField from '@/Components/partials/InputFields';
-import Alert from '@/Components/partials/Alert';
+import { AlertWrapper, showAlert } from '@/Components/partials/Alert';
 
 const TambahRTRW = () => {
   const [rwOptions, setRwOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
   
   const { data, setData, post, processing, errors, reset } = useForm({
     nama: "",
@@ -60,24 +58,32 @@ const TambahRTRW = () => {
     });
 
     try {
-      await router.post(route('rt-rw.store'), formData, {
-        onSuccess: () => {
-          reset();
-          if (data.jabatan === 'RW') {
-            fetchRWList(); // Refresh RW list after adding new RW
-          }
-          setIsAlertOpen(true)
-        },
-        onError: (errors) => {
-          console.error('Error submitting form:', errors);
-          alert('Terjadi kesalahan saat menambahkan data');
-        },
-        onFinish: () => {
-          setIsLoading(false);
+      const response = await axios.post('/rt-rw/store', formData);
+
+      if (response.status === 200) {
+        reset();
+  
+        if (data.jabatan === 'RW') {
+          fetchRWList();
         }
-      });
+  
+        showAlert({
+          title: "Akun berhasil ditambahkan",
+          desc: `Nama ${data.nama} dengan jabatan ${data.jabatan} ${data.nomor} telah ditambahkan`,
+          message: "Silahkan cek kembali di laman Biodata User",
+          color: "green",
+        });
+      }
+      setIsLoading(false);
     } catch (error) {
       console.error('Error submitting form:', error);
+      showAlert({
+        title: "Akun gagal ditambahkan",
+        desc: error.response.data.error,
+        message: `Silahkan masukan kembali data ${data.jabatan} dengan benar`,
+        succes: false,
+        color: "red",
+      });
       setIsLoading(false);
     }
   };
@@ -104,15 +110,9 @@ const TambahRTRW = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="w-full p-10">
       <div>
-        <Alert
-            isOpen={isAlertOpen}
-            onClose={() => setIsAlertOpen(false)}
-            title="Akun berhasil ditambahkan"
-            message="Silahkan cek kembali di laman Biodata User"
-            iconColor="#4CAF50"
-        />
+        <AlertWrapper />
       </div>
       <Tabs defaultValue="rtTab" className="max-w-2xl mx-auto">
         <TabsList className="grid w-full grid-cols-2">
@@ -121,7 +121,7 @@ const TambahRTRW = () => {
         </TabsList>
 
         <TabsContent value="rtTab">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 mt-6">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="col-span-2">
                 <InputField
@@ -261,7 +261,7 @@ const TambahRTRW = () => {
         </TabsContent>
 
         <TabsContent value="rwTab">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 mt-6">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="col-span-2">
                 <InputField
@@ -375,7 +375,7 @@ const TambahRTRW = () => {
             <div className="flex justify-end mt-6">
               <PrimaryButton
                 color="green"
-                className="px-6 py-2"
+                className="px-6 py-4 md:py-2 w-full text-center"
                 disabled={processing || isLoading}
               >
                 {isLoading ? 'Menyimpan...' : 'Tambah RW'}

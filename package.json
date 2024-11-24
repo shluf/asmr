@@ -33,10 +33,12 @@
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",
         "date-fns": "^2.30.0",
+        "embla-carousel-react": "^8.5.1",
         "lucide-react": "^0.447.0",
         "react-day-picker": "^8.10.1",
         "react-dropzone": "^14.2.10",
         "react-google-recaptcha": "^3.1.0",
+        "react-responsive": "^10.0.0",
         "tailwind-merge": "^2.5.3",
         "tailwindcss-animate": "^1.0.7",
         "zustand": "^5.0.1"

@@ -1,5 +1,5 @@
 import { Button } from "@/Components/ui/button";
-import { ArrowUpDown, Check, X } from "lucide-react";
+import { ArrowUpDown, X } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -10,10 +10,12 @@ import {
 import axios from "axios";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { useState } from "react";
+import { DataField } from "@/Components/partials/dataField";
 
 export const columnsWarga = [
     {
         accessorKey: "nomer_kk",
+        name: "Nomor KK",
         header: () => <div className="text-center">Nomor KK</div>,
         cell: ({ row }) => {
             return <div className="text-left font-medium">{row.getValue("nomer_kk")}</div>;
@@ -40,6 +42,7 @@ export const columnsWarga = [
     },
     {
         accessorKey: "jenis_kelamin",
+        name: "Jenis Kelamin",
         header: () => <div className="text-center">Jenis Kelamin</div>,
         cell: ({ row }) => {
             return <div className="text-left font-medium">{row.getValue("jenis_kelamin") === "L" ? "Laki-laki" : "Perempuan"}</div>;
@@ -47,13 +50,15 @@ export const columnsWarga = [
     },
     {
         accessorKey: "nik_warga",
+        name: "NIK",
         header: () => <div className="text-center">NIK</div>,
         cell: ({ row }) => {
             return <div className="text-right font-medium">{row.getValue("nik_warga")}</div>;
         },
     },
     {
-        accessorKey: "id_rt",
+        accessorKey: "no_rt",
+        name: "RT",
         header: ({ column }) => {
             return (
                 <Button
@@ -68,11 +73,12 @@ export const columnsWarga = [
             );
         },
         cell: ({ row }) => {
-            return <div className="text-center font-medium">{row.getValue("id_rt")}</div>;
+            return <div className="text-center font-medium">{row.getValue("no_rt")}</div>;
         },
     },
     {
-        accessorKey: "id_rw",
+        accessorKey: "no_rw",
+        name: "RW",
         header: ({ column }) => {
             return (
                 <Button
@@ -87,16 +93,36 @@ export const columnsWarga = [
             );
         },
         cell: ({ row }) => {
-            return <div className="text-center font-medium">{row.getValue("id_rw")}</div>;
+            return <div className="text-center font-medium">{row.getValue("no_rw")}</div>;
         },
     },
     {
         accessorKey: "phone",
+        name: "No Telp",
         header: () => <div className="text-left">Nomor Telp</div>,
         cell: ({ row }) => {
             return <div className="text-right font-medium">{row.getValue("phone")}</div>;
         },
     },
+    {
+        accessorKey: "approved",
+        header: () => null,
+        cell: () => null,
+        enableHiding: false,
+    },
+    {
+        accessorKey: "tempat_dan_tanggal_lahir",
+        header: () => null,
+        cell: () => null,
+        enableHiding: false,
+    },
+    {
+        accessorKey: "alamat",
+        header: () => null,
+        cell: () => null,
+        enableHiding: false,
+    },
+
     {
         id: "actions",
         enableHiding: false,
@@ -110,6 +136,8 @@ export const columnsWarga = [
                 try {
                     await axios.post(`/approvalRole/disapprove/${nik_warga}`);
                     setLoading((prev) => ({ ...prev, [nik_warga]: false }));
+                    alert("Akun berhasil dinonaktifkan.");
+                    setData((prevData) => prevData.filter((user) => user.nik_warga !== nik_warga));
                 } catch (error) {
                     console.error("Error disapproving user:", error);
                     alert("Terjadi kesalahan saat mendisapprove warga.");
@@ -127,7 +155,7 @@ export const columnsWarga = [
                                 Lihat data
                             </button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
+                        <DialogContent className="sm:max-w-[600px]">
                             <DialogHeader>
                                 <DialogTitle>Data Lengkap Warga</DialogTitle>
                             </DialogHeader>
@@ -135,8 +163,8 @@ export const columnsWarga = [
                                 <DataField label="Nama" value={row.getValue("nama")} />
                                 <DataField label="No KK" value={row.getValue("nomer_kk")} />
                                 <DataField label="NIK" value={row.getValue("nik_warga")} />
-                                <DataField label="RT" value={row.getValue("id_rt")} />
-                                <DataField label="RW" value={row.getValue("id_rw")} />
+                                <DataField label="RT" value={row.getValue("no_rt")} />
+                                <DataField label="RW" value={row.getValue("no_rw")} />
                                 <DataField 
                                     label="Status" 
                                     value={row.getValue("approved") === 1 ? "Disetujui" : "Ditolak"} 
@@ -148,7 +176,7 @@ export const columnsWarga = [
                                 />
                                 <DataField 
                                     label="Jenis Kelamin" 
-                                    value={row.getValue("jenis_kelamin")} 
+                                    value={row.getValue("jenis_kelamin") === "L" ? "Laki-Laki" : "Perempuan"} 
                                 />
                                 <div className="flex gap-2 justify-end items-center w-full">
                                     <PrimaryButton
@@ -169,10 +197,3 @@ export const columnsWarga = [
         },
     },
 ];
-
-const DataField = ({ label, value }) => (
-    <div className="grid grid-cols-4 items-center gap-4">
-        <span className="font-semibold">{label}:</span>
-        <span className="col-span-3">{value}</span>
-    </div>
-);

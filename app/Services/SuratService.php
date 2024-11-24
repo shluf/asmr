@@ -46,13 +46,13 @@ class SuratService
             'NIK_WARGA' => $pengajuan->nik_pemohon,
             'ALAMAT_WARGA' => $pengajuan->alamat_pemohon,
             'TEMPAT_TGL_LAHIR' => $pengajuan->tempat_tanggal_lahir_pemohon,
-            'JENIS_KELAMIN' => $pengajuan->jenis_kelamin_pemohon,
+            'JENIS_KELAMIN' => $pengajuan->jenis_kelamin_pemohon === "L" ? "Laki-laki" : "Perempuan",
             'AGAMA' => $pengajuan->agama_pemohon,
             'NO_SURAT' => $this->generateNomorSurat($pengajuan),
             'TANGGAL_SURAT' => Carbon::now()->isoFormat('D MMMM Y'),
             'NAMA_RT' => $rt->nama,
             'NAMA_RW' => $rw->nama,
-            'TTD_RT' => $this->generateTtdImage($rt->ttd),
+            'TTD_RT' => $rt->ttd,
             'TTD_RW' => $this->generateTtdImage($rw->ttd)
         ]);
 

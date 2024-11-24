@@ -17,13 +17,52 @@ class BiodatasUserController extends Controller
     public function index()
     {
         try {
-            // Fetch data for RT and RW
-            $dataRW = RW::leftJoin('users', 'rw.id_user', '=', 'users.id')->select('rw.*', 'users.email') ->get();
-            $dataRT = RT::leftJoin('users','rt.id_user','=','users.id')->select('rt.*','users.email')->get();
-            $dataWarga = Warga::where('approved', 1)->get();
+            $dataRW = RW::leftJoin('users', 'rw.id_user', '=', 'users.id')
+                        ->select('rw.*', 'users.email')
+                        ->get()
+                        ->map(function ($rw) {
+                            $rw->no_rw = $rw->getNoRW();
+                            return $rw;
+                        });
+
+            $dataRT = RT::leftJoin('users', 'rt.id_user', '=', 'users.id')
+                        ->select('rt.*', 'users.email')
+                        ->get()
+                        ->map(function ($rt) {
+                            $rt->no_rt = $rt->getNoRT();
+                            $rt->no_rw = $rt->getNoRW();
+                            return $rt;
+                        });
+
+            $dataWarga = Warga::where('approved', 1)->get()
+                        ->map(function ($warga) {
+                            $warga->no_rt = $warga->noRT();
+                            $warga->no_rw = $warga->noRW();
+                            return $warga;
+                        });
             return response()->json([
                 'rt' => $dataRT,
                 'rw' => $dataRW,
+                'warga' => $dataWarga,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengambil data',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function PendingWarga()
+    {
+        try {
+            $dataWarga = Warga::where('approved', null)->get()
+                        ->map(function ($warga) {
+                            $warga->no_rt = $warga->noRT();
+                            $warga->no_rw = $warga->noRW();
+                            return $warga;
+                        });
+            return response()->json([
                 'warga' => $dataWarga,
             ], 200);
         } catch (\Exception $e) {

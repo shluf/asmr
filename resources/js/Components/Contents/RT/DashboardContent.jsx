@@ -10,7 +10,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Button } from "@/Components/ui/button";
 import { id as idLocale } from "date-fns/locale";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { UserFilled } from "@/utility/svg-icons";
 import { Link } from "@inertiajs/react";
 import { format } from "date-fns";
@@ -80,14 +79,14 @@ const DashboardContent = ({ idRT }) => {
                                     <TableCell className="font-medium text-blue-600">
                                         {activity.tanggal}
                                     </TableCell>
-                                    <TableCell>{activity.waktu}</TableCell>
+                                    <TableCell className="text-blue-600">{activity.waktu}</TableCell>
                                     <TableCell className="text-blue-600">
                                         {activity.jenis_kegiatan}
                                     </TableCell>
                                     <TableCell className="text-blue-600">
                                         {activity.tempat}
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell className="text-blue-600">
                                         {activity.penanggung_jawab}
                                     </TableCell>
                                 </TableRow>

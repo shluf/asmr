@@ -53,4 +53,10 @@ class RT extends Model
     {
         return $this->penanggung_jawab_rt;
     }
+
+    public function getNoRW()
+    {
+        return $this->rw->getNoRW();
+    }
+
 }

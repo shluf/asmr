@@ -1,7 +1,7 @@
 const pageAdminRoutes = [
     { name: 'Dashboard', route: ''},
     { name: 'Biodata User', route: 'biodataUser'},
-    { name: 'Rekapitulasi Pengajuan Surat Warga', route: 'rekapPengajuan'},
+    { name: 'Rekapitulasi Pengajuan Surat', route: 'rekapPengajuan'},
     { name: 'Approval Role', route: 'approvalRole'},
     { name: 'Tambah RT/RW', route: 'tambahRTRW'}
   ]

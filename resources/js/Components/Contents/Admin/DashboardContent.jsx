@@ -1,143 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
-import axios from "axios";
-import renderIcon from "@/utility/renderIcon";
 import { UserFilled } from "@/utility/svg-icons";
 import { Skeleton } from "@/Components/ui/skeleton";
 import { Card, CardContent } from "@/Components/ui/card";
+import DataCard from "@/Components/partials/DataCard";
+import { ShieldCheck } from "lucide-react";
+import { fetchRtRwStats, fetchWargaPendingData, fetchWargaStats } from "@/hooks/Admin";
 
 const DashboardContent = () => {
-    const [isLoading, setIsLoading] = useState(true)
-    const [wargaStats, setWargaStats] = useState([
-        { label: "Populasi Warga", value: 0 },
-        { label: "Total Pengajuan Surat", value: 0 },
-        { label: "Total Pengajuan Dalam Proses", value: 0 },
-        { label: "Total Pengajuan Menunggu Tindakan", value: 0 },
-    ]);
-    const fetchWargaStats = async () => {
-        try {
-            const response = await axios.get("/CountUser");
-            setWargaStats([
-                {
-                    label: "Populasi Warga",
-                    value: response.data.CountWarga,
-                },
-                {
-                    label: "Total Pengajuan Surat",
-                    value: response.data.CountPengajuanSurat,
-                },
-                {
-                    label: "Total Pengajuan Dalam Proses",
-                    value: response.data.CountDataPengajuanPending,
-                },
-                {
-                    label: "Total Pengajuan Menunggu Tindakan",
-                    value: response.data.CountDataPengajuanSelesai,
-                },
-            ]);
-        } catch (error) {
-            console.error("Error fetching warga stats:", error);
-        }
-    };
-
-    const [RtRwStats, setRtRwStats] = useState([
-        { label: "Populasi Staff", value: 0 },
-        { label: "Total Pengajuan Surat", value: 0 },
-        { label: "Total Pengajuan Dalam Proses", value: 0 },
-        { label: "Total Pengajuan Menunggu Tindakan", value: 0 },
-    ]);
-    const fetchRtRwStats = async () => {
-        try {
-            const response = await axios.get("/CountUser");
-            setRtRwStats([
-                {
-                    label: "Populasi staff ",
-                    value: response.data.CountRtDanRw,
-                },
-                {
-                    label: "Total Pengajuan Surat",
-                    value: response.data.CountPengajuanSurat,
-                },
-                {
-                    label: "Total Pengajuan Dalam Proses",
-                    value: response.data.CountDataPengajuanPending,
-                },
-                {
-                    label: "Total Pengajuan Menunggu Tindakan",
-                    value: response.data.CountDataPengajuanSelesai,
-                },
-            ]);
-        } catch (error) {
-            console.error("Error fetching warga stats:", error);
-        }
-    };
+    const [isLoading, setIsLoading] = useState(true);
     const [dataWarga, setDataWarga] = useState([]);
 
+    const [wargaStats, setWargaStats] = useState([
+        { label: "Populasi Warga", value: "···" },
+        { label: "Total Pengajuan Surat", value: "···" },
+        { label: "Total Pengajuan Dalam Proses", value: "···" },
+        { label: "Total Pengajuan Menunggu Tindakan", value: "···" },
+    ]);
+
+    const [RtRwStats, setRtRwStats] = useState([
+        { label: "Populasi Staff", value: "···" },
+        { label: "Total Pengajuan Surat", value: "···" },
+        { label: "Total Pengajuan Dalam Proses", value: "···" },
+        { label: "Total Pengajuan Menunggu Tindakan", value: "···" },
+    ]);
+
     useEffect(() => {
-        fetchData();
-        fetchWargaStats();
-        fetchRtRwStats();
+        fetchWargaPendingData(setDataWarga, setIsLoading);
+        fetchWargaStats(setWargaStats);
+        fetchRtRwStats(setRtRwStats);
     }, []);
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(route("biodataUser"));
-            setDataWarga(response.data.warga);
-            setIsLoading(false)
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
+
     return (
         <div className="flex flex-col w-full">
             <div className="flex w-full h-full">
                 <div className="container mx-auto p-6 ">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-8">
-                        {/* Kartu Data Warga */}
-                        <div className="border-2 border-blue-3 rounded-[10px]  shadow-lg">
-                            <h2 className="text-lg font-bold text-blue-5 text-start border-b border-blue-3 p-4">
-                                Data Warga
-                            </h2>
-                            <ul>
-                                {wargaStats.map((stat, index) => (
-                                    <li
-                                        key={index}
-                                        className="flex justify-between py-1 border-b text-blue-4 border-blue-3 p-4 mt-5   mb-5"
-                                    >
-                                        <span>{stat.label}</span>
-                                        <span>{stat.value}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                            <div className="mt-4 w-full text-2xl text-start mb-4 p-5">
-                                <Link href="dashboard/biodataUser">
-                                    BIODATA WARGA
-                                </Link>
-                            </div>
-                        </div>
-
-                        {/* Kartu Data Anggota RT/RW */}
-                        <div className="border-2 border-blue-3 rounded-[10px]  shadow-lg">
-                            <h2 className="text-lg font-bold text-blue-5 text-start border-b border-blue-3 p-4">
-                                Data Anggota RT/RW
-                            </h2>
-                            <ul>
-                                {RtRwStats.map((stat, index) => (
-                                    <li
-                                        key={index}
-                                        className="flex justify-between py-1 border-b text-blue-4 border-blue-3 p-4 mt-5   mb-5"
-                                    >
-                                        <span>{stat.label}</span>
-                                        <span>{stat.value}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                            <div className="mt-4 w-full text-2xl text-start mb- p-5">
-                                <Link href="dashboard/biodataUser">
-                                    BIODATA RT/RW
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
+                <DataCard 
+                    wargaStats={wargaStats} 
+                    RtRwStats={RtRwStats}
+                />
                 </div>
             </div>
             <div className="container mx-auto p-6">
@@ -169,7 +70,21 @@ const DashboardContent = () => {
                                 </Card>
                             ))}
                         </>
-                        : dataWarga.map((warga, index) => (
+                        : !dataWarga.length > 0 ? (
+                            <Card>
+                              <CardContent className="p-6">
+                                <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                  <ShieldCheck className="h-6 w-6 text-blue" />
+                                </div>               
+                                <div className='flex flex-col h-full justify-between'>
+                                  <p className="font-medium flex items-center h-1/2">Tidak ada warga yang mendaftar</p>
+                                  <p className="text-sm flex h-1/2 text-blue">Semua approval role warga telah diproses</p>
+                                </div>
+                              </div>
+                              </CardContent>
+                            </Card>
+                          ) : dataWarga.map((warga, index) => (
                             <div
                                 key={index}
                                 className="overflow-x-scroll flex items-center justify-between border gap-8 border-gray-200 rounded-lg p-4 shadow-sm bg-white"
@@ -184,7 +99,7 @@ const DashboardContent = () => {
                                         <span className="font-semibold text-gray-700">
                                             Nama
                                         </span>
-                                        <span className="text-gray-900">
+                                        <span className="md:text-base text-sm text-blue-600 text-nowrap">
                                             {warga.nama}
                                         </span>
                                     </div>
@@ -192,7 +107,7 @@ const DashboardContent = () => {
                                         <span className="font-semibold text-gray-700">
                                             NIK
                                         </span>
-                                        <span className="text-gray-900">
+                                        <span className="md:text-base text-sm text-blue-600">
                                             {warga.nik_warga}
                                         </span>
                                     </div>
@@ -200,24 +115,26 @@ const DashboardContent = () => {
                                         <span className="font-semibold text-gray-700">
                                             RT
                                         </span>
-                                        <span className="text-blue-600">
-                                            {warga.id_rt}
+                                        <span className="md:text-base text-sm text-blue-600 text-nowrap">
+                                            {warga.no_rt}
                                         </span>
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="font-semibold text-gray-700">
                                             RW
                                         </span>
-                                        <span className="text-blue-600">
-                                            {warga.id_rw}
+                                        <span className="md:text-base text-sm text-blue-600 text-nowrap">
+                                            {warga.no_rw}
                                         </span>
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="font-semibold text-gray-700">
                                             Status
                                         </span>
-                                        <span className="text-orange-500">
-                                            {warga.approved === 1
+                                        <span className="md:text-base text-sm text-green-2">
+                                            {warga.approved === null
+                                                ? "Pending" : 
+                                                warga.approved === 1 
                                                 ? "Approved"
                                                 : "Not Approved"}
                                         </span>
@@ -229,7 +146,7 @@ const DashboardContent = () => {
                                         href={route("dashboard", {
                                             page: "approvalRole",
                                         })}
-                                        className="border border-blue-500 text-blue-500 md:px-32 py-2 text-nowrap rounded-full hover:bg-blue-500 hover:text-white transition"
+                                        className="border border-blue-500 text-blue-500 md:px-28 px-4 py-2 text-nowrap rounded-full hover:bg-blue-500 hover:text-white transition"
                                     >
                                         Lihat data
                                     </Link>

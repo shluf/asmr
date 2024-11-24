@@ -37,6 +37,7 @@ export const fetchAkunData = async (setProfileWarga, setData, nikWarga) => {
       const response = await axios.get(`/profile-warga/${nikWarga}`);
       if (response.data.status === 'success') {
         setProfileWarga(response.data.data);
+        console.log(response.data.data)
         
         // Pre-fill form data
         setData({
@@ -47,6 +48,8 @@ export const fetchAkunData = async (setProfileWarga, setData, nikWarga) => {
           agama: response.data.data.agama || "",
         });
       }
+
+      return response.data.data.jenis_kelamin;
     } catch (error) {
       console.error('Error fetching profile:', error);
     }
