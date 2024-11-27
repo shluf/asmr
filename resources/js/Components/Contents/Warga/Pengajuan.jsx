@@ -58,7 +58,7 @@ const Pengajuan = () => {
                 jenis_surat: selectedJenisSurat,
                 deskripsi: description,
             });
-            console.log("Submitting data:", pengajuan);
+            // console.log("Submitting data:", pengajuan);
             showAlert({
                 title: "Berhasil",
                 desc: "Surat berhasil diajukan",
@@ -95,7 +95,7 @@ const Pengajuan = () => {
     };
 
     return (
-        <div className="w-full  flex justify-center items-start p-3">
+        <div className="w-full  flex justify-center items-start p-3 mb-4">
             <div>
                 <AlertWrapper />
             </div>

@@ -37,9 +37,8 @@ export const fetchAkunData = async (setProfileWarga, setData, nikWarga) => {
       const response = await axios.get(`/profile-warga/${nikWarga}`);
       if (response.data.status === 'success') {
         setProfileWarga(response.data.data);
-        console.log(response.data.data)
+        // console.log(response.data.data)
         
-        // Pre-fill form data
         setData({
           phone: response.data.data.phone || "",
           alamat: response.data.data.alamat || "",

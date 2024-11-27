@@ -18,6 +18,14 @@ class SuratService
         $warga = $pengajuan->warga;
         $rt = $pengajuan->rt;
         $rw = $pengajuan->rw;
+        
+        $ttd_rt_path = $rt->ttd 
+        ? storage_path('app/public/' . $rt->ttd) 
+        : public_path('img/placeholder_ttd.png');
+        
+        $ttd_rw_path = $rw->ttd 
+        ? storage_path('app/public/' . $rw->ttd) 
+        : public_path('img/placeholder_ttd.png');
 
         switch ($pengajuan->jenis_surat) {
             case 'Pengantar KTP':
@@ -52,8 +60,8 @@ class SuratService
             'TANGGAL_SURAT' => Carbon::now()->isoFormat('D MMMM Y'),
             'NAMA_RT' => $rt->nama,
             'NAMA_RW' => $rw->nama,
-            'TTD_RT' => $rt->ttd,
-            'TTD_RW' => $this->generateTtdImage($rw->ttd)
+            'TTD_RT' => $ttd_rt_path,
+            'TTD_RW' => $ttd_rw_path
         ]);
 
         // Generate PDF
@@ -75,8 +83,15 @@ class SuratService
         $prefix = match($pengajuan->jenis_surat) {
             'Pengantar KTP' => 'KTP',
             'Pengantar KK' => 'KK',
-            'Keterangan Domisili' => 'DOM',
-            'Keterangan Tidak Mampu' => 'SKTM',
+            'Pengantar Akta Kelahiran' => 'AK',
+            'Surat Keterangan Kematian' => 'SKK',
+            'Surat Domisili Tempat tinggal' => 'DTT',
+            'Surat Domisili Usaha' => 'DTT',
+            'Surat Keterangan Tidak Mampu' => 'SKTM',
+            'Surat SKCK' => 'SKCK',
+            'Surat Ketenagakerjaan' => 'SKTK',
+            'Surat Pengantar Nikah' => 'SPN',
+            'Surat Keterangan Pindah' => 'SKP',
             default => 'UMM'
         };
 
@@ -88,15 +103,6 @@ class SuratService
             $pengajuan->id_rw,
             date('Y')
         );
-    }
-
-    private function generateTtdImage($ttdBase64)
-    {
-        // Konversi base64 TTD menjadi gambar
-        $ttdImage = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $ttdBase64));
-        
-        // Return dalam format yang bisa digunakan di HTML template
-        return "data:image/png;base64," . base64_encode($ttdImage);
     }
 
     private function replacePlaceholders($template, $data)

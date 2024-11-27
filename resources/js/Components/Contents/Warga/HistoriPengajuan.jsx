@@ -50,12 +50,12 @@ const HistoriPengajuan = ({ nikWarga }) => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full mb-4">
       <Card>
         <CardContent className="space-y-4 p-6">
           {isHistoryLoading ? (
             [...Array(5)].map((_, i) => (
-              <Card>
+              <Card key={i}>
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
                     <Skeleton className="w-12 h-12 rounded-xl" />

@@ -29,7 +29,7 @@ const DashboardContent = ({ idRT }) => {
     }, []);
 
     return (
-        <div className="space-y-8 overflow-hidden w-full">
+        <div className="space-y-8 overflow-hidden w-full mb-4">
             <Card>
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold">

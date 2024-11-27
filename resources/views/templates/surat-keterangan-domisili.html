@@ -7,7 +7,7 @@
         body {
             font-family: Times New Roman, serif;
             margin: 40px;
-            font-size: 14px;
+            font-size: 12px;
             line-height: 1.5;
         }
         .kop-surat {
@@ -41,6 +41,8 @@
         }
         .ttd-area img {
             height: 80px;
+            width: 100%;
+            object-fit: contain;
             margin: 10px 0;
         }
         .clear {
@@ -111,14 +113,13 @@
     <div class="ttd-area">
         <p>{{KELURAHAN}}, {{TANGGAL_SURAT}}</p>
         <p>Ketua {{ID_RT}}</p>
-        <img src="/storage/{{TTD_RT}}" alt="Tanda Tangan RT">
+        <img src="{{TTD_RT}}" alt="Tanda Tangan RT">
         <p>{{NAMA_RT}}</p>
     </div>
-
     <div class="ttd-area">
         <p>Mengetahui,</p>
         <p>Ketua {{ID_RW}}</p>
-        <img src="/storage/{{TTD_RW}}" alt="Tanda Tangan RW">
+        <img src="{{TTD_RW}}" alt="Tanda Tangan RW">
         <p>{{NAMA_RW}}</p>
     </div>
 

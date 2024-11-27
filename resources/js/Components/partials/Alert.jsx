@@ -38,12 +38,12 @@ function Alert({
           </div>
         </AlertDialogHeader>
           <AlertDialogDescription className="text-center text-base px-4 text-gray-600">
-          <div className="text-center text-sm text-gray-400 mt-2">
+          <p className="text-center text-sm text-gray-400 mt-2">
             {desc}
-          </div>
-          <div>
+          </p>
+          <p>
             {message}
-          </div>
+          </p>
           </AlertDialogDescription>
         <AlertDialogFooter className="sm:justify-center mt-2">
           <PrimaryButton

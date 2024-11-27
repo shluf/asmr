@@ -7,7 +7,7 @@
         body {
             font-family: Times New Roman, serif;
             margin: 40px;
-            font-size: 14px;
+            font-size: 12px;
             line-height: 1.5;
         }
         .kop-surat {
@@ -44,6 +44,8 @@
         }
         .ttd-area img {
             height: 80px;
+            width: 100%;
+            object-fit: contain;
             margin: 10px 0;
         }
         .clear {
@@ -59,15 +61,13 @@
         <h3>{{ID_RT}} {{ID_RW}}</h3>
         <p>{{ALAMAT_KANTOR}}</p>
     </div>
-
     <div class="nomor-surat">
         <h4 class="text-up">SURAT PENGANTAR {{JENIS_SURAT}}</h4>
         <p>Nomor: {{NO_SURAT}}</p>
     </div>
-
     <div class="isi-surat">
         <p>Yang bertanda tangan di bawah ini Ketua {{ID_RT}} {{ID_RW}} {{KELURAHAN}} {{KECAMATAN}}, menerangkan dengan sebenarnya bahwa:</p>
-        
+       
         <table>
             <tr>
                 <td width="160">Nama Lengkap</td>
@@ -105,26 +105,22 @@
                 <td>{{ALAMAT_WARGA}}</td>
             </tr>
         </table>
-
         <p>Adalah benar warga {{ID_RT}} {{ID_RW}} {{KELURAHAN}} {{KECAMATAN}} dan yang bersangkutan hendak membuat {{JENIS_SURAT}}.</p>
-        
+       
         <p>Demikian surat pengantar ini dibuat untuk dipergunakan sebagaimana mestinya.</p>
     </div>
-
     <div class="ttd-area">
         <p>{{KELURAHAN}}, {{TANGGAL_SURAT}}</p>
         <p>Ketua {{ID_RT}}</p>
-        <img src="/storage/{{TTD_RT}}" alt="Tanda Tangan RT">
+        <img src="{{TTD_RT}}" alt="Tanda Tangan RT">
         <p>{{NAMA_RT}}</p>
     </div>
-
     <div class="ttd-area">
         <p>Mengetahui,</p>
         <p>Ketua {{ID_RW}}</p>
-        <img src="/storage/{{TTD_RW}}" alt="Tanda Tangan RW">
+        <img src="{{TTD_RW}}" alt="Tanda Tangan RW">
         <p>{{NAMA_RW}}</p>
     </div>
-
     <div class="clear"></div>
 </body>
 </html>

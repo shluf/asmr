@@ -19,7 +19,7 @@ export default function ResetPassword({ token, email }) {
     const submit = async (e) => {
         e.preventDefault();
 
-        console.log(data);
+        // console.log(data);
 
         try {
             await axios.post(route('password.store'), {

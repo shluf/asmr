@@ -92,12 +92,24 @@ const TambahRTRW = () => {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 2 * 1024 * 1024) { // 2MB limit
-        alert('File terlalu besar. Maksimal ukuran file adalah 2MB');
+        showAlert({
+          title: "Gagal Mengupload Gambar",
+          desc: "File terlalu besar",
+          message: "Maksimal ukuran file adalah 2MB",
+          succes: false,
+          color: "red",
+        });
         e.target.value = '';
         return;
       }
       if (!['image/jpeg', 'image/png'].includes(file.type)) {
-        alert('Format file tidak didukung. Gunakan format JPG atau PNG');
+        showAlert({
+          title: "Gagal Mengupload Gambar",
+          desc: "Format file tidak didukung",
+          message: "Gunakan format JPG atau PNG",
+          succes: false,
+          color: "red",
+        });
         e.target.value = '';
         return;
       }
@@ -110,7 +122,7 @@ const TambahRTRW = () => {
   };
 
   return (
-    <div className="w-full p-10">
+    <div className="w-full p-10 mb-8">
       <div>
         <AlertWrapper />
       </div>

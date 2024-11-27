@@ -43,6 +43,7 @@ const ApprovalRole = () => {
                 title: "Terjadi Kesalahan",
                 desc: error,
                 message: "Status approval user gagal diperbarui",
+                succes: false,
                 color: "red",
                 });
         }
@@ -65,6 +66,7 @@ const ApprovalRole = () => {
                 title: "Terjadi Kesalahan",
                 desc: error,
                 message: "Status approval user gagal diperbarui",
+                succes: false,
                 color: "red",
                 });
         }

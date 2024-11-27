@@ -19,6 +19,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import { fetchPengajuanMasalahData } from '@/hooks/RW';
 import { Skeleton } from '@/Components/ui/skeleton';
 import TextInput from '@/Components/TextInput';
+import { showAlert } from '@/Components/partials/Alert';
 
 const PengajuanMasalah = ({ idRW }) => {
   const [openItems, setOpenItems] = useState({});
@@ -29,7 +30,6 @@ const PengajuanMasalah = ({ idRW }) => {
     fetchPengajuanMasalahData(setPendingSurat, idRW);
   }, []);
 
-  // Handle approval/rejection
   const handleAction = async (id_pengajuan_surat, status) => {
     setLoading({ ...loading, [id_pengajuan_surat]: true });
     
@@ -40,9 +40,24 @@ const PengajuanMasalah = ({ idRW }) => {
         id_approver: idRW
       });
 
+      showAlert({
+        title: "Berhasil!",
+        desc: `Surat ini telah di${status} oleh anda`,
+        message: "Status approval surat berhasil diperbarui",
+        succes: true,
+        color: "green",
+        });
+
       fetchPengajuanMasalahData(setPendingSurat, idRW);
       
     } catch (error) {
+      showAlert({
+        title: "Terjadi Kesalahan",
+        desc: error,
+        message: "Status approval surat gagal diperbarui",
+        succes: false,
+        color: "red",
+        });
       console.error('Error updating status:', error);
     }
     

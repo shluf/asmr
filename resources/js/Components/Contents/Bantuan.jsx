@@ -5,7 +5,7 @@ import { PhoneCall } from "lucide-react"
 
 const Bantuan = () => {
   return (
-    <div className='flex mt-8 md:mt-0 justify-center items-center'>
+    <div className='flex mt-8 md:mt-0 justify-center items-center mx-8'>
     <Card className="w-full max-w-md mx-auto hover:shadow-lg transition-shadow duration-300">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold text-center">Bantuan</CardTitle>

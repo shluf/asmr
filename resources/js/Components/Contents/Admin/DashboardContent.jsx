@@ -32,7 +32,7 @@ const DashboardContent = () => {
     }, []);
 
     return (
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full mb-8">
             <div className="flex w-full h-full">
                 <div className="container mx-auto p-6 ">
                 <DataCard 

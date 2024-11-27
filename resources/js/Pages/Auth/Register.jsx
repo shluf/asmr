@@ -58,7 +58,7 @@ export default function Register({ rtRwData }) {
     const submit = (e) => {
         e.preventDefault();
 
-        console.log(data);
+        // console.log(data);
 
         post(route("register"), {
             onFinish: () => reset("password", "password_confirmation"),

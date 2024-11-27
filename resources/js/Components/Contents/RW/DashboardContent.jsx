@@ -38,6 +38,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import { Skeleton } from "@/Components/ui/skeleton";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
+import { AlertWrapper, showAlert } from "@/Components/partials/Alert";
 
 const DashboardContent = ({ idRW }) => {
     const [dataProker, setDataProker] = useState([]);
@@ -45,6 +46,15 @@ const DashboardContent = ({ idRW }) => {
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [prokerIsLoading, setProkerIsLoading] = useState(true);
     const [editProker, setEditProker] = useState({
+        tanggal: "",
+        waktu: "",
+        jenis_kegiatan: "",
+        tempat: "",
+        penanggung_jawab: "",
+    });
+
+    const [date, setDate] = useState();
+    const [tambahProker, setTambahProker] = useState({
         tanggal: "",
         waktu: "",
         jenis_kegiatan: "",
@@ -65,51 +75,96 @@ const DashboardContent = ({ idRW }) => {
         setEditProker(Proker);
         setShowEditDialog(true);
     };
-    //handle delete
+    
+    // handle delete
     const DeletehandleApprove = async (id) => {
         try {
             const response = await axios.delete(`/program-kerja/delete/${id}`);
-            // console.log(response);
-            fetchProkerData(setDataProker);
+            showAlert({
+                title: "Berhasil!",
+                desc: "Program kerja berhasil dihapus.",
+                message: "Data telah diperbarui.",
+                succes: true,
+                color: "green",
+            });
+            fetchProkerData(setDataProker, setProkerIsLoading);
         } catch (error) {
-            console.error("Error fetching data:", error);
+            showAlert({
+                title: "Terjadi Kesalahan",
+                desc: error.message,
+                message: "Gagal menghapus program kerja.",
+                succes: false,
+                color: "red",
+            });
+            console.error("Error deleting data:", error);
         }
     };
-    //handle sumbit edit
+
+    // handle submit edit
     const handleSubmitEdit = async () => {
         try {
             const response = await axios.put(
                 `/program-kerja/update/${editProker.id_program_kerja}`,
                 editProker
             );
-            // console.log(response);
-            fetchProkerData(setDataProker);
+            showAlert({
+                title: "Berhasil!",
+                desc: "Program kerja berhasil diperbarui.",
+                message: "Data telah diperbarui.",
+                succes: true,
+                color: "green",
+            });
+            fetchProkerData(setDataProker, setProkerIsLoading);
             setShowEditDialog(false);
         } catch (error) {
-            console.error("Error fetching data:", error);
+            showAlert({
+                title: "Terjadi Kesalahan",
+                desc: error.message,
+                message: "Gagal memperbarui program kerja.",
+                succes: false,
+                color: "red",
+            });
+            console.error("Error updating data:", error);
         }
     };
-    //handle submit tambah
+
+    // handle submit tambah
     const handleSubmitTambah = async () => {
         try {
             const response = await axios.post(
                 `/program-kerja/store`,
                 tambahProker
             );
-            // console.log(response);
-            fetchProkerData(setDataProker);
+            showAlert({
+                title: "Berhasil!",
+                desc: "Program kerja berhasil ditambahkan.",
+                message: "Data telah diperbarui.",
+                succes: true,
+                color: "green",
+            });
+            setTambahProker({
+                tanggal: "",
+                waktu: "",
+                jenis_kegiatan: "",
+                tempat: "",
+                penanggung_jawab: "",
+            })
+            setDate()
+            fetchProkerData(setDataProker, setProkerIsLoading);
         } catch (error) {
-            console.error("Error fetching data:", error);
+            showAlert({
+                title: "Terjadi Kesalahan",
+                desc: error.message,
+                message: "Gagal menambahkan program kerja.",
+                succes: false,
+                color: "red",
+            });
+            console.error("Error adding data:", error);
         }
     };
+
+
     //Tambah proker
-    const [tambahProker, setTambahProker] = useState({
-        tanggal: "",
-        waktu: "",
-        jenis_kegiatan: "",
-        tempat: "",
-        penanggung_jawab: "",
-    });
     const handleTambahChange = (e) => {
         setTambahProker({ ...tambahProker, [e.target.name]: e.target.value });
     };
@@ -121,10 +176,11 @@ const DashboardContent = ({ idRW }) => {
             tanggal: format(selectedDate, "yyyy-MM-dd"),
         });
     };
-    const [date, setDate] = useState();
 
     return (
-        <div className="space-y-8 overflow-hidden w-full">
+        <>
+        <AlertWrapper />
+        <div className="space-y-8 overflow-hidden w-full mb-4">
             <Card>
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold">
@@ -502,6 +558,7 @@ const DashboardContent = ({ idRW }) => {
                 </Dialog>
             )}
         </div>
+        </>
     );
 };
 

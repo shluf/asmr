@@ -28,7 +28,7 @@ const RekapPengajuan = ({ idRT }) => {
   }, []);
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-4 mb-4">
     <Card>
       <CardHeader>
         <CardTitle>Rekapitulasi Pengajuan</CardTitle>

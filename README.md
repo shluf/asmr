@@ -15,6 +15,8 @@ Warga yang telah memiliki akun juga dapat melihat program kerja yang sudah, seda
 ## Instalasi Aplikasi Surat Menyurat RT/RW
 
 ### Prasyarat
+* **MySql:** Pastikan MySql sudah terinstal.
+* **NodeJs:** Pastikan NodeJs sudah terinstal.
 * **PHP:** Pastikan PHP versi 8.0 atau lebih tinggi sudah terinstal.
 * **Composer:** Pastikan Composer sudah terinstal secara global.
 
@@ -48,7 +50,13 @@ Mulai database server kemudian jalan perintah berikut
 php artisan migrate
 ```
 
-### Langkah 7: Konfigurasi Vite
+### Langkah 7: Isi database dengan Seeder
+Mulai database server kemudian jalan perintah berikut 
+```bash
+php artisan db:seed
+```
+
+### Langkah 8: Konfigurasi Vite
 1. Jalankan perintah berikut 
 ```bash
 npm i 
@@ -63,7 +71,7 @@ npm run build
 ```
 4. Perintah `npm run dev` dapat ditutup
 
-### Langkah 8: Jalankan Aplikasi
+### Langkah 9: Jalankan Aplikasi
 ```bash
 php artisan serve
 ```

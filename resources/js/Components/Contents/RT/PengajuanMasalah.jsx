@@ -17,7 +17,9 @@ import {
 import PrimaryButton from '@/Components/PrimaryButton';
 import { Skeleton } from '@/Components/ui/skeleton';
 import TextInput from '@/Components/TextInput';
-import { fetchPendingRTData, handleApprovalPengajuan } from '@/hooks/RT';
+import { fetchPendingRTData } from '@/hooks/RT';
+import axios from 'axios';
+import { AlertWrapper, showAlert } from '@/Components/partials/Alert';
 
 const PengajuanMasalah = ({ idRT }) => {
   const [openItems, setOpenItems] = useState({});
@@ -28,7 +30,45 @@ const PengajuanMasalah = ({ idRT }) => {
     fetchPendingRTData(idRT, setPendingSurat);
   }, []);
 
+  const handleApprovalPengajuan = async (id_pengajuan_surat, status) => {
+    setLoading({ ...loading, [id_pengajuan_surat]: true });
+
+    try {
+        await axios.put(`/surat/approval/${id_pengajuan_surat}`, {
+        status_approval: status,
+        approver_type: 'rt',
+        id_approver: idRT
+        });
+
+        showAlert({
+          title: "Berhasil!",
+          desc: `Surat ini telah di${status} oleh anda`,
+          message: "Status approval surat berhasil diperbarui",
+          succes: true,
+          color: "green",
+          });
+
+        fetchPendingRTData(idRT, setPendingSurat);
+        
+    } catch (error) {
+      showAlert({
+        title: "Terjadi Kesalahan",
+        desc: error,
+        message: "Status approval surat gagal diperbarui",
+        succes: false,
+        color: "red",
+        });
+
+        console.error('Error updating status:', error);
+    }
+
+    setLoading({ ...loading, [id_pengajuan_surat]: false });
+};
+
+
   return (
+    <>
+    <AlertWrapper />
     <div className="w-full space-y-4">
       <Card>
         <CardHeader>
@@ -209,7 +249,7 @@ const PengajuanMasalah = ({ idRT }) => {
                           color="red"
                           rounded='full'
                           disabled={loading[surat.id_pengajuan_surat]}
-                          onClick={() => handleApprovalPengajuan(surat.id_pengajuan_surat, 'rejected', loading, setLoading, idRT, setPendingSurat)}
+                          onClick={() => handleApprovalPengajuan(surat.id_pengajuan_surat, 'rejected')}
                         >
                           <X className="w-4 h-4 mr-2" />
                           Tolak
@@ -218,7 +258,7 @@ const PengajuanMasalah = ({ idRT }) => {
                           color="green"
                           rounded='full'
                           disabled={loading[surat.id_pengajuan_surat]}
-                          onClick={() => handleApprovalPengajuan(surat.id_pengajuan_surat, 'approved', loading, setLoading, idRT, setPendingSurat)}
+                          onClick={() => handleApprovalPengajuan(surat.id_pengajuan_surat, 'approved')}
                         >
                           <Check className="w-4 h-4 mr-2" />
                           Setujui
@@ -232,6 +272,7 @@ const PengajuanMasalah = ({ idRT }) => {
         </CardContent>
       </Card>
     </div>
+    </>
   );
 };
 
