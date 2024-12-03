@@ -17,22 +17,22 @@ const BiodataUser = () => {
 
     return (
         <div className="w-full p-6">
-            <div>
-                <h2 className="font-semibold text-lg mb-4 text-blue-5">
+            <div id="rw-data" >
+                <h2 className="font-semibold text-xl mb-4 text-blue-5">
                     Data anggota RW
                 </h2>
                 <DataTable data={dataRW} columns={columnsRW} pageSize={4} isLoading={loading} />
             </div>
 
-            <div className="mt-10">
-                <h2 className="font-semibold text-lg mb-4 text-blue-5">
+            <div id="rt-data"  className="mt-10">
+                <h2  className="font-semibold text-xl mb-4 text-blue-5">
                     Data anggota RT
                 </h2>
                 <DataTable data={dataRT} columns={columnsRT} pageSize={4} isLoading={loading} />
             </div>
 
-            <div className="mt-10">
-                <h2 className="font-semibold text-lg mb-4 text-blue-5">
+            <div id="warga-data" className="mt-10">
+                <h2 className="font-semibold text-xl mb-4 text-blue-5">
                     Data Warga
                 </h2>
                 <DataTable data={dataWarga} columns={columnsWarga} setDataWarga={setDataWarga} pageSize={10} hide={{tempat_dan_tanggal_lahir: false, approval: false, alamat: false }} isLoading={loading} />

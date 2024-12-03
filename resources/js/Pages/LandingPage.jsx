@@ -7,6 +7,24 @@ const LandingPage = ({ auth }) => {
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState("beranda");
 
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [subject, setSubject] = useState('');
+    const [message, setMessage] = useState('');
+    const ownerEmail= import.meta.env.VITE_MAIL_USERNAME;
+  
+    const createMailtoLink = () => {
+        const mailtoBody = `Yth. Tim Aplikasi Surat Menyurat RT/RW,%0D%0A%0D%0ADengan hormat,%0D%0ASaya ${firstName}, ingin menyampaikan beberapa kritik dan saran yang saya harap dapat menjadi bahan pertimbangan untuk perbaikan layanan di aplikasi ini.%0D%0A%0D%0A${message}%0D%0A%0D%0ATerima kasih atas perhatian dan kerjasamanya. Semoga kritik dan saran ini dapat membantu dalam meningkatkan layanan ini.%0D%0A%0D%0AHormat saya,%0D%0A${firstName} ${lastName}%0D%0A%0D%0AEmail: ${email}`;
+        return `mailto:${ownerEmail}?subject=${encodeURIComponent('Kritik & Saran - ' + subject)}&body=${mailtoBody}`
+    };
+    
+  
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        window.open(createMailtoLink(), '_blank');
+      };
+
     useEffect(() => {
         AOS.init({
             duration: 1000,
@@ -54,17 +72,19 @@ const LandingPage = ({ auth }) => {
             }`}
                 >
                     <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-                        <a
-                            href="#"
-                            className="text-2xl font-bold text-gray-800"
-                        >
-                            <img
-                                src="/logo.svg"
-                                alt="Logo"
-                                className="h-8 inline-block mr-2"
-                            />
-                        </a>
-                        <div className="hidden md:block">
+                        <div className="md:w-1/3">
+                            <a
+                                href="#"
+                                className="text-2xl font-bold text-gray-800"
+                                >
+                                <img
+                                    src="/logo.svg"
+                                    alt="Logo"
+                                    className="h-8 inline-block mr-2"
+                                    />
+                            </a>
+                        </div>
+                        <div className="hidden md:flex justify-center md:min-w-[500px] md:w-1/3">
                             <a
                                 href="#"
                                 className={`hover:text-green ${
@@ -109,7 +129,7 @@ const LandingPage = ({ auth }) => {
                                 Kritik Saran
                             </a>
                         </div>
-                        <div className="flex">
+                        <div className="flex md:w-1/3 justify-end">
                             {auth.user ? (
                                 <Link
                                     href={route("dashboard")}
@@ -186,7 +206,7 @@ const LandingPage = ({ auth }) => {
                                                         Lanjutkan aktivitas?
                                                     </p>
                                                     <p className="text-gray-600 text-center">
-                                                        All Typologies
+                                                        Kembali ke dashboard
                                                     </p>
                                                 </div>
                                                 <Link
@@ -203,12 +223,12 @@ const LandingPage = ({ auth }) => {
                                                         Belum memiliki akun?
                                                     </p>
                                                     <p className="text-gray-600 text-center">
-                                                        Insert keyword
+                                                        Registrasi sekarang
                                                     </p>
                                                 </div>
                                                 <Link
                                                     href={route("register")}
-                                                    className="rounded-md px-3 py-2 bg-yellow hover:bg-yellow-2 text-white font-medium mr-2 ring-1 ring-transparent transition hover:text-white focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                                    className="rounded-md px-3 py-2 bg-yellow hover:bg-yellow-2 text-white font-medium mr-6 ring-1 ring-transparent transition hover:text-white focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                                 >
                                                     Registrasi
                                                 </Link>
@@ -217,7 +237,7 @@ const LandingPage = ({ auth }) => {
                                                         Sudah memiliki akun?
                                                     </p>
                                                     <p className="text-gray-600 text-center">
-                                                        All Typologies
+                                                        Masuk ke aplikasi
                                                     </p>
                                                 </div>
                                                 <Link
@@ -279,9 +299,9 @@ const LandingPage = ({ auth }) => {
                                 </div>
                                 <div className="flex items-center justify-center">
                                     <img
-                                        src="/img/hero.png"
+                                        src="/img/hero-desktop.png"
                                         alt="Hero Image"
-                                        className="rounded-lg object-cover shadow-lg md:w-auto w-full h-60 md:h-[480px]"
+                                        className="rounded-lg object-contain md:w-auto w-full h-60 md:h-[480px]"
                                         data-aos="zoom-in-left"
                                         data-aos-delay="750"
                                     />
@@ -308,11 +328,11 @@ const LandingPage = ({ auth }) => {
                             >
                                 Langkah - langkah pengajuan masalah
                             </h2>
-                            <div className="flex flex-col md:flex-row items-strech justify-center gap-8 mt-8 h-full">
+                            <div className="flex flex-col md:flex-row items-center justify-center gap-8 mt-8 h-full">
                                 <div
                                     data-aos="flip-left"
                                     data-aos-delay="250"
-                                    className="flex justify-start items-center flex-col border border-gray-300 rounded-lg p-6 shadow-md w-full md:w-64"
+                                    className="flex justify-start items-center flex-col border border-gray-300 rounded-lg p-6 max-w-96 shadow-md w-full md:w-64"
                                 >
                                     <div className="flex justify-center items-center bg-[#FAEFCF] rounded-full h-12 w-12">
                                         <img
@@ -352,7 +372,7 @@ const LandingPage = ({ auth }) => {
                                 <div
                                     data-aos="flip-left"
                                     data-aos-delay="500"
-                                    className="flex justify-start items-center flex-col border border-gray-300 rounded-lg p-6 shadow-md w-full md:w-64"
+                                    className="flex justify-start items-center flex-col border border-gray-300 rounded-lg p-6 max-w-96 shadow-md w-full md:w-64"
                                 >
                                     <div className="flex justify-center items-center bg-[#CEFEF5] rounded-full h-12 w-12">
                                         <img
@@ -391,7 +411,7 @@ const LandingPage = ({ auth }) => {
                                 <div
                                     data-aos="flip-left"
                                     data-aos-delay="1000"
-                                    className="flex justify-start items-center flex-col border border-gray-300 rounded-lg p-6 shadow-md w-full md:w-64"
+                                    className="flex justify-start items-center flex-col border border-gray-300 rounded-lg p-6 max-w-96 shadow-md w-full md:w-64"
                                 >
                                     <div className="flex justify-center items-center bg-[#EBDDFD] rounded-full h-12 w-12">
                                         <img
@@ -431,7 +451,7 @@ const LandingPage = ({ auth }) => {
                                 <div
                                     data-aos="flip-left"
                                     data-aos-delay="1500"
-                                    className="flex justify-start items-center flex-col border border-gray-300 rounded-lg p-6 shadow-md w-full md:w-64"
+                                    className="flex justify-start items-center flex-col border border-gray-300 rounded-lg p-6 max-w-96 shadow-md w-full md:w-64"
                                 >
                                     <div className="flex justify-center items-center bg-[#EBDDFD] rounded-full h-12 w-12">
                                         <img
@@ -480,9 +500,7 @@ const LandingPage = ({ auth }) => {
                                     <form
                                         data-aos="flip-right"
                                         data-aos-delay="750"
-                                        action="mailto:example@example.com"
-                                        method="post"
-                                        encType="text/plain"
+                                        onSubmit={handleSubmit}
                                     >
                                         <div className="grid md:grid-cols-2 gap-4">
                                             <div className="col-span-2 md:col-span-1">
@@ -496,8 +514,10 @@ const LandingPage = ({ auth }) => {
                                                     type="text"
                                                     name="firstName"
                                                     id="firstName"
-                                                    defaultValue="John"
+                                                    value={firstName}
+                                                    onChange={(e) => setFirstName(e.target.value)}
                                                     className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-0 border-b-2"
+                                                    required
                                                 />
                                             </div>
                                             <div className="col-span-2 md:col-span-1">
@@ -511,8 +531,10 @@ const LandingPage = ({ auth }) => {
                                                     type="text"
                                                     name="lastName"
                                                     id="lastName"
-                                                    defaultValue="Doe"
+                                                    value={lastName}
+                                                    onChange={(e) => setLastName(e.target.value)}
                                                     className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-0 border-b-2"
+                                                    required
                                                 />
                                             </div>
                                             <div className="col-span-2">
@@ -526,8 +548,10 @@ const LandingPage = ({ auth }) => {
                                                     type="email"
                                                     name="email"
                                                     id="email"
-                                                    defaultValue="johndoe@gmail.com"
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
                                                     className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-0 border-b-2"
+                                                    required
                                                 />
                                             </div>
                                             <div className="col-span-2">
@@ -541,7 +565,10 @@ const LandingPage = ({ auth }) => {
                                                     type="text"
                                                     name="subject"
                                                     id="subject"
+                                                    value={subject}
+                                                    onChange={(e) => setSubject(e.target.value)}
                                                     className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-0 border-b-2"
+                                                    required
                                                 />
                                             </div>
                                             <div className="col-span-2">
@@ -555,8 +582,11 @@ const LandingPage = ({ auth }) => {
                                                     id="message"
                                                     name="message"
                                                     rows="3"
+                                                    value={message}
+                                                    onChange={(e) => setMessage(e.target.value)}
                                                     className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-b-2"
-                                                    placeholder="Type your Message"
+                                                    placeholder="Tulis pesan disini"
+                                                    required
                                                 ></textarea>
                                             </div>
                                         </div>
@@ -592,13 +622,15 @@ const LandingPage = ({ auth }) => {
                                     <div
                                         data-aos="fade-up"
                                         data-aos-delay="100"
+                                        className="col-span-2 flex justify-center"
                                     >
-                                        <h3 className="text-2xl font-bold leading-tight">
+                                        <h3 className="text-2xl max-w-xs font-bold leading-tight">
                                             Layanan Surat Menyurat di Ujung Jari
                                             Anda, Bersama Kami!
                                         </h3>
                                     </div>
-                                    <div
+                                    
+                                    {/* <div
                                         data-aos="fade-up"
                                         data-aos-delay="300"
                                     >
@@ -614,7 +646,7 @@ const LandingPage = ({ auth }) => {
                                         <p className="text-sm mt-2">
                                             U.S. of America
                                         </p>
-                                    </div>
+                                    </div> */}
                                     <div
                                         data-aos="fade-up"
                                         data-aos-delay="300"
@@ -623,10 +655,10 @@ const LandingPage = ({ auth }) => {
                                             Hubungi Kami
                                         </h3>
                                         <p className="text-sm mt-2 bg-green p-4 rounded-md">
-                                            info@travel.comt
+                                            info@asmr.com
                                         </p>
                                         <p className="text-md font-bold mt-2">
-                                            + 01 483 593 284
+                                            + 62 833 593 284
                                         </p>
                                     </div>
                                 </div>

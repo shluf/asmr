@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/Components/ui/button"
 import { PhoneCall } from "lucide-react"
 
-const Bantuan = () => {
+const Bantuan = ({warga = false}) => {
   return (
     <div className='flex mt-8 md:mt-0 justify-center items-center mx-8'>
     <Card className="w-full max-w-md mx-auto hover:shadow-lg transition-shadow duration-300">
@@ -14,13 +14,39 @@ const Bantuan = () => {
         <p className="text-center text-muted-foreground">
           Mohon hubungi nomor di bawah ini jika Anda mengalami kesulitan:
         </p>
-        <div className="flex items-center justify-center space-x-2">
-          <PhoneCall className="w-5 h-5 text-primary" />
-          <p className="font-bold text-lg">ADMIN: 0817973xxxx</p>
+        <div className='flex flex-col justify-center items-center'>
+          <div className={`flex items-center ${warga ? "justify-start" : "justify-center"} md:w-2/3 w-full space-x-2`}>
+            <PhoneCall className="w-5 h-5 text-primary" />
+            <p className="font-bold text-lg">ADMIN: 0817973xxxx</p>
+          </div>
+            {warga &&
+              <>        
+              <div className="flex items-center justify-start md:w-2/3 w-full space-x-2">
+                <PhoneCall className="w-5 h-5 text-primary" />
+                <p className="font-bold text-lg">RT: 0817973xxxx</p>
+              </div>
+              <div className="flex items-center justify-start md:w-2/3 w-full space-x-2">
+                <PhoneCall className="w-5 h-5 text-primary" />
+                <p className="font-bold text-lg">RW: 0817973xxxx</p>
+              </div>
+              </>
+              }
         </div>
-        <Button className="w-full mt-4" variant="outline" onClick={() => window.location.href = 'tel:0817973xxxx'}>
-          Hubungi Admin
+        <div className="flex md:flex-row flex-col gap-4">
+        <Button className="w-full md:mt-4" variant="outline" onClick={() => window.location.href = 'tel:0817973xxxx'}>
+          Admin
         </Button>
+        {warga && 
+          <>
+            <Button className="w-full md:mt-4" variant="outline" onClick={() => window.location.href = 'tel:0817973xxxx'}>
+              RT
+            </Button>
+            <Button className="w-full md:mt-4" variant="outline" onClick={() => window.location.href = 'tel:0817973xxxx'}>
+              RW
+            </Button>
+          </>
+        }
+        </div>
       </CardContent>
     </Card>
     </div>

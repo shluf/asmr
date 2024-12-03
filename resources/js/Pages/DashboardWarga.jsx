@@ -18,7 +18,7 @@ export default function Dashboard({ currentPage, nik }) {
             case 'akun':
                 return <Akun nikWarga={nik} />;
             case 'bantuan':
-                return <Bantuan />;
+                return <Bantuan warga={true} />;
             default:
                 return <DashboardContent />;
         }

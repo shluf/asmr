@@ -32,7 +32,7 @@ export const fetchRtRwStats = async (setRtRwStats) => {
         const response = await axios.get("/CountUser");
         setRtRwStats([
             {
-                label: "Populasi staff ",
+                label: "Populasi Staff ",
                 value: response.data.CountRtDanRw,
             },
             {

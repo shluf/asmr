@@ -14,5 +14,42 @@ const UserFilled = ({size}) => (
     </svg>
 );
 
-export { UserFilled };
+const ArrowRight = ({className, ...props}) => {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M5 12H19M19 12L12 5M19 12L12 19"
+        stroke="blue"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+const ArrowTopRight = ({className, ...props}) => {
+  return (
+    <svg
+      fill="#000000"
+      className={className}
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      enableBackground="new 0 0 24 24"
+      {...props}
+    >
+      <path d="M17,6H7C6.4,6,6,6.4,6,7s0.4,1,1,1h7.6l-8.3,8.3c-0.4,0.4-0.4,1,0,1.4c0.4,0.4,1,0.4,1.4,0L16,9.4V17c0,0.6,0.4,1,1,1s1-0.4,1-1V7C18,6.4,17.6,6,17,6z" />
+    </svg>
+  );
+};
+
+
+
+export { UserFilled, ArrowRight, ArrowTopRight };
 

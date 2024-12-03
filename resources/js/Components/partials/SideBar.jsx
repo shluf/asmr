@@ -1,14 +1,32 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import NavLink from "@/Components/NavLink";
 import { Badge } from "@/components/ui/badge";
-import { useNotificationPolling } from "@/utility/SideBarNotification";
+import { useManualNotificationRefresh, useNotificationPolling } from "@/utility/SideBarNotification";
 import renderIcon from "@/utility/renderIcon";
 import { Link } from "@inertiajs/react";
 import { cn } from "@/lib/utils"
+import axios from "axios";
+import { X } from "lucide-react";
 
 
 const SideBar = ({ color, userRole }) => {
   const routes = useNotificationPolling(userRole);
+  const manualRefresh = useManualNotificationRefresh();
+
+  const clearNotification = async (e, jenis) => {
+    e.preventDefault();
+
+    try {
+      await axios.delete(route('notification.clear'), {
+        data: { jenis }, 
+      });
+
+      await manualRefresh(userRole)
+
+    } catch (error) {
+      console.error("Error clearing notification:", error);
+    }
+  };
 
   return (
     <>
@@ -33,8 +51,9 @@ const SideBar = ({ color, userRole }) => {
                                     {renderIcon(data.icon)}
                                     {data.name}
                                     {data.notification > 0 && (
-                                        <Badge color={color} className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                                            {data.notification}
+                                        <Badge onClick={(e) => clearNotification(e, data.jenis)} color={color} className="group ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                                              <span className="group-hover:hidden">{data.notification}</span>
+                                              <span className="hidden group-hover:block"><X className="p-1"/></span>
                                         </Badge>
                                     )}
                                 </NavLink>

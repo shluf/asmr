@@ -113,9 +113,9 @@ const Pengajuan = () => {
                     memberikan keterangan kepada :
                 </div>
                 <div className="text-gray-800 mx-2 md:mx-8 mt-4 md:text-base text-sm space-y-1">
-                    <div className="flex">
+                    <div className="flex items-center">
                         <label className="font-semibold w-60">Nama</label>
-                        <span className="w-5">:</span>
+                        <span className="w-5 ">:</span>
                         <TextInput
                             color="green"
                             type="text"
@@ -125,7 +125,7 @@ const Pengajuan = () => {
                             className="flex-1 p-2 min-w-60 sm:min-w-80 border rounded"
                         />
                     </div>
-                    <div className="flex">
+                    <div className="flex items-center">
                         <label className="font-semibold w-60">NIK </label>
                         <span className="w-5">:</span>
                         <TextInput
@@ -137,7 +137,7 @@ const Pengajuan = () => {
                             className="flex-1 p-2 min-w-60 sm:min-w-80 border rounded"
                         />
                     </div>
-                    <div className="flex">
+                    <div className="flex items-center">
                         <span className="font-semibold w-60">NO.KK</span>
                         <span className="w-5">:</span>
                         <TextInput
@@ -149,7 +149,7 @@ const Pengajuan = () => {
                             className="flex-1 min-w-60 sm:min-w-80 p-2 border rounded"
                         />
                     </div>
-                    <div className="flex">
+                    <div className="flex items-center">
                         <label className="font-semibold w-60">
                             Jenis Kelamin
                         </label>
@@ -175,7 +175,7 @@ const Pengajuan = () => {
                         </div>
 
                     </div>
-                    <div className="flex">
+                    <div className="flex items-center">
                         <label className="font-semibold w-60">Agama</label>
                         <span className="w-5">:</span>
                         <div className="flex-1 min-w-60 sm:min-w-80">
@@ -202,7 +202,7 @@ const Pengajuan = () => {
                         </div>
 
                     </div>
-                    <div className="flex">
+                    <div className="flex items-center">
                         <label className="font-semibold w-60">
                             Tempat, tanggal lahir
                         </label>
@@ -216,7 +216,7 @@ const Pengajuan = () => {
                             className="flex-1 min-w-60 sm:min-w-80 p-2 border rounded"
                         />
                     </div>
-                    <div className="flex">
+                    <div className="flex items-center">
                         <label className="font-semibold w-60">
                             Alamat/Tempat tinggal
                         </label>

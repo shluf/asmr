@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/carousel";
 import { useMediaQuery } from 'react-responsive';
 import { Link } from '@inertiajs/react';
+import { ArrowRight } from '@/utility/svg-icons';
 
 const DataCard = ({ wargaStats, RtRwStats }) => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -16,39 +17,48 @@ const DataCard = ({ wargaStats, RtRwStats }) => {
     {
       title: "Data Warga",
       stats: wargaStats,
-      link: "dashboard/biodataUser",
+      link: "dashboard/biodataUser#warga-data",
       linkText: "BIODATA WARGA"
     },
     {
       title: "Data Anggota RT/RW",
       stats: RtRwStats,
-      link: "dashboard/biodataUser",
+      link: "dashboard/biodataUser#rw-data",
       linkText: "BIODATA RT/RW"
     }
   ];
 
   const StatCard = ({ title, stats, link, linkText }) => (
-    <div className="border-2 border-blue-3 rounded-[10px] shadow-lg h-full">
-      <h2 className="text-lg font-bold text-blue-5 text-start border-b border-blue-3 p-4">
-        {title}
-      </h2>
-      <ul>
-        {stats.map((stat, index) => (
-          <li
-            key={index}
-            className="flex justify-between py-1 border-b text-blue-4 border-blue-3 p-4 mt-5 mb-5"
-          >
-            <span className='text-sm md:text-base'>{stat.label}</span>
-            <span>{stat.value}</span>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-4 w-full text-xl md:text-2xl text-start mb-4 p-5">
-        <Link href={link}>
-          {linkText}
-        </Link>
+      <div className="border-2 border-blue-3 rounded-[10px] shadow-lg h-full">
+          <h2 className="text-lg font-bold text-blue-5 text-start border-b border-blue-3 p-4">
+              {title}
+          </h2>
+          <ul>
+              {stats.map((stat, index) => (
+                  <li
+                      key={index}
+                      className="flex justify-between py-1 border-b text-blue-4 border-blue-3 p-4 mt-5 mb-5"
+                  >
+                      <span className="text-sm md:text-base">{stat.label}</span>
+                      <span>{stat.value}</span>
+                  </li>
+              ))}
+          </ul>
+          <div className="flex justify-between items-center mt-4 w-full text-start mb-4 p-5">
+              <p className="text-xl md:text-xl">{linkText}</p>
+              <Link
+                  href={link}
+                  className="flex items-center text-blue md:text-base text-sm group transition-all"
+              >
+                  <p className="text-nowrap">lihat data</p>
+                  <ArrowRight
+                      className="ml-2 transition-transform group-hover:-rotate-45"
+                      width="20"
+                      height="20"
+                  />
+              </Link>
+          </div>
       </div>
-    </div>
   );
 
   return (

@@ -15,14 +15,16 @@ export default function Guest({ children, button, title, wide=false }) {
 
             <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out bg-white bg-opacity-50 backdrop-blur shadow-md mt-4 mx-4 rounded-lg">
                 <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-                    <a href="#" className="text-2xl font-bold text-gray-800">
-                        <img
-                            src="/logo.svg"
-                            alt="Logo"
-                            className="h-8 inline-block mr-2"
-                        />
-                    </a>
-                    <div className="hidden md:block">
+                    <div className="md:w-1/3">
+                        <a href="/" className="text-2xl font-bold text-gray-800">
+                            <img
+                                src="/logo.svg"
+                                alt="Logo"
+                                className="h-8 inline-block mr-2"
+                            />
+                        </a>
+                    </div>
+                    <div className="hidden justify-center md:min-w-[500px] md:flex md:w-1/3">
                         <a href="/#" className="text-gray-800 hover:text-green">
                             Beranda
                         </a>
@@ -48,7 +50,7 @@ export default function Guest({ children, button, title, wide=false }) {
                             Kritik Saran
                         </a>
                     </div>
-                    <div className="flex">
+                    <div className="flex md:w-1/3 justify-end">
                         {button == "all" ? (
                             <>
                                 <Link

@@ -129,7 +129,7 @@ const HistoriPengajuan = ({ nikWarga }) => {
                           (step) => step.title === "Penerbitan Surat" && step.status === "approved"
                         ) && (
                           <Button disable={`${isDownloadLoading}`} variant="outline" className="rounded-full" onClick={() => handleDownloadSurat(submission.id_pengajuan_surat)}>
-                            <Download className="w-4 h-4" />
+                            <Download className="w-4 h-4 mr-2" /> Unduh
                           </Button>
                         )}
                         <CollapsibleTrigger asChild>
@@ -143,12 +143,13 @@ const HistoriPengajuan = ({ nikWarga }) => {
                     </Card>
 
                     <CollapsibleContent className="mx-2 py-6 rounded-b-lg px-8 md:px-16 bg-[#d9d9d926] shadow-inner">
-                      <div className="space-y-4">
+                      <div className="relative space-y-4">
+                        <span className="absolute top-4 left-[18.5px] bottom-4 bg-slate-300 w-[3px] z-10"></span>
                         {submission?.progress?.map((step, stepIndex) =>
                           step.status !== "pending" ? (
-                            <div key={stepIndex} className="flex gap-4">
+                            <div key={stepIndex} className="flex items-center gap-4">
                               <div
-                                className={`w-10 h-10 rounded-full flex items-center justify-center ${getStatusColor(
+                                className={`w-10 h-10 rounded-full z-20 flex items-center justify-center ${getStatusColor(
                                   step.status
                                 )}`}
                               >
@@ -157,6 +158,14 @@ const HistoriPengajuan = ({ nikWarga }) => {
                               <div className="flex-1">
                                 <h4 className="font-medium">{step.title}</h4>
                                 <p className="text-sm text-gray-500">{step.description}</p>
+                                {step.tgl_approval
+                              &&
+                              <p className="text-xs text-gray-500 mt-1 px-2 border-l-2">
+                                  {format(new Date(step.tgl_approval), "dd MMMM yyyy  HH:II", {
+                                    locale: idLocale,
+                                  })} WIB
+                                </p>
+                                }
                               </div>
                             </div>
                           ) : null

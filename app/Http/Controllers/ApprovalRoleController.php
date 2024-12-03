@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UserApprovalStatusMail;
 use App\Models\Warga;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ApprovalRoleController extends Controller
 {
@@ -32,6 +34,8 @@ class ApprovalRoleController extends Controller
         $warga->approved = true; // Ganti dengan field yang sesuai
         $warga->save();
 
+        Mail::to($warga->user->email)->send(new UserApprovalStatusMail($warga, true));
+
         return response()->json(['message' => 'User approved successfully']);
     }
 
@@ -40,6 +44,8 @@ class ApprovalRoleController extends Controller
         $warga = Warga::findOrFail($nik_warga);
         $warga->approved = false; // Ganti dengan field yang sesuai
         $warga->save();
+
+        Mail::to($warga->user->email)->send(new UserApprovalStatusMail($warga, false));
 
         return response()->json(['message' => 'User disapproved successfully']);
     }

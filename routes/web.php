@@ -32,11 +32,11 @@ Route::get('/', function () {
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
     ]);
-});
+})->header('skip_zrok_interstitial', 'true');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/{page?}', [DashboardController::class, 'index'])->name('dashboard');
-});
+})->header('skip_zrok_interstitial', 'true');
    
 
 Route::middleware('auth')->group(function () {
@@ -82,8 +82,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/pengajuan', [SuratController::class, 'getAllPengajuanSurat']);
     });
 
-
-    Route::get('/notifications/count', [NotificationController::class, 'getNotificationCounts']);
+    Route::prefix('notifications')->group(function () {
+        Route::get('/count', [NotificationController::class, 'getNotificationCounts']);
+        Route::delete('/clear', [NotificationController::class, 'clearNotification'])->name('notification.clear');
+    });
 
     Route::get('/surat/download/{pengajuan}', [SuratPDFController::class, 'download'])
         ->name('surat.download');

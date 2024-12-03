@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Notifikasi;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use App\Models\PengajuanSurat;
@@ -18,6 +19,7 @@ class SuratService
         $warga = $pengajuan->warga;
         $rt = $pengajuan->rt;
         $rw = $pengajuan->rw;
+        $user = $warga->user;
         
         $ttd_rt_path = $rt->ttd 
         ? storage_path('app/public/' . $rt->ttd) 
@@ -74,6 +76,12 @@ class SuratService
         $path = 'surat/' . $filename;
         $pdf->save(storage_path('app/public/' . $path));
         
+        Notifikasi::create([
+            'id_user' => $user->id,
+            'pesan' => 'Surat pengantar Anda telah siap diunduh.',
+            'id_pengajuan_surat' => $pengajuan->id_pengajuan_surat,
+            'jenis_notif' => 'surat',
+        ]);
         
         return $path;
     }
