@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Models\Warga;
 use Illuminate\Http\Request;
 use App\Models\PengajuanSurat;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -99,4 +100,70 @@ class BiodatasUserController extends Controller
         }
 
     }
+    public function updateRT(Request $request, $id){
+        try {
+
+            DB::beginTransaction();
+            $RT = RT::findOrFail($id);
+
+            $validate = $request->validate([
+                'nama' => 'required',
+                'email'=> 'required|email|unique:users,email,'.$RT->id_user,
+                'periode' => 'required',
+                'penanggung_jawab_rt' => 'required',
+                'alamat' => 'required',
+            ]);
+            
+            $user = User::findOrFail($RT->id_user);
+            $user->email = $request->email;
+            $user->save();
+            
+            $RT->nama = $request->nama;
+            $RT->penanggung_jawab_rt = $request->penanggung_jawab_rt;
+            $RT->periode = $request->periode;
+            $RT->alamat = $request->alamat;
+            $RT->save();
+            
+            DB::commit();
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengambil data',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function updateRW(Request $request, $id){
+        try {
+            DB::beginTransaction();
+            $RW = RW::findOrFail($id);
+
+            $validate = $request->validate([
+                'nama' => 'required',
+                'email'=> 'required|email|unique:users,email,'.$RW->id_user,
+                'periode' => 'required',
+                'penanggung_jawab_rw' => 'required',
+                'alamat' => 'required',
+            ]);
+            
+            $user = User::findOrFail($RW->id_user);
+            $user->email = $request->email;
+            $user->save();
+            
+            $RW->nama = $request->nama;
+            $RW->penanggung_jawab_rw = $request->penanggung_jawab_rw;
+            $RW->periode = $request->periode;
+            $RW->alamat = $request->alamat;
+            $RW->save();
+            
+            DB::commit();
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengambil data',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 }
