@@ -124,10 +124,10 @@ class RegisterRtRwController extends Controller
                 'password' => ['sometimes', Password::defaults()],
                 'nik' => 'sometimes|string|unique:rw,nik|unique:rt,nik,'.$id,
                 'periode' => 'sometimes|string',
+                'alamat' => 'sometimes|string',
                 'ttd' => 'sometimes|image|mimes:jpeg,png|max:2048',
-
                 'id_rw' => 'sometimes|exists:rw,id_rw',
-            ]);
+            ]);     
 
             $user = User::findOrFail($id);
             $userData = [
@@ -155,17 +155,19 @@ class RegisterRtRwController extends Controller
                     'nama' => $request->nama ?? $rw->nama,
                     'nik' => $request->nik ?? $rw->nik,
                     'periode' => $request->periode ?? $rw->periode,
-                    'penanggung_jawab_rw' => $request->nama ?? $rw->penanggung_jawab_rw,
+                    'penanggung_jawab_rw' => $request->penanggung_jawab_rw ?? $rw->penanggung_jawab_rw,
                 ]);
-            } else {
+            } elseif ($user->role === 'RT') {
                 $rt = RT::where('id_user', $user->id)->firstOrFail();
                 $rt->update([
                     'nama' => $request->nama ?? $rt->nama,
                     'nik' => $request->nik ?? $rt->nik,
                     'periode' => $request->periode ?? $rt->periode,
                     'id_rw' => $request->id_rw ?? $rt->id_rw,
-                    'penanggung_jawab_rt' => $request->nama ?? $rt->penanggung_jawab_rt,
+                    'penanggung_jawab_rt' => $request->penanggung_jawab_rt ?? $rt->penanggung_jawab_rt,
                 ]);
+            } else {
+                return response()->json(['message' => 'Role tidak valid'], 400);
             }
 
             DB::commit();

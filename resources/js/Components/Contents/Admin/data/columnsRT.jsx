@@ -1,9 +1,15 @@
 import { DataField } from "@/Components/partials/dataField";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Button } from "@/Components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/Components/ui/dialog";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/Components/ui/dialog";
 import axios from "axios";
-import { ArrowUpDown, Check } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { useState } from "react";
 
 export const columnsRT = [
@@ -29,7 +35,7 @@ export const columnsRT = [
     },
     {
         accessorKey: "penanggung_jawab_rt",
-        name: "Jabatan", 
+        name: "Jabatan",
         header: ({ column }) => {
             return (
                 <Button
@@ -44,7 +50,11 @@ export const columnsRT = [
             );
         },
         cell: ({ row }) => {
-            return <div className="text-right font-medium text-nowrap">{row.getValue("penanggung_jawab_rt")}</div>;
+            return (
+                <div className="text-right font-medium text-nowrap">
+                    {row.getValue("penanggung_jawab_rt")}
+                </div>
+            );
         },
     },
     {
@@ -60,7 +70,11 @@ export const columnsRT = [
         name: "Periode",
         header: () => <div className="text-center">Periode</div>,
         cell: ({ row }) => {
-            return <div className="text-right font-medium text-nowrap">{row.getValue("periode")}</div>;
+            return (
+                <div className="text-right font-medium text-nowrap">
+                    {row.getValue("periode")}
+                </div>
+            );
         },
     },
     {
@@ -72,14 +86,20 @@ export const columnsRT = [
                     variant="ghost"
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
-                    } className="text-right">
+                    }
+                    className="text-right"
+                >
                     Penanggung Jawab
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
-            )
+            );
         },
         cell: ({ row }) => {
-            return <div className="text-right font-medium text-nowrap">{row.getValue("no_rw")}</div>;
+            return (
+                <div className="text-right font-medium text-nowrap">
+                    {row.getValue("no_rw")}
+                </div>
+            );
         },
     },
     {
@@ -90,37 +110,88 @@ export const columnsRT = [
             const [show, setShow] = useState(false);
             return (
                 <div className="text-right font-medium">
-                    <div className={`cursor-pointer ${show ? "" : "line-clamp-3"}`} onClick={() => setShow(!show)}>{row.getValue("alamat")}</div>
+                    <div
+                        className={`cursor-pointer ${
+                            show ? "" : "line-clamp-3"
+                        }`}
+                        onClick={() => setShow(!show)}
+                    >
+                        {row.getValue("alamat")}
+                    </div>
                 </div>
             );
         },
+    },
+    {
+        accessorKey: "id_rt",
+        header: () => null,
+        cell: () => null,
+        enableHiding: false,
     },
     {
         id: "actions",
         enableHiding: false,
         header: () => <div className="text-right">Action</div>,
         cell: ({ row }) => {
-            const nikWarga = row.getValue("nik_warga");
+            const idRT = row.getValue("id_rt");
+            const [formData, setFormData] = useState(() => ({
+                [idRT]: {
+                    nama: row.getValue("nama"),
+                    email: row.getValue("email"),
+                    periode: row.getValue("periode"),
+                    penanggung_jawab_rt: row.getValue("penanggung_jawab_rt"),
+                    alamat: row.getValue("alamat"),
+                },
+            }));
             const [loading, setLoading] = useState({});
+            const [isDialogOpen, setIsDialogOpen] = useState(false);
+            const handleInputChange = (e) => {
+                const { name, value } = e.target;
+                setFormData((prev) => ({
+                    ...prev,
+                    [idRT]: {
+                        ...prev[idRT],
+                        [name]: value, // Hanya memperbarui field yang relevan
+                    },
+                }));
+            };
 
-            const handleDisapprove = async (nik_warga) => {
-                setLoading((prev) => ({ ...prev, [nik_warga]: true }));
+            const handleUpdate = async (id_rt, updatedData) => {
+                setLoading((prev) => ({ ...prev, [id_rt]: true }));
                 try {
-                    await axios.post(`/approvalRole/disapprove/${nik_warga}`);
-                    setLoading((prev) => ({ ...prev, [nik_warga]: false }));
+                    await axios.put(
+                        `/biodatasUser/store-rt/${id_rt}`,
+                        updatedData
+                    );
+                    alert("Data berhasil diperbarui");
+                    setIsDialogOpen(false);
                 } catch (error) {
-                    console.error("Error disapproving user:", error);
-                    alert("Terjadi kesalahan saat mendisapprove warga.");
-                    setLoading((prev) => ({ ...prev, [nik_warga]: false }));
+                    console.error("Error updating RT data:", error);
+                    alert("Terjadi kesalahan saat memperbarui data.");
+                } finally {
+                    setLoading((prev) => ({ ...prev, [id_rt]: false }));
                 }
             };
 
             return (
                 <div className="text-center">
-                    <Dialog>
+                    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                         <DialogTrigger asChild>
                             <button
                                 type="button"
+                                onClick={() =>
+                                    setFormData({
+                                        [idRT]: {
+                                            nama: row.getValue("nama"),
+                                            email: row.getValue("email"),
+                                            periode: row.getValue("periode"),
+                                            penanggung_jawab_rt: row.getValue(
+                                                "penanggung_jawab_rt"
+                                            ),
+                                            alamat: row.getValue("alamat"),
+                                        },
+                                    })
+                                }
                                 className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                             >
                                 <svg
@@ -137,44 +208,54 @@ export const columnsRT = [
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-[600px]">
                             <DialogHeader>
-                                <DialogTitle>Edit {row.getValue("penanggung_jawab_rt")}</DialogTitle>
+                                <DialogTitle>
+                                    Edit {row.getValue("penanggung_jawab_rt")}
+                                </DialogTitle>
                             </DialogHeader>
                             <div className="grid gap-4 py-4">
                                 <DataField
                                     label="Nama"
-                                    value={row.getValue("nama")}
-                                />
-                                <DataField
-                                    label="Jabatan"
-                                    value={row.getValue("penanggung_jawab_rt")}
+                                    value={formData[idRT]?.nama || ""}
+                                    name="nama"
+                                    onChange={handleInputChange}
                                 />
                                 <DataField
                                     label="Email"
-                                    value={row.getValue("email")}
+                                    value={formData[idRT]?.email || ""}
+                                    name="email"
+                                    onChange={handleInputChange}
                                 />
                                 <DataField
                                     label="Periode"
-                                    value={row.getValue("periode")}
+                                    value={formData[idRT]?.periode || ""}
+                                    name="periode"
+                                    onChange={handleInputChange}
                                 />
                                 <DataField
                                     label="Penanggung Jawab"
-                                    value={row.getValue("no_rw")}
+                                    value={
+                                        formData[idRT]?.penanggung_jawab_rt ||
+                                        ""
+                                    }
+                                    name="penanggung_jawab_rt"
+                                    onChange={handleInputChange}
                                 />
                                 <DataField
                                     label="Alamat"
-                                    value={row.getValue("alamat")}
+                                    value={formData[idRT]?.alamat || ""}
+                                    name="alamat"
                                     textarea
+                                    onChange={handleInputChange}
                                 />
                                 <div className="flex gap-2 justify-end items-center w-full">
                                     <PrimaryButton
                                         color="green"
                                         rounded="full"
-                                        disabled={loading[nikWarga]}
+                                        disabled={loading[idRT]}
                                         onClick={() =>
-                                            handleDisapprove(nikWarga)
+                                            handleUpdate(idRT, formData[idRT])
                                         }
                                     >
-                                        <Check className="w-4 h-4 mr-2" />
                                         Simpan
                                     </PrimaryButton>
                                 </div>
