@@ -70,7 +70,7 @@ const DataTable = ({ data, columns, hide = {}, pageSize = 5, isLoading = false }
     
       return (
         <div>
-          <div className="flex items-center py-4">
+          <div className="flex items-center py-4 gap-3">
             <Input
               placeholder="Cari nama..."
               value={table.getColumn("nama")?.getFilterValue() ?? ""}

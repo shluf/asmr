@@ -33,7 +33,7 @@ const DashboardLayout = ({
             <SideBar color={color} userRole={user.role} />
 
             <div className="flex flex-col overflow-hidden">
-                <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 my-2 lg:h-[60px] lg:px-6">
+                <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 mt-2 lg:h-[60px] lg:px-6">
 
                     <div className="flex md:hidden h-14 justify-center items-center px-4">
                         <Link href="/">
@@ -42,7 +42,7 @@ const DashboardLayout = ({
                     </div>
 
                     <div className="w-full flex-1">
-                        <h1 className="text-lg font-semibold md:text-2xl">
+                        <h1 className="hidden sm:block text-lg font-semibold md:text-2xl">
                             {header}
                         </h1>
                     </div>

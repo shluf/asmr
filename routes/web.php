@@ -32,11 +32,11 @@ Route::get('/', function () {
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
     ]);
-})->header('skip_zrok_interstitial', 'true');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/{page?}', [DashboardController::class, 'index'])->name('dashboard');
-})->header('skip_zrok_interstitial', 'true');
+});
    
 
 Route::middleware('auth')->group(function () {

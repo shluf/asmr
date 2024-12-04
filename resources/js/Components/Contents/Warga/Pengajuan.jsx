@@ -113,48 +113,47 @@ const Pengajuan = () => {
                     memberikan keterangan kepada :
                 </div>
                 <div className="text-gray-800 mx-2 md:mx-8 mt-4 md:text-base text-sm space-y-1">
-                    <div className="flex items-center">
-                        <label className="font-semibold w-60">Nama</label>
-                        <span className="w-5 ">:</span>
+                    <div className="flex md:flex-row flex-col md:items-center items-start">
+                        <label className="font-semibold w-60">Nama <span className="w-5 md:hidden">:</span></label>
+                        <span className="w-5 md:block hidden">:</span>
                         <TextInput
                             color="green"
                             type="text"
                             name="nama_pemohon"
                             value={pengajuan.nama_pemohon}
                             onChange={handleInputChange}
-                            className="flex-1 p-2 min-w-60 sm:min-w-80 border rounded"
+                            className="flex-1 p-2 w-full sm:min-w-80 border rounded"
                         />
                     </div>
-                    <div className="flex items-center">
-                        <label className="font-semibold w-60">NIK </label>
-                        <span className="w-5">:</span>
+                    <div className="flex md:flex-row flex-col md:items-center items-start">
+                        <label className="font-semibold w-60">NIK <span className="w-5 md:hidden">:</span></label>
+                        <span className="w-5 md:block hidden">:</span>
                         <TextInput
                             color="green"
-                            type="text"
+                            type="number"
                             name="nik_pemohon"
                             value={pengajuan.nik_pemohon}
                             onChange={handleInputChange}
-                            className="flex-1 p-2 min-w-60 sm:min-w-80 border rounded"
+                            className="flex-1 p-2 min-w-60 sm:min-w-80 border rounded w-full "
                         />
                     </div>
-                    <div className="flex items-center">
-                        <span className="font-semibold w-60">NO.KK</span>
-                        <span className="w-5">:</span>
+                    <div className="flex md:flex-row flex-col md:items-center items-start">
+                        <label className="font-semibold w-60">NO.KK <span className="w-5 md:hidden">:</span></label>
+                        <span className="w-5 md:block hidden">:</span>
                         <TextInput
                             color="green"
                             type="text"
                             name="nomer_kk"
                             value={dataWarga.nomer_kk || ""}
-                            readOnly
-                            className="flex-1 min-w-60 sm:min-w-80 p-2 border rounded"
+                            
+                            disabled
+                            className="flex-1 min-w-60 sm:min-w-80 p-2 text-zinc-500 border rounded w-full "
                         />
                     </div>
-                    <div className="flex items-center">
-                        <label className="font-semibold w-60">
-                            Jenis Kelamin
-                        </label>
-                        <span className="w-5">:</span>
-                        <div className="flex-1 min-w-60 sm:min-w-80 ">
+                    <div className="flex md:flex-row flex-col md:items-center items-start">
+                        <label className="font-semibold w-60">Jenis Kelamin <span className="w-5 md:hidden">:</span></label>
+                            <span className="w-5 md:block hidden">:</span>
+                        <div className="flex-1 min-w-60 sm:min-w-80 w-full">
                         <Select 
                             onValueChange={(value) => 
                                 setPengajuan((prev) => ({ ...prev, jenis_kelamin_pemohon: value }))}
@@ -175,10 +174,10 @@ const Pengajuan = () => {
                         </div>
 
                     </div>
-                    <div className="flex items-center">
-                        <label className="font-semibold w-60">Agama</label>
-                        <span className="w-5">:</span>
-                        <div className="flex-1 min-w-60 sm:min-w-80">
+                    <div className="flex md:flex-row flex-col md:items-center items-start">
+                        <label className="font-semibold w-60">Agama <span className="w-5 md:hidden">:</span></label>
+                        <span className="w-5 md:block hidden">:</span>
+                        <div className="flex-1 min-w-60 sm:min-w-80 w-full">
                         <Select 
                             onValueChange={(value) => 
                                 setPengajuan((prev) => ({ ...prev, agama_pemohon: value }))}
@@ -202,32 +201,32 @@ const Pengajuan = () => {
                         </div>
 
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex md:flex-row flex-col md:items-center items-start">
                         <label className="font-semibold w-60">
-                            Tempat, tanggal lahir
+                            Tempat, tanggal lahir <span className="w-5 md:hidden">:</span>
                         </label>
-                        <span className="w-5">:</span>
+                        <span className="w-5 md:block hidden">:</span>
                         <TextInput
                             color="green"
                             type="text"
                             name="tempat_tanggal_lahir_pemohon"
                             value={pengajuan.tempat_tanggal_lahir_pemohon}
                             onChange={handleInputChange}
-                            className="flex-1 min-w-60 sm:min-w-80 p-2 border rounded"
+                            className="flex-1 min-w-60 sm:min-w-80 p-2 border rounded w-full "
                         />
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex md:flex-row flex-col md:items-center items-start">
                         <label className="font-semibold w-60">
-                            Alamat/Tempat tinggal
+                            Alamat/Tempat tinggal <span className="w-5 md:hidden">:</span>
                         </label>
-                        <span className="w-5">:</span>
+                        <span className="w-5 md:block hidden">:</span>
                         <TextInput
                             color="green"
                             type="text"
                             name="alamat_pemohon"
                             value={pengajuan.alamat_pemohon}
                             onChange={handleInputChange}
-                            className="flex-1 p-2 min-w-60 sm:min-w-80 border rounded"
+                            className="flex-1 p-2 min-w-60 sm:min-w-80 border rounded w-full "
                         />
                     </div>
                     </div>

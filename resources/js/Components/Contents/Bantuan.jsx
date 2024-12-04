@@ -16,18 +16,27 @@ const Bantuan = ({warga = false}) => {
         </p>
         <div className='flex flex-col justify-center items-center'>
           <div className={`flex items-center ${warga ? "justify-start" : "justify-center"} md:w-2/3 w-full space-x-2`}>
-            <PhoneCall className="w-5 h-5 text-primary" />
-            <p className="font-bold text-lg">ADMIN: 0817973xxxx</p>
+            <PhoneCall className="w-5 h-5 text-green" />
+            <div className='flex items-center'>
+              <p className="font-bold text-md w-20">ADMIN</p><span className='mx-1'>:</span>
+              <p>0817973xxxx</p>
+            </div>
           </div>
             {warga &&
               <>        
               <div className="flex items-center justify-start md:w-2/3 w-full space-x-2">
-                <PhoneCall className="w-5 h-5 text-primary" />
-                <p className="font-bold text-lg">RT: 0817973xxxx</p>
+                <PhoneCall className="w-5 h-5 text-green" />
+                <div className='flex items-center'>
+                  <p className="font-bold text-md w-20">RT</p><span className='mx-1'>:</span>
+                  <p>0817973xxxx</p>
+                </div>
               </div>
               <div className="flex items-center justify-start md:w-2/3 w-full space-x-2">
-                <PhoneCall className="w-5 h-5 text-primary" />
-                <p className="font-bold text-lg">RW: 0817973xxxx</p>
+                <PhoneCall className="w-5 h-5 text-green" />
+                <div className='flex items-center'>
+                  <p className="font-bold text-md w-20">RW</p><span className='mx-1'>:</span>
+                  <p>0817973xxxx</p>
+                </div>
               </div>
               </>
               }
