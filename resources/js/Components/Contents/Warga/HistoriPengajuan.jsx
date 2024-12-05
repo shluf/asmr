@@ -98,7 +98,7 @@ const HistoriPengajuan = ({ nikWarga }) => {
                   setOpenItems((prev) => ({ ...prev, [index]: isOpen }))
                 }
               >
-                <Card>
+                <Card className="shadow-sm hover:shadow-lg transition-shadow duration-300">
                   <CardContent className="p-6">
                     <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
                       <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">

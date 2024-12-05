@@ -20,7 +20,17 @@ function Alert({
   succes = true,
   customButton = false,
   color = "green",
+  onConfirm,
+  confirmButtonText = "Tutup"
 }) {
+  const handleConfirm = () => {
+    if (onConfirm) {
+      onConfirm();
+    }
+
+    onClose();
+  };
+
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent className="max-w-md rounded-3xl">
@@ -46,19 +56,25 @@ function Alert({
           </div>
           </AlertDialogDescription>
         <AlertDialogFooter className="sm:justify-center mt-2">
-          <PrimaryButton
-            color={ customButton ? "yellow" : "green"} 
+          {/* <PrimaryButton
+            color={ customButton ? "yellow" : "green"}
             onClick={onClose}
           >
             Tutup
-          </PrimaryButton>
-          {customButton &&
-          <Link href={route('login', { status: 'Registration successful. Tunggu akun anda dicheck oleh admin.' })} >
+          </PrimaryButton> */}
+
+          {onConfirm ? (
             <PrimaryButton
-            color="green">
-              Lanjutkan
+              color="green"
+              onClick={handleConfirm}
+            >
+              {confirmButtonText}
             </PrimaryButton>
-            </Link>}
+          ) : (
+              <PrimaryButton color="green" onClick={onClose}>
+                Tutup
+              </PrimaryButton>
+          )}
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -67,9 +83,9 @@ function Alert({
 
 let showAlertHelper = null;
 
-export function showAlert({ title, succes=true, message, desc, customButton, color }) {
+export function showAlert({ title, succes=true, message, desc, customButton, color, onConfirm, confirmButtonText }) {
   if (showAlertHelper) {
-    showAlertHelper({ title, message, desc, succes, customButton, color });
+    showAlertHelper({ title, message, desc, succes, customButton, color, onConfirm, confirmButtonText });
   }
 }
 
@@ -82,10 +98,21 @@ export function AlertWrapper() {
     succes: true,
     customButton: false,
     color: "green",
+    onConfirm: null,
+    confirmButtonText: "Lanjutkan"
   });
 
-  showAlertHelper = ({ title, message, desc, succes, customButton, color }) => {
-    setAlertProps({ title, message, desc, succes, customButton, color });
+  showAlertHelper = ({ title, message, desc, succes, customButton, color, onConfirm, confirmButtonText }) => {
+    setAlertProps({ 
+      title, 
+      message, 
+      desc, 
+      succes, 
+      customButton, 
+      color, 
+      onConfirm, 
+      confirmButtonText 
+    });
     setIsOpen(true);
   };
 
@@ -99,6 +126,8 @@ export function AlertWrapper() {
       succes={alertProps.succes}
       customButton={alertProps.customButton}
       color={alertProps.color}
+      onConfirm={alertProps.onConfirm}
+      confirmButtonText={alertProps.confirmButtonText}
     />
   );
 }

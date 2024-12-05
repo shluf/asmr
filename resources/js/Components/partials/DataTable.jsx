@@ -27,7 +27,7 @@ import { Skeleton } from "../ui/skeleton";
 import { Input } from "../ui/input";
 import PrimaryButton from "../PrimaryButton";
 
-const DataTable = ({ data, columns, hide = {}, pageSize = 5, isLoading = false }) => {
+const DataTable = ({ data, columns, hide = {}, pageSize = 5, refresh, isLoading = false }) => {
     const [sorting, setSorting] = useState([]);
     const [columnFilters, setColumnFilters] = useState([]);
     const [columnVisibility, setColumnVisibility] = useState(hide);
@@ -162,7 +162,7 @@ const DataTable = ({ data, columns, hide = {}, pageSize = 5, isLoading = false }
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      Data tidak ditemukan.
                     </TableCell>
                   </TableRow>
                 )}

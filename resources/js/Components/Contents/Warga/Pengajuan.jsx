@@ -99,7 +99,7 @@ const Pengajuan = () => {
             <div>
                 <AlertWrapper />
             </div>
-            <div className="bg-white shadow-lg rounded-lg w-full h-full  p-8">
+            <div className="bg-white shadow-sm hover:shadow-lg transition-shadow duration-300 border rounded-lg w-full h-full  p-8">
                 <h2 className="text-2xl font-bold text-blue-900 mb-6">
                     Form Pengajuan
                 </h2>

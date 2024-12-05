@@ -11,8 +11,16 @@ const BiodataUser = () => {
     const [dataWarga, setDataWarga] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
+    const fetchData = () => {
         fetchBiodataUserData(setDataRT, setDataRW, setDataWarga, setLoading);
+    }
+
+    const rtColumns = columnsRT(fetchData);
+    const rwColumns = columnsRW(fetchData);
+    const wargaColumns = columnsWarga(fetchData);
+
+    useEffect(() => {
+        fetchData();
     }, []);
 
     return (
@@ -21,21 +29,21 @@ const BiodataUser = () => {
                 <h2 className="font-semibold text-xl mb-4 text-blue-5">
                     Data anggota RW
                 </h2>
-                <DataTable data={dataRW} columns={columnsRW} pageSize={4} isLoading={loading} />
+                <DataTable data={dataRW} columns={rwColumns} pageSize={4} isLoading={loading} />
             </div>
 
             <div id="rt-data"  className="mt-10">
                 <h2  className="font-semibold text-xl mb-4 text-blue-5">
                     Data anggota RT
                 </h2>
-                <DataTable data={dataRT} columns={columnsRT} pageSize={4} isLoading={loading} />
+                <DataTable data={dataRT} columns={rtColumns} pageSize={4} isLoading={loading} />
             </div>
 
             <div id="warga-data" className="mt-10">
                 <h2 className="font-semibold text-xl mb-4 text-blue-5">
                     Data Warga
                 </h2>
-                <DataTable data={dataWarga} columns={columnsWarga} setDataWarga={setDataWarga} pageSize={10} hide={{tempat_dan_tanggal_lahir: false, approval: false, alamat: false }} isLoading={loading} />
+                <DataTable data={dataWarga} columns={wargaColumns} pageSize={10} isLoading={loading} />
             </div>
 
         </div>

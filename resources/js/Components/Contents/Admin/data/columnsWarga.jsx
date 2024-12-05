@@ -13,7 +13,7 @@ import { useState } from "react";
 import { DataField } from "@/Components/partials/dataField";
 import { AlertWrapper, showAlert } from "@/Components/partials/Alert";
 
-export const columnsWarga = [
+export const columnsWarga = (fetchData) => [
     {
         accessorKey: "nomer_kk",
         name: "Nomor KK",
@@ -136,16 +136,20 @@ export const columnsWarga = [
                 setLoading((prev) => ({ ...prev, [nik_warga]: true }));
                 try {
                     await axios.post(`/approvalRole/disapprove/${nik_warga}`);
+
                     setLoading((prev) => ({ ...prev, [nik_warga]: false }));
-                    alert("Akun berhasil dinonaktifkan.");
+
                     showAlert({
                         title: "Berhasil!",
                         desc: "Akun ini telah dinonaktifkan",
                         message: "Akun berhasil dinonaktifkan",
                         success: true,
                         color: "green",
+                        onConfirm: () => {
+                            fetchData();
+                          },
                     });
-                    setData((prevData) => prevData.filter((user) => user.nik_warga !== nik_warga));
+
                 } catch (error) {
                     console.error("Error disapproving user:", error);
                     showAlert({

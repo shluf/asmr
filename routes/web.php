@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/biodatasUser', [BiodatasUserController::class, 'index'])->name('biodataUser');
     Route::put('/biodatasUser/store-rt/{id}', [BiodatasUserController::class, 'updateRT'])->name('biodataUser.store.rt');
     Route::put('/biodatasUser/store-rw/{id}', [BiodatasUserController::class, 'updateRW'])->name('biodataUser.store.rw');
+    Route::delete('/biodatasUser/delete-rt/{id}', [BiodatasUserController::class, 'destroyRT'])->name('biodataUser.delete.rt');
+    Route::delete('/biodatasUser/delete-rw/{id}', [BiodatasUserController::class, 'destroyRW'])->name('biodataUser.delete.rw');
     Route::get('/pending-warga', [BiodatasUserController::class, 'PendingWarga'])->name('pendingWarga');
     Route::get('/CountUser',[BiodatasUserController::class,'CountData'])->name('CountUser');
 

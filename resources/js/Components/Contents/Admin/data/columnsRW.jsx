@@ -1,3 +1,4 @@
+import { AlertWrapper, showAlert } from "@/Components/partials/Alert";
 import { DataField } from "@/Components/partials/dataField";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Button } from "@/Components/ui/button";
@@ -9,10 +10,10 @@ import {
     DialogTrigger,
 } from "@/Components/ui/dialog";
 import axios from "axios";
-import { ArrowUpDown, Check } from "lucide-react";
+import { ArrowUpDown, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-export const columnsRW = [
+export const columnsRW = (fetchData) => [
     {
         accessorKey: "nama",
         header: ({ column }) => {
@@ -102,7 +103,7 @@ export const columnsRW = [
     {
         id: "actions",
         enableHiding: false,
-        header: () => <div className="text-right">Action</div>,
+        header: () => <div className="text-center">Action</div>,
         cell: ({ row }) => {
             const idRW = row.getValue("id_rw");
             const [formData, setFormData] = useState(() => ({
@@ -122,7 +123,7 @@ export const columnsRW = [
                     ...prev,
                     [idRW]: {
                         ...prev[idRW],
-                        [name]: value, // Hanya memperbarui field yang relevan
+                        [name]: value,
                     },
                 }));
             };
@@ -134,17 +135,77 @@ export const columnsRW = [
                         `/biodatasUser/store-rw/${id_rw}`,
                         updatedData
                     );
-                    alert("Data berhasil diperbarui");
+
                     setIsDialogOpen(false);
+
+                    showAlert({
+                        title: "Berhasil!",
+                        desc: `Data ${row.getValue("penanggung_jawab_rw")} telah diperbarui  `,
+                        message: "Data berhasil diperbarui",
+                        success: true,
+                        color: "green",
+                        onConfirm: () => {
+                            fetchData();
+                          },
+                    });
                 } catch (error) {
                     console.error("Error updating RW data:", error);
-                    alert("Terjadi kesalahan saat memperbarui data.");
+                    showAlert({
+                        title: "Gagal!",
+                        desc: "Terjadi kesalahan saat memperbarui data warga",
+                        message: "Gagal memperbarui data",
+                        success: false,
+                        color: "red",
+                    });
+                } finally {
+                    setLoading((prev) => ({ ...prev, [id_rw]: false }));
+                }
+            };
+
+            const handleDelete = async (id_rw) => {
+                setLoading((prev) => ({ ...prev, [id_rw]: true }));
+                try {
+                    await axios.delete(route('biodataUser.delete.rw', id_rw));
+
+                    showAlert({
+                        title: "Berhasil!",
+                        desc: "Data RW telah dihapus",
+                        message: "Data berhasil dihapus",
+                        success: true,
+                        color: "green",
+                        onConfirm: () => {
+                            fetchData();
+                          },
+                    });
+                    
+                } catch (error) {
+                    console.error("Error menghapus data RW:", error);
+                    showAlert({
+                        title: "Gagal!",
+                        desc: "Terjadi kesalahan saat menghapus data RW",
+                        message: "Gagal menghapus data",
+                        success: false,
+                        color: "red",
+                    });
                 } finally {
                     setLoading((prev) => ({ ...prev, [id_rw]: false }));
                 }
             };
 
             return (
+                <>
+                <AlertWrapper />
+                <div className="flex">
+                <button
+                    type="button"
+                    className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-primary-foreground focus:outline-none bg-red rounded-full border border-gray-200 hover:bg-red-600 hover:text-gray-300 focus:z-10 focus:ring-4 focus:ring-gray-100"
+                    disabled={loading[idRW]}
+                    onClick={() =>
+                        handleDelete(idRW)
+                    }
+                >
+                    <Trash2 width={'16px'} height={'16px'} />
+                </button>
                 <div className="text-center">
                     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                         <DialogTrigger asChild>
@@ -234,6 +295,8 @@ export const columnsRW = [
                         </DialogContent>
                     </Dialog>
                 </div>
+                </div>
+                </>
             );
         },
     },

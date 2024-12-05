@@ -148,8 +148,8 @@ const DashboardContent = () => {
                                 <div className="w-12 h-12 bg-green-3 rounded-[12px] flex items-center justify-center text-2xl">
                                     <UserFilled size={6} />
                                 </div>
-                                <div className="grid grid-cols-2 gap-1 md:gap-4 ml-4 w-full justify-center items-center">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4 justify-center">
+                                <div className="grid grid-cols-2 gap-1 md:gap-4 ml-4 w-full items-center">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4 items-center">
                                         <div>
                                             <p className="font-medium mt-2 text-left mb-1">
                                                 Tanggal pengajuan
@@ -173,7 +173,7 @@ const DashboardContent = () => {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="text-right grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4 justify-center">
+                                    <div className="text-right grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4 items-center">
                                         <div>
                                             <p className="font-medium mt-2 text-left mb-1">
                                                 Status tindak lanjut
