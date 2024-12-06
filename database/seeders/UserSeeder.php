@@ -14,14 +14,14 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'id' => 1,
-                'name' => 'RW 01',
+                'name' => 'rw01',
                 'email' => 'rw01@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'RW',
             ],
             [
                 'id' => 2,
-                'name' => 'RW 02',
+                'name' => 'rw02',
                 'email' => 'rw02@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'RW',
@@ -32,28 +32,28 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'id' => 3,
-                'name' => 'RT 01',
+                'name' => 'rt01rw01',
                 'email' => 'rt01@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'RT',
             ],
             [
                 'id' => 4,
-                'name' => 'RT 01',
+                'name' => 'rt01rw02',
                 'email' => 'rt02@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'RT',
             ],
             [
                 'id' => 8,
-                'name' => 'RT 02',
+                'name' => 'rt03rw01',
                 'email' => 'rt03@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'RT',
             ],
             [
                 'id' => 9,
-                'name' => 'RT 02',
+                'name' => 'rt04rw02',
                 'email' => 'rt04@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'RT',
@@ -64,7 +64,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'id' => 5,
-                'name' => 'Admin User',
+                'name' => 'Admin',
                 'email' => 'admin@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'Admin',

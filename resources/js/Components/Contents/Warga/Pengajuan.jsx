@@ -123,6 +123,7 @@ const Pengajuan = () => {
                             value={pengajuan.nama_pemohon}
                             onChange={handleInputChange}
                             className="flex-1 p-2 w-full sm:min-w-80 border rounded"
+                            required
                         />
                     </div>
                     <div className="flex md:flex-row flex-col md:items-center items-start">
@@ -135,6 +136,7 @@ const Pengajuan = () => {
                             value={pengajuan.nik_pemohon}
                             onChange={handleInputChange}
                             className="flex-1 p-2 min-w-60 sm:min-w-80 border rounded w-full "
+                            required
                         />
                     </div>
                     <div className="flex md:flex-row flex-col md:items-center items-start">
@@ -157,6 +159,7 @@ const Pengajuan = () => {
                         <Select 
                             onValueChange={(value) => 
                                 setPengajuan((prev) => ({ ...prev, jenis_kelamin_pemohon: value }))}
+                            value={pengajuan.jenis_kelamin_pemohon}
                         >
 
                         <SelectTrigger  
@@ -181,6 +184,7 @@ const Pengajuan = () => {
                         <Select 
                             onValueChange={(value) => 
                                 setPengajuan((prev) => ({ ...prev, agama_pemohon: value }))}
+                            value={pengajuan.agama_pemohon}
                         >
                         <SelectTrigger  
                             color="green"      
@@ -213,6 +217,7 @@ const Pengajuan = () => {
                             value={pengajuan.tempat_tanggal_lahir_pemohon}
                             onChange={handleInputChange}
                             className="flex-1 min-w-60 sm:min-w-80 p-2 border rounded w-full "
+                            required
                         />
                     </div>
                     <div className="flex md:flex-row flex-col md:items-center items-start">
@@ -227,6 +232,7 @@ const Pengajuan = () => {
                             value={pengajuan.alamat_pemohon}
                             onChange={handleInputChange}
                             className="flex-1 p-2 min-w-60 sm:min-w-80 border rounded w-full "
+                            required
                         />
                     </div>
                     </div>
@@ -273,7 +279,7 @@ const Pengajuan = () => {
                         className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green"
                         rows="4"
                         placeholder="Detail Pengajuan"
-                        value={description}
+                        value={isLainnya ? description : ""}
                         disabled={!isLainnya}
                         onChange={(e) => setDescription(e.target.value)}
                     />

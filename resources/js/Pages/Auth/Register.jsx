@@ -264,7 +264,7 @@ export default function Register({ rtRwData }) {
                         disabled={processing}
                         color={"yellow"}
                     >
-                        Registrasi
+                        {processing ? 'Sedang Mendaftar...' : 'Registrasi'}
                     </PrimaryButton>
                 </div>
             </form>

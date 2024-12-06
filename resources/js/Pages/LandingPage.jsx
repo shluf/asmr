@@ -7,23 +7,44 @@ const LandingPage = ({ auth }) => {
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState("beranda");
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [subject, setSubject] = useState('');
-    const [message, setMessage] = useState('');
+    const [form, setForm] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+      
     const ownerEmail= import.meta.env.VITE_MAIL_USERNAME;
   
     const createMailtoLink = () => {
-        const mailtoBody = `Yth. Tim Aplikasi Surat Menyurat RT/RW,%0D%0A%0D%0ADengan hormat,%0D%0ASaya ${firstName}, ingin menyampaikan beberapa kritik dan saran yang saya harap dapat menjadi bahan pertimbangan untuk perbaikan layanan di aplikasi ini.%0D%0A%0D%0A${message}%0D%0A%0D%0ATerima kasih atas perhatian dan kerjasamanya. Semoga kritik dan saran ini dapat membantu dalam meningkatkan layanan ini.%0D%0A%0D%0AHormat saya,%0D%0A${firstName} ${lastName}%0D%0A%0D%0AEmail: ${email}`;
-        return `mailto:${ownerEmail}?subject=${encodeURIComponent('Kritik & Saran - ' + subject)}&body=${mailtoBody}`
+        const mailtoBody = `Yth. Tim Aplikasi Surat Menyurat RT/RW,%0D%0A%0D%0ADengan hormat,%0D%0ASaya ${form.firstName}, ingin menyampaikan beberapa kritik dan saran yang saya harap dapat menjadi bahan pertimbangan untuk perbaikan layanan di aplikasi ini.%0D%0A%0D%0A${form.message}%0D%0A%0D%0ATerima kasih atas perhatian dan kerjasamanya. Semoga kritik dan saran ini dapat membantu dalam meningkatkan layanan ini.%0D%0A%0D%0AHormat saya,%0D%0A${form.firstName} ${form.lastName}%0D%0A%0D%0AEmail: ${form.email}`;
+        return `mailto:${ownerEmail}?subject=${encodeURIComponent('Kritik & Saran - ' + form.subject)}&body=${mailtoBody}`
     };
     
-  
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        window.open(createMailtoLink(), '_blank');
+    const resetForm = () => {
+        setForm({
+          firstName: '',
+          lastName: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
       };
+      
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm(prevForm => ({
+            ...prevForm,
+            [name]: value
+        }));
+    };
+  
+    const handleSubmit = (e) => {
+    e.preventDefault();
+    window.open(createMailtoLink(), '_blank');
+    resetForm();
+    };
 
     useEffect(() => {
         AOS.init({
@@ -514,8 +535,8 @@ const LandingPage = ({ auth }) => {
                                                     type="text"
                                                     name="firstName"
                                                     id="firstName"
-                                                    value={firstName}
-                                                    onChange={(e) => setFirstName(e.target.value)}
+                                                    value={form.firstName}
+                                                    onChange={handleChange}
                                                     className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-0 border-b-2"
                                                     required
                                                 />
@@ -531,8 +552,8 @@ const LandingPage = ({ auth }) => {
                                                     type="text"
                                                     name="lastName"
                                                     id="lastName"
-                                                    value={lastName}
-                                                    onChange={(e) => setLastName(e.target.value)}
+                                                    value={form.lastName}
+                                                    onChange={handleChange}
                                                     className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-0 border-b-2"
                                                     required
                                                 />
@@ -548,8 +569,8 @@ const LandingPage = ({ auth }) => {
                                                     type="email"
                                                     name="email"
                                                     id="email"
-                                                    value={email}
-                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    value={form.email}
+                                                    onChange={handleChange}
                                                     className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-0 border-b-2"
                                                     required
                                                 />
@@ -565,8 +586,8 @@ const LandingPage = ({ auth }) => {
                                                     type="text"
                                                     name="subject"
                                                     id="subject"
-                                                    value={subject}
-                                                    onChange={(e) => setSubject(e.target.value)}
+                                                    value={form.subject}
+                                                    onChange={handleChange}
                                                     className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-0 border-b-2"
                                                     required
                                                 />
@@ -582,8 +603,8 @@ const LandingPage = ({ auth }) => {
                                                     id="message"
                                                     name="message"
                                                     rows="3"
-                                                    value={message}
-                                                    onChange={(e) => setMessage(e.target.value)}
+                                                    value={form.message}
+                                                    onChange={handleChange}
                                                     className="mt-1 focus:ring-green focus:border-green block w-full shadow-sm sm:text-sm border-gray-300 rounded border-b-2"
                                                     placeholder="Tulis pesan disini"
                                                     required
