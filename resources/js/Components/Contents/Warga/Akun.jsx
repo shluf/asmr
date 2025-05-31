@@ -24,15 +24,20 @@ const Akun = ({ nikWarga }) => {
     agama: "",
   });
 
+  const fetchData = async () => {
+    const gender = await fetchAkunData(setProfileWarga, setData, nikWarga);
+    setJenisKelamin(gender === "P" ? "Perempuan" : "Laki-Laki");
+  };
 
   useEffect( () => {
-    const fetchData = async () => {
-      const gender = await fetchAkunData(setProfileWarga, setData, nikWarga);
-      setJenisKelamin(gender === "P" ? "Perempuan" : "Laki-Laki");
-    };
 
     fetchData();
   }, [nikWarga]);
+
+  const handleBack = () => {
+    fetchData();
+    setIsEditMode(false);
+  }
 
   const submit = async (e) => {
     e.preventDefault();
@@ -273,7 +278,7 @@ const Akun = ({ nikWarga }) => {
                                           type="button"
                                           className="px-6 py-3"
                                           color="yellow"
-                                          onClick={() => setIsEditMode(false)}
+                                          onClick={() => handleBack()}
                                       >
                                           Batal
                                       </PrimaryButton>

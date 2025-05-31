@@ -166,4 +166,54 @@ class BiodatasUserController extends Controller
         }
     }
 
+    public function destroyRT($id)
+{
+    try {
+        DB::beginTransaction();
+        
+        $RT = RT::findOrFail($id);
+        $user = User::findOrFail($RT->id_user);
+        $RT->delete();
+        $user->delete();
+        
+        DB::commit();
+        
+        return response()->json([
+            'message' => 'Data RT berhasil dihapus'
+        ], 200);
+        
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json([
+            'message' => 'Terjadi kesalahan saat menghapus data RT',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+
+public function destroyRW($id)
+{
+    try {
+        DB::beginTransaction();
+
+        $RW = RW::findOrFail($id);
+        $user = User::findOrFail($RW->id_user);
+        $RW->delete();
+        $user->delete();
+        
+        DB::commit();
+        
+        return response()->json([
+            'message' => 'Data RW berhasil dihapus'
+        ], 200);
+        
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json([
+            'message' => 'Terjadi kesalahan saat menghapus data RW',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+
 }

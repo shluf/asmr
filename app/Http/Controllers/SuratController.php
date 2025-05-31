@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PengajuanSurat;
 use App\Models\ApprovalSurat;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -83,8 +84,6 @@ class SuratController extends Controller
             if (!$approval) {
                 throw new \Exception('Data approval tidak ditemukan');
             }
-
-            // Update approval status
             
             // Update tanggal approval sesuai approver
             if ($request->approver_type === 'rt') {
@@ -92,11 +91,35 @@ class SuratController extends Controller
                 $approval->status_rt = $request->status_approval;
                 $status = $request->status_approval === 'approved' ? 'Menunggu persetujuan RW' : 'Selesai';
                 $approval->status_approval = $status;
+
+                $notifRt = Notifikasi::where('id_user', $approval->pengajuanSurat->rt->user->id)
+                    ->where('id_pengajuan_surat', $id_pengajuan_surat)
+                    ->first();
+
+                if ($notifRt) {
+                    $notifRt->delete();
+                }
+
+                if ($request->status_approval == "approved") {
+                    Notifikasi::create([
+                        'id_user' => $approval->pengajuanSurat->rw->user->id,
+                        'pesan' => $approval->pengajuanSurat->rt->nama . ' telah menyetujui surat pengantar.',
+                        'id_pengajuan_surat' => $approval->pengajuanSurat->id_pengajuan_surat,
+                        'jenis_notif' => 'surat',
+                    ]);
+                }
             } else {
                 $approval->tanggal_approval_rw = now();
                 $approval->status_rw = $request->status_approval;
                 $status = $request->status_approval === 'approved' ? 'Menunggu Surat dicetak' : 'Selesai';
                 $approval->status_approval = $status;
+
+                $notifRw = Notifikasi::where('id_user', $approval->pengajuanSurat->rw->user->id)
+                ->where('id_pengajuan_surat', $id_pengajuan_surat)
+                ->first();
+                if ($notifRw) {
+                    $notifRw->delete();
+                }
             }
 
             $pengajuan = PengajuanSurat::find($id_pengajuan_surat);

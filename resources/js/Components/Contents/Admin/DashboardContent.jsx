@@ -32,7 +32,7 @@ const DashboardContent = () => {
     }, []);
 
     return (
-        <div className="flex flex-col w-full mb-8">
+        <div className="flex flex-col w-full mb-10">
             <div className="flex w-full h-full">
                 <div className="container mx-auto p-6 ">
                 <DataCard 
@@ -41,7 +41,7 @@ const DashboardContent = () => {
                 />
                 </div>
             </div>
-            <div className="container mx-auto p-6">
+            <div className="container mx-auto p-6 md:mb-0 mb-8">
                 <div className="border rounded-lg p-4 shadow-lg">
                     <h2 className="text-lg font-bold mb-4">
                         Approval warga pending

@@ -13,8 +13,8 @@ return new class extends Migration
             $table->enum('status_rw', ['approved', 'rejected', 'pending'])->default('pending');
             $table->enum('status_rt', ['approved', 'rejected', 'pending'])->default('pending');
             $table->string('status_approval')->nullable();
-            $table->date('tanggal_approval_rt')->nullable();
-            $table->date('tanggal_approval_rw')->nullable();
+            $table->dateTime('tanggal_approval_rt')->nullable();
+            $table->dateTime('tanggal_approval_rw')->nullable();
             $table->timestamps();
 
             // Foreign key references

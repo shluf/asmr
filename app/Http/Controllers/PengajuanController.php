@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ApprovalSurat;
+use App\Models\Notifikasi;
 use App\Models\Warga;
 use Illuminate\Http\Request;
 use App\Models\PengajuanSurat;
@@ -99,6 +100,13 @@ class PengajuanController extends Controller
                 'status_approval' => 'Surat telah diajukan',
                 'tanggal_approval_rt' => null,
                 'tanggal_approval_rw' => null,
+            ]);
+
+            Notifikasi::create([
+                'id_user' => $warga->rt->user->id,
+                'id_pengajuan_surat' => $pengajuan->id_pengajuan_surat,
+                'pesan' => $warga->nama . ' telah mengajukan surat pengantar.',
+                'jenis_notif' => 'surat',
             ]);
 
             // Beri respons sukses ke frontend

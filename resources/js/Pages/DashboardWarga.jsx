@@ -6,7 +6,7 @@ import Pengajuan from '@/Components/Contents/Warga/Pengajuan';
 import DashboardLayout from '@/Layouts/DashboardLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ currentPage, nik }) {
+export default function Dashboard({ currentPage, nik, name, role }) {
     const renderContent = () => {
         switch(currentPage) {
             case 'dashboard':
@@ -18,14 +18,14 @@ export default function Dashboard({ currentPage, nik }) {
             case 'akun':
                 return <Akun nikWarga={nik} />;
             case 'bantuan':
-                return <Bantuan />;
+                return <Bantuan warga={true} />;
             default:
                 return <DashboardContent />;
         }
     }
 
     return (
-        <DashboardLayout color={'green'}>
+        <DashboardLayout color={'green'} name={name} role={role}>
             <Head title="Dashboard" />
             {renderContent()}
         </DashboardLayout>

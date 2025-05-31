@@ -27,7 +27,7 @@ import { Skeleton } from "../ui/skeleton";
 import { Input } from "../ui/input";
 import PrimaryButton from "../PrimaryButton";
 
-const DataTable = ({ data, columns, hide = {}, pageSize = 5, isLoading = false }) => {
+const DataTable = ({ data, columns, hide = {}, pageSize = 5, refresh, isLoading = false }) => {
     const [sorting, setSorting] = useState([]);
     const [columnFilters, setColumnFilters] = useState([]);
     const [columnVisibility, setColumnVisibility] = useState(hide);
@@ -70,7 +70,7 @@ const DataTable = ({ data, columns, hide = {}, pageSize = 5, isLoading = false }
     
       return (
         <div>
-          <div className="flex items-center py-4">
+          <div className="flex items-center py-4 gap-3">
             <Input
               placeholder="Cari nama..."
               value={table.getColumn("nama")?.getFilterValue() ?? ""}
@@ -162,7 +162,7 @@ const DataTable = ({ data, columns, hide = {}, pageSize = 5, isLoading = false }
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      Data tidak ditemukan.
                     </TableCell>
                   </TableRow>
                 )}

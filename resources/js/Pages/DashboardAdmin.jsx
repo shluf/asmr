@@ -6,7 +6,7 @@ import TambahRTRW from "@/Components/Contents/Admin/TambahRTRW";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Dashboard({ currentPage }) {
+export default function Dashboard({ currentPage, name, role }) {
     const renderContent = () => {
         switch (currentPage) {
             case "biodataUser":
@@ -24,7 +24,7 @@ export default function Dashboard({ currentPage }) {
 
 
     return (
-        <DashboardLayout color={"blue"}>
+        <DashboardLayout color={"blue"} name={name} role={role}>
             <Head title="Dashboard" />
             {renderContent()}
         </DashboardLayout>

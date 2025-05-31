@@ -5,7 +5,7 @@ import RekapPengajuan from '@/Components/Contents/RW/RekapPengajuan';
 import DashboardLayout from '@/Layouts/DashboardLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ currentPage, idRW }) {
+export default function Dashboard({ currentPage, idRW, name, role }) {
     const renderContent = () => {
         switch(currentPage) {
             case 'dashboard':
@@ -22,7 +22,7 @@ export default function Dashboard({ currentPage, idRW }) {
     }
 
     return (
-        <DashboardLayout color={'orange'}>
+        <DashboardLayout color={'orange'} name={name} role={role}>
             <Head title="Dashboard" />
             {renderContent()}
         </DashboardLayout>

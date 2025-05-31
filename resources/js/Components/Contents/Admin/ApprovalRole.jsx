@@ -12,7 +12,7 @@ import { Skeleton } from "@/Components/ui/skeleton";
 import { AlertWrapper, showAlert } from "@/Components/partials/Alert";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/Components/ui/dialog";
 import PrimaryButton from "@/Components/PrimaryButton";
-import { Check, X } from "lucide-react";
+import { Check, Loader2, X } from "lucide-react";
 import { DataField } from "@/Components/partials/dataField";
 import { fetchApprovalRoleData } from "@/hooks/Admin";
 
@@ -21,6 +21,7 @@ const ApprovalRole = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [selectedWarga, setSelectedWarga] = useState(null);
     const [loading, setLoading] = useState({});
+    const [show, setShow] = useState({});
 
     useEffect(() => {
         fetchApprovalRoleData(setIsLoading, setDataWarga);
@@ -28,6 +29,7 @@ const ApprovalRole = () => {
 
     const handleApprove = async (nik_warga) => {
         try {
+            setLoading((prev) => ({ ...prev, [nik_warga]: true, ['main']: true }));
             await axios.post(`/approvalRole/approve/${nik_warga}`);
             showAlert({
                 title: "Berhasil!!!",
@@ -35,8 +37,8 @@ const ApprovalRole = () => {
                 message: "Status approval user telah diperbarui",
                 color: "green",
                 });
-            fetchData();
-            setLoading((prev) => ({ ...prev, [nik_warga]: false }));
+            fetchApprovalRoleData(setIsLoading, setDataWarga);
+            setLoading((prev) => ({ ...prev, [nik_warga]: false, ['main']: false }));
         } catch (error) {
             console.error("Error approving user:", error);
             showAlert({
@@ -51,6 +53,7 @@ const ApprovalRole = () => {
 
     const handleDisapprove = async (nik_warga) => {
         try {
+            setLoading((prev) => ({ ...prev, [nik_warga]: true,  ['main']: true }));
             await axios.post(`/approvalRole/disapprove/${nik_warga}`);
             showAlert({
                 title: "Berhasil!!!",
@@ -58,8 +61,8 @@ const ApprovalRole = () => {
                 message: "Status approval user telah diperbarui",
                 color: "green",
                 });
-            fetchData(); 
-            setLoading((prev) => ({ ...prev, [nik_warga]: false }));
+            fetchApprovalRoleData(setIsLoading, setDataWarga); 
+            setLoading((prev) => ({ ...prev, [nik_warga]: false,  ['main']: false }));
         } catch (error) {
             console.error("Error disapproving user:", error);
             showAlert({
@@ -75,11 +78,24 @@ const ApprovalRole = () => {
     return (
         <div className="w-full p-6">
             <AlertWrapper />
-            <div className="mt-10">
+            <div>
                 <h2 className="font-semibold text-lg mb-4">
                     Permintaan Role
                 </h2>
-                <Table>
+                <Table className="relative">                        
+                    {loading['main'] && 
+                            <div className="absolute top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-sm">
+                                <div className="flex flex-col items-center justify-center">
+                                <Loader2 
+                                    className="h-12 w-12 animate-spin text-green" 
+                                    strokeWidth={2} 
+                                />
+                                <p className="mt-4 text-gray-700 font-semibold">
+                                    Sistem sedang bekerja, mohon tunggu sebentar...
+                                </p>
+                                </div>
+                            </div>
+                        }
                     <TableHeader>
                         <TableRow>
                             <TableHead>Nomor KK</TableHead>
@@ -95,6 +111,7 @@ const ApprovalRole = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
+
                         {isLoading ? (
                             Array(5).fill(null).map((_, index) => (
                                 <TableRow key={index}>
@@ -123,8 +140,16 @@ const ApprovalRole = () => {
                                     <TableCell>{warga.jenis_kelamin}</TableCell>
                                     <TableCell>{warga.phone}</TableCell>
                                     <TableCell>{warga.tempat_dan_tanggal_lahir}</TableCell>
-                                    <TableCell>{warga.alamat}</TableCell>
-                                    <TableCell>{warga.approved ? "Disetujui" : warga.approved === false ? "Ditolak" : "Pending"}</TableCell>
+                                    <TableCell>
+                                        <div className={`cursor-pointer ${show[warga.nik_warga] ? "" : "line-clamp-3"}`} 
+                                            onClick={() => setShow(prev => ({
+                                                ...prev, 
+                                                [warga.nik_warga]: !prev[warga.nik_warga]
+                                            }))}>
+                                                {warga.alamat}
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>{warga.approved ? "Disetujui" : warga.approved === 0 ? "Ditolak" : "Pending"}</TableCell>
                                     <TableCell>
                                         <div className="flex space-x-2">
                                             <button
@@ -169,7 +194,7 @@ const ApprovalRole = () => {
                                                         <DataField label="NIK" value={selectedWarga.nik_warga} />
                                                         <DataField label="RT" value={selectedWarga.no_rt} />
                                                         <DataField label="RW" value={selectedWarga.no_rw} />
-                                                        <DataField label="Status" value={selectedWarga.approved ? "Disetujui" : selectedWarga.approved === false ? "Ditolak" : "Pending"} />
+                                                        <DataField label="Status" value={selectedWarga.approved ? "Disetujui" : selectedWarga.approved === 0 ? "Ditolak" : "Pending"} />
                                                         <DataField label="Alamat" value={selectedWarga.alamat} />
                                                         <DataField label="Tanggal Lahir" value={selectedWarga.tempat_dan_tanggal_lahir} />
                                                         <DataField label="Jenis Kelamin" value={selectedWarga.jenis_kelamin === "L" ? "Laki-laki" : "Perempuan"} />

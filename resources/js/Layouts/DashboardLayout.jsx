@@ -18,6 +18,8 @@ import { useEffect, useState } from "react";
 
 const DashboardLayout = ({
     color = "yellow",
+    name,
+    role,
     children,
 }) => {
     const user = usePage().props.auth.user;
@@ -33,7 +35,7 @@ const DashboardLayout = ({
             <SideBar color={color} userRole={user.role} />
 
             <div className="flex flex-col overflow-hidden">
-                <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 my-2 lg:h-[60px] lg:px-6">
+                <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 mt-2 lg:h-[60px] lg:px-6">
 
                     <div className="flex md:hidden h-14 justify-center items-center px-4">
                         <Link href="/">
@@ -42,7 +44,7 @@ const DashboardLayout = ({
                     </div>
 
                     <div className="w-full flex-1">
-                        <h1 className="text-lg font-semibold md:text-2xl">
+                        <h1 className="hidden sm:block text-lg font-semibold md:text-2xl">
                             {header}
                         </h1>
                     </div>
@@ -58,13 +60,13 @@ const DashboardLayout = ({
                                         <CircleUser className="h-full w-full" />
                                     </div>
                                     <div className={`absolute -bottom-2 group-hover:-bottom-1 left-1/2 transform transition-all -translate-x-1/2 bg-${color} text-white px-3 rounded-full text-[8px] font-medium`}>
-                                        {user.role}
+                                        {role}
                                     </div>
                                 </div>
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
+                            <DropdownMenuLabel>{name}</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             {user.role === "Warga" &&
                                 <Link href={route('dashboard', { page: "akun" })}>

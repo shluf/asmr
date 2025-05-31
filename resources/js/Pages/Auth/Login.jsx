@@ -109,7 +109,7 @@ export default function Login({ status, canResetPassword }) {
                     )}
 
                     <PrimaryButton className="ms-4 " disabled={processing} color={'green'}>
-                        Log in
+                        Masuk
                     </PrimaryButton>
                 </div>
             </form>
