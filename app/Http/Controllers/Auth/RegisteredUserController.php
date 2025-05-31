@@ -75,7 +75,7 @@ class RegisteredUserController extends Controller
         $warga = Warga::create([
             'nik_warga' => $request->nik_warga,
             'id_user' => $user->id,
-            'id_rt' => $request->id_rt,
+            'id_rt' => $request->id_rt, 
             'id_rw' => $request->id_rw,
             'nama' => $request->nama,
             'nomer_kk' => $request->nomer_kk,
@@ -90,6 +90,7 @@ class RegisteredUserController extends Controller
         
 
         event(new Registered($user, $warga));
+        
         return redirect()->route('login')->with('status', 'Registration successful. Tunggu akun anda dicheck oleh admin.');
     }
 }

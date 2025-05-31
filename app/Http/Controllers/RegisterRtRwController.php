@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\RT;
 use App\Models\RW;
 use App\Models\User;
+use App\Models\Warga;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterRtRwController extends Controller
 {
@@ -159,7 +160,7 @@ class RegisterRtRwController extends Controller
                 ]);
             } elseif ($user->role === 'RT') {
                 $rt = RT::where('id_user', $user->id)->firstOrFail();
-                $rt->update([
+                $rt->update([   
                     'nama' => $request->nama ?? $rt->nama,
                     'nik' => $request->nik ?? $rt->nik,
                     'periode' => $request->periode ?? $rt->periode,
@@ -185,64 +186,64 @@ class RegisterRtRwController extends Controller
         }
     }
 
-    public function destroy($id)
-    {
-        try {
-            DB::beginTransaction();
+    public function destroy($id, Request $request)
+{
+    try {
+        DB::beginTransaction();
 
-            $user = User::findOrFail($id);
+        // Allow deletion by either warga_id or user_id
+        $warga = $request->has('user_id') 
+            ? Warga::where('id_users', $request->user_id)->firstOrFail()
+            : Warga::findOrFail($id);
 
-            if ($user->ttd_path) {
-                Storage::delete($user->ttd_path);
-            }
+        // Get related data before deletion
+        $user = $warga->user;
+        $pejabatData = $warga->pejabatRT ?: $warga->pejabatRW;
+        $role = $pejabatData ? ($warga->pejabatRT ? 'RT' : 'RW') : 'Warga';
+        
+        // 1. Delete signature file if exists
+        if ($pejabatData && $pejabatData->ttd) {
+            Storage::delete(str_replace('/storage', 'public', $pejabatData->ttd));
+        }
 
+        // 2. Delete official position if exists
+        if ($pejabatData) {
+            $pejabatData->delete();
+        }
+
+        // 3. Delete address
+        if ($warga->alamat) {
+            $warga->alamat()->delete();
+        }
+
+        // 4. Delete warga record
+        $warga->delete();
+
+        // 5. Delete user account (optional - can be made configurable)
+        $deleteUser = $request->input('delete_user', true);
+        if ($deleteUser) {
             $user->delete();
-
-            DB::commit();
-
-            return response()->json([
-                'message' => 'Data berhasil dihapus'
-            ], 200);
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json([
-                'message' => 'Terjadi kesalahan saat menghapus data',
-                'error' => $e->getMessage()
-            ], 500);
         }
+
+        DB::commit();
+
+        return response()->json([
+            "message" => "Data berhasil dihapus",
+            "deleted" => [
+                "role" => $role,
+                "warga_id" => $warga->id,
+                "user_id" => $user->id,
+                "user_deleted" => $deleteUser
+            ]
+        ], 200);
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json([
+            'error' => 'Gagal menghapus data',
+            'message' => $e->getMessage()
+        ], 500);
     }
-
-    public function getRWList()
-    {
-        try {
-            $rwList = RW::select('id_rw', 'nama', 'penanggung_jawab_rw')
-                ->orderBy('id_rw')
-                ->get();
-
-            return response()->json($rwList);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Terjadi kesalahan saat mengambil data RW',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    public function getRTByRW($rwId)
-    {
-        try {
-            $rtList = RT::where('id_rw', $rwId)
-                ->select('id_rt', 'nama')
-                ->orderBy('id_rt')
-                ->get();
-
-            return response()->json($rtList);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Terjadi kesalahan saat mengambil data RT',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
+}
+    
 }

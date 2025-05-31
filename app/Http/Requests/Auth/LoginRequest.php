@@ -86,7 +86,7 @@ class LoginRequest extends FormRequest
          if ($user->role === 'Warga') {
              $warga = Warga::where('id_user', $user->id)->first();
              // If 'Warga' is not approved, logout and throw an exception
-             if (!$warga || !$warga->approved) {
+             if ($user->status === 'false') {
                  Auth::logout();
                  throw ValidationException::withMessages([
                      'login' => 'Akun Anda belum disetujui oleh admin.',
